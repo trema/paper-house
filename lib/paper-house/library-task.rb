@@ -16,39 +16,15 @@
 #
 
 
-require "pstore"
-require "rake"
+require "paper-house/build-task"
 
 
-module Rake
-  module PaperHouse
-    module Dependency
-      @@store = {}
-
-
-      def self.read name, object_file
-        dump_of( name ).transaction( true ) do | store |
-          store[ object_file ]
-        end || []
-      end
-
-
-      def self.write name, object_file, dependency
-        dump_of( name ).transaction( false ) do | store |
-          store[ object_file ] = dependency
-        end
-      end
-
-
-      def self.dump_of name
-        @@store[ name ] ||= PStore.new( path( name ) )
-      end
-
-
-      def self.path name
-        File.join Rake.original_dir, ".#{ name }.depends"
-      end
-    end
+module PaperHouse
+  #
+  # Common base class for static, shared, and ruby library tasks.
+  #
+  class LibraryTask < BuildTask
+    attr_accessor :library_name
   end
 end
 

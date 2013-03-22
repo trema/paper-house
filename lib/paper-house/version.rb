@@ -16,23 +16,13 @@
 #
 
 
-require "rake/paper-house/build-task"
-
-
-module Rake
-  module PaperHouse
-    #
-    # Common base class for static, shared, and ruby library tasks.
-    #
-    class LibraryTask < BuildTask
-      attr_accessor :library_name
-    end
-  end
+module PaperHouse
+  VERSION = "0.1.4"
 end
 
 
 ### Local variables:
 ### mode: Ruby
-### coding: utf-8-unix
+### coding: utf-8
 ### indent-tabs-mode: nil
 ### End:

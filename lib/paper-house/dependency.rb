@@ -16,46 +16,36 @@
 #
 
 
-require "rake/paper-house/build-task"
-require "rake/paper-house/linker-options"
+require "pstore"
+require "rake"
 
 
-module Rake
-  module PaperHouse
-    #
-    # Compile *.c files into an executable file.
-    #
-    class ExecutableTask < BuildTask
-      include LinkerOptions
+module PaperHouse
+  module Dependency
+    @@store = {}
 
 
-      attr_writer :executable_name
+    def self.read name, object_file
+      dump_of( name ).transaction( true ) do | store |
+        store[ object_file ]
+      end || []
+    end
 
 
-      ##########################################################################
-      private
-      ##########################################################################
-
-
-      def executable_name
-        @executable_name || @name
+    def self.write name, object_file, dependency
+      dump_of( name ).transaction( false ) do | store |
+        store[ object_file ] = dependency
       end
-      alias :target_file_name :executable_name
+    end
 
 
-      def generate_target
-        sh "gcc -o #{ target_path } #{ objects.to_s } #{ gcc_options }"
-      end
+    def self.dump_of name
+      @@store[ name ] ||= PStore.new( path( name ) )
+    end
 
 
-      def gcc_options
-        [ gcc_ldflags, gcc_l_options ].join " "
-      end
-
-
-      def gcc_ldflags
-        [ @ldflags ].flatten.join " "
-      end
+    def self.path name
+      File.join Rake.original_dir, ".#{ name }.depends"
     end
   end
 end

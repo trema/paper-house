@@ -16,15 +16,16 @@
 #
 
 
-module Rake
-  module PaperHouse
-    VERSION = "0.1.3"
+module PaperHouse
+  module LinkerOptions
+    attr_writer :ldflags
+    attr_writer :library_dependencies
   end
 end
 
 
 ### Local variables:
 ### mode: Ruby
-### coding: utf-8
+### coding: utf-8-unix
 ### indent-tabs-mode: nil
 ### End:

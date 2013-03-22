@@ -16,44 +16,34 @@
 #
 
 
-require "rake/paper-house/library-task"
+require "paper-house/library-task"
 
 
-module Rake
-  module PaperHouse
-    #
-    # Compile *.c files into a static library.
-    #
-    class StaticLibraryTask < LibraryTask
-      ##########################################################################
-      private
-      ##########################################################################
+module Trema
+  #
+  # Compile *.c files into a shared library.
+  #
+  class SharedLibraryTask < LibraryTask
+    attr_accessor :version
 
 
-      def generate_target
-        ar
-        ranlib
-      end
+    ############################################################################
+    private
+    ############################################################################
 
 
-      def ar
-        sh "ar -cq #{ target_path } #{ objects.to_s }"
-      end
+    def generate_target
+      sh "gcc -shared -Wl,-soname=#{ soname } -o #{ target_path } #{ objects.to_s }"
+    end
 
 
-      def ranlib
-        sh "ranlib #{ target_path }"
-      end
+    def soname
+      File.basename( target_file_name ).sub( /\.\d+\.\d+\Z/, "" )
+    end
 
 
-      def library_name
-        @library_name || @name
-      end
-
-
-      def target_file_name
-        library_name + ".a"
-      end
+    def target_file_name
+      @library_name + ".so." + @version
     end
   end
 end
