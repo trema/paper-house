@@ -19,7 +19,7 @@
 require "paper-house/library-task"
 
 
-module Trema
+module PaperHouse
   #
   # Compile *.c files into a shared library.
   #
