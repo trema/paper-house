@@ -20,7 +20,7 @@ require "rake/paper-house/library-task"
 
 
 module Rake
-  module Trema
+  module PaperHouse
     #
     # Compile *.c files into a shared library.
     #
