@@ -62,8 +62,8 @@ module Rake
 
 
       def define_main_task
-        directory @target_directory
         task name => [ @target_directory, target_path ]
+        directory @target_directory
       end
 
 

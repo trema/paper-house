@@ -20,7 +20,7 @@ require "rake/paper-house/build-task"
 
 
 module Rake
-  module Trema
+  module PaperHouse
     #
     # Common base class for static, shared, and ruby library tasks.
     #

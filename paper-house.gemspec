@@ -8,8 +8,6 @@ Gem::Specification.new do | gem |
   gem.summary = "Rake for C."
   gem.description = "Rake tasks for compiling C projects."
 
-  gem.required_ruby_version = "~> 1.8.7"
-
   gem.license = "GPL2"
 
   gem.authors = [ "Yasuhito Takamiya" ]
