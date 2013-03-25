@@ -95,7 +95,7 @@ module PaperHouse
 
     def define_clobber_targets
       CLOBBER.include target_path
-      CLOBBER.include Dependency.path( @name )
+      CLOBBER.include @dependency.path
     end
 
 
@@ -115,6 +115,7 @@ module PaperHouse
       @name = name
       @cflags = []
       @includes = []
+      @dependency = Dependency.new( @name )
       @library_dependencies = []
     end
 
@@ -127,10 +128,10 @@ module PaperHouse
 
 
     def compile o_file, c_file
-      return if uptodate?( o_file, Dependency.read( @name, o_file ) << c_file )
+      return if uptodate?( o_file, @dependency.read( o_file ) << c_file )
       auto_depends = AutoDepends.new( c_file, o_file, auto_depends_gcc_options )
       auto_depends.run
-      Dependency.write @name, o_file, auto_depends.data
+      @dependency.write o_file, auto_depends.data
     end
 
 

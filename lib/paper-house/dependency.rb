@@ -21,31 +21,40 @@ require "rake"
 
 
 module PaperHouse
-  module Dependency
-    @@store = {}
+  #
+  # Keeps compilation dependencies
+  #
+  class Dependency
+    attr_reader :path
 
 
-    def self.read name, object_file
-      dump_of( name ).transaction( true ) do | store |
+    def initialize name
+      @path = File.join( Rake.original_dir, ".#{ name }.depends" )
+      @cache = {}
+    end
+
+
+    def read object_file
+      db.transaction( true ) do | store |
         store[ object_file ]
       end || []
     end
 
 
-    def self.write name, object_file, dependency
-      dump_of( name ).transaction( false ) do | store |
+    def write object_file, dependency
+      db.transaction( false ) do | store |
         store[ object_file ] = dependency
       end
     end
 
 
-    def self.dump_of name
-      @@store[ name ] ||= PStore.new( path( name ) )
-    end
+    ############################################################################
+    private
+    ############################################################################
 
 
-    def self.path name
-      File.join Rake.original_dir, ".#{ name }.depends"
+    def db
+      @cache[ @name ] ||= PStore.new( @path )
     end
   end
 end
