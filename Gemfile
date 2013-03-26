@@ -13,6 +13,7 @@ group :development do
   gem "rb-fsevent", :require => false
   gem "rb-inotify", :require => false
   gem "reek", "~> 1.3.1"
+  gem "relish", "~> 0.6"
   gem "terminal-notifier-guard"
 end
 

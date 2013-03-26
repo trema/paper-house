@@ -18,3 +18,8 @@ Reek::Rake::Task.new do | t |
   t.reek_opts = "--quiet"
   t.source_files = FileList[ "lib/**/*.rb" ]
 end
+
+
+task :relish do
+  sh "relish push trema/paper-house"
+end
