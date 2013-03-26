@@ -1,4 +1,2 @@
 require "coveralls"
-
-
-# Coveralls.wear_merged!
+Coveralls.wear!

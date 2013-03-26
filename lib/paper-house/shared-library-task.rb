@@ -52,6 +52,7 @@ module PaperHouse
 
 
     def target_file_name
+      fail ":version option is a mandatory." if not @version
       library_name + ".so." + @version
     end
   end
