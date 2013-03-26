@@ -25,6 +25,16 @@ module PaperHouse
   #
   class LibraryTask < BuildTask
     attr_accessor :library_name
+
+
+    ############################################################################
+    private
+    ############################################################################
+
+
+    def library_name
+      @library_name || @name
+    end
   end
 end
 

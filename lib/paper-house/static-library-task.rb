@@ -45,11 +45,6 @@ module PaperHouse
     end
 
 
-    def library_name
-      @library_name || @name
-    end
-
-
     def target_file_name
       library_name + ".a"
     end

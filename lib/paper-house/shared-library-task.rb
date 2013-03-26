@@ -33,7 +33,16 @@ module PaperHouse
 
 
     def generate_target
-      sh "gcc -shared -Wl,-soname=#{ soname } -o #{ target_path } #{ objects.to_s }"
+      sh "gcc -shared -Wl,#{ soname_option },#{ soname } -o #{ target_path } #{ objects.to_s }"
+    end
+
+
+    def soname_option
+      if /darwin/=~ RUBY_PLATFORM
+        "-install_name"
+      else
+        "-soname"
+      end
     end
 
 
@@ -43,7 +52,7 @@ module PaperHouse
 
 
     def target_file_name
-      @library_name + ".so." + @version
+      library_name + ".so." + @version
     end
   end
 end
