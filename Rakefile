@@ -2,6 +2,15 @@ require "bundler/gem_tasks"
 require "reek/rake/task"
 
 
+task :travis => [ :cucumber, :reek ]
+
+
+require "cucumber/rake/task"
+Cucumber::Rake::Task.new do | t |
+  t.cucumber_opts = "--tags ~@wip"
+end
+
+
 Reek::Rake::Task.new do | t |
   t.fail_on_error = true
   t.verbose = false
