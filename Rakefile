@@ -4,7 +4,7 @@ require "rspec/core"
 require "rspec/core/rake_task"
 
 
-task :travis => [ :cucumber, :reek ]
+task :travis => [ :spec, :cucumber, :reek ]
 
 
 RSpec::Core::RakeTask.new do | task |
