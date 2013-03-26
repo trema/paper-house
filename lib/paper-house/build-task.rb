@@ -36,7 +36,8 @@ module PaperHouse
 
     def initialize name, &block
       init name.to_s
-      block.call self
+      set_defaults
+      block.call self if block
       define
     end
 
@@ -95,7 +96,7 @@ module PaperHouse
 
     def define_clobber_targets
       CLOBBER.include target_path
-      CLOBBER.include @dependency.path
+      CLOBBER.include dependency.path
     end
 
 
@@ -113,9 +114,14 @@ module PaperHouse
 
     def init name
       @name = name
+    end
+
+
+    def set_defaults
+      @sources = "*.c"
+      @target_directory = "."
       @cflags = []
       @includes = []
-      @dependency = Dependency.new( @name )
       @library_dependencies = []
     end
 
@@ -128,10 +134,15 @@ module PaperHouse
 
 
     def compile o_file, c_file
-      return if uptodate?( o_file, @dependency.read( o_file ) << c_file )
+      return if no_need_to_compile?( o_file, c_file )
       auto_depends = AutoDepends.new( c_file, o_file, auto_depends_gcc_options )
       auto_depends.run
-      @dependency.write o_file, auto_depends.data
+      dependency.write o_file, auto_depends.data
+    end
+
+
+    def no_need_to_compile?( o_file, c_file )
+      uptodate?( o_file, dependency.read( o_file ) << c_file )
     end
 
 
@@ -149,6 +160,11 @@ module PaperHouse
 
     def c_includes
       sources.pathmap( "%d" ).uniq
+    end
+
+
+    def dependency
+      @dependency ||= Dependency.new( @name )
     end
   end
 end
