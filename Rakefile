@@ -1,8 +1,15 @@
 require "bundler/gem_tasks"
 require "reek/rake/task"
+require "rspec/core"
+require "rspec/core/rake_task"
 
 
 task :travis => [ :cucumber, :reek ]
+
+
+RSpec::Core::RakeTask.new do | task |
+  task.rspec_opts = "--format documentation --color"
+end
 
 
 require "cucumber/rake/task"
