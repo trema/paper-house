@@ -1,10 +1,11 @@
 require "bundler/gem_tasks"
+require "coveralls/rake/task"
 require "reek/rake/task"
 require "rspec/core"
 require "rspec/core/rake_task"
 
 
-task :travis => [ :spec, :cucumber, :reek ]
+task :travis => [ :spec, :cucumber, :reek, "coveralls:push" ]
 
 
 RSpec::Core::RakeTask.new do | task |
@@ -25,6 +26,9 @@ Reek::Rake::Task.new do | t |
   t.reek_opts = "--quiet"
   t.source_files = FileList[ "lib/**/*.rb" ]
 end
+
+
+Coveralls::RakeTask.new
 
 
 task :relish do
