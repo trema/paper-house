@@ -52,7 +52,7 @@ module PaperHouse
 
     def gcc_options
       [
-        @ldflags.join( " " ),
+        ldflags.join( " " ),
         gcc_ldflags,
         gcc_l_options,
       ].join " "

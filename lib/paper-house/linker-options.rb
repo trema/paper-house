@@ -20,6 +20,28 @@ module PaperHouse
   module LinkerOptions
     attr_writer :ldflags
     attr_writer :library_dependencies
+
+
+    def ldflags
+      [ @ldflags ].flatten.compact
+    end
+
+
+    def library_dependencies
+      [ @library_dependencies ].flatten.compact
+    end
+
+
+    ############################################################################
+    private
+    ############################################################################
+
+
+    def gcc_l_options
+      library_dependencies.collect do | each |
+        "-l#{ each }"
+      end.join( " " )
+    end
   end
 end
 

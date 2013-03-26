@@ -19,15 +19,17 @@
 require "paper-house/executable-task"
 
 
-describe PaperHouse::ExecutableTask do
-  it "should raise an error if :version option is missing" do
-    expect {
-      PaperHouse::SharedLibraryTask.new "libhello" do | task |
-        task.target_directory = "."
-        task.sources = "*.c"
-      end
-    }.to raise_error( ":version option is a mandatory." )
-  end
+describe PaperHouse::ExecutableTask, ".new( :test )" do
+  subject { PaperHouse::ExecutableTask.new :test }
+
+  its( :name ) { should eq "test" }
+  its( :executable_name ) { should eq "test" }
+  its( :target_directory ) { should eq "." }
+  its( :sources ) { should be_empty  }
+  its( :cflags ) { should be_empty }
+  its( :includes ) { should be_empty }
+  its( :ldflags ) { should be_empty }
+  its( :library_dependencies ) { should be_empty }
 end
 
 

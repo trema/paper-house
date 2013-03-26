@@ -31,15 +31,15 @@ module PaperHouse
     attr_writer :executable_name
 
 
-    ############################################################################
-    private
-    ############################################################################
-
-
     def executable_name
       @executable_name || @name
     end
     alias :target_file_name :executable_name
+
+
+    ############################################################################
+    private
+    ############################################################################
 
 
     def generate_target
@@ -53,7 +53,7 @@ module PaperHouse
 
 
     def gcc_ldflags
-      [ @ldflags ].flatten.join " "
+      ldflags.join " "
     end
   end
 end

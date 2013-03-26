@@ -122,14 +122,6 @@ module PaperHouse
       @target_directory = "."
       @cflags = []
       @includes = []
-      @library_dependencies = []
-    end
-
-
-    def gcc_l_options
-      @library_dependencies.collect do | each |
-        "-l#{ each }"
-      end.join( " " )
     end
 
 

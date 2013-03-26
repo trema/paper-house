@@ -27,6 +27,12 @@ module PaperHouse
     attr_accessor :version
 
 
+    def initialize name, version = nil, &block
+      @version = version
+      super name, &block
+    end
+
+
     ############################################################################
     private
     ############################################################################
