@@ -9,7 +9,8 @@ Paper House
 
 Rake for C
 
-Document
-========
+Documents
+=========
 
- * https://www.relishapp.com/trema/paper-house/docs
+ * [Usage](https://www.relishapp.com/trema/paper-house/docs)
+ * [API](http://rubydoc.info/github/trema/paper-house/master/frames)
