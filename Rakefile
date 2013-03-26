@@ -3,6 +3,7 @@ require "coveralls/rake/task"
 require "reek/rake/task"
 require "rspec/core"
 require "rspec/core/rake_task"
+require "yard"
 
 
 task :travis => [ :spec, :cucumber, :reek, "coveralls:push" ]
@@ -33,4 +34,10 @@ Coveralls::RakeTask.new
 
 task :relish do
   sh "relish push trema/paper-house"
+end
+
+
+YARD::Rake::YardocTask.new do | t |
+  t.options = [ "--no-private" ]
+  t.options << "--debug" << "--verbose" if $trace
 end
