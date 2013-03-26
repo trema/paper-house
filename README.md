@@ -1,4 +1,4 @@
-paper-house
+Paper House
 ===========
 
 [![Gem Version](https://badge.fury.io/rb/paper-house.png)](http://badge.fury.io/rb/paper-house)
@@ -7,3 +7,8 @@ paper-house
 [![Dependency Status](https://gemnasium.com/trema/paper-house.png)](https://gemnasium.com/trema/paper-house)
 
 Rake for C
+
+Document
+========
+
+ * https://www.relishapp.com/trema/paper-house/docs
