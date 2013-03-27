@@ -19,5 +19,5 @@ Feature: PaperHouse::SharedLibraryTask
         task.version = "0.1.0"
       end
       """
-    When I run `rake libhello`
+    When I run rake "libhello"
     Then a file named "libhello.so.0.1.0" should exist

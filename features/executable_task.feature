@@ -19,6 +19,5 @@ Feature: PaperHouse::ExecutableTask
         task.sources = [ "*.c" ]
       end
       """
-    When I run `rake hello`
+    When I run rake "hello"
     Then a file named "hello" should exist
-

@@ -17,5 +17,5 @@ Feature: PaperHouse::RubyLibraryTask
         task.library_dependencies = [ "ruby" ]
       end
       """
-    When I successfully run `rake hello`
+    When I run rake "hello"
     Then a file named "hello.so" should exist

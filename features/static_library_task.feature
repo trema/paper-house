@@ -18,6 +18,6 @@ Feature: PaperHouse::StaticLibraryTask
         task.sources = "*.c"
       end
       """
-    When I run `rake libhello`
+    When I run rake "libhello"
     Then a file named "libhello.a" should exist
 
