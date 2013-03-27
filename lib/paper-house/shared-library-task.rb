@@ -27,6 +27,13 @@ module PaperHouse
     attr_accessor :version
 
 
+    SONAME_OPTION = if /darwin/=~ RUBY_PLATFORM
+                      "-install_name"
+                    else
+                      "-soname"
+                    end
+
+
     def initialize name, version = nil, &block
       @version = version
       super name, &block
@@ -39,16 +46,7 @@ module PaperHouse
 
 
     def generate_target
-      sh "gcc -shared -Wl,#{ soname_option },#{ soname } -o #{ target_path } #{ objects.to_s }"
-    end
-
-
-    def soname_option
-      if /darwin/=~ RUBY_PLATFORM
-        "-install_name"
-      else
-        "-soname"
-      end
+      sh "gcc -shared -Wl,#{ SONAME_OPTION },#{ soname } -o #{ target_path } #{ objects.to_s }"
     end
 
 
