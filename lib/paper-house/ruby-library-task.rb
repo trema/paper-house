@@ -28,11 +28,15 @@ module PaperHouse
     include LinkerOptions
 
 
-    RUBY_INCLUDES = [
-      File.join( RbConfig::CONFIG[ "rubyhdrdir" ], RbConfig::CONFIG[ "arch" ] ),
-      File.join( RbConfig::CONFIG[ "rubyhdrdir" ], "ruby/backward" ),
-      RbConfig::CONFIG[ "rubyhdrdir" ]
-    ]
+    if RUBY_VERSION >= "1.9.0"
+      RUBY_INCLUDES = [
+        File.join( RbConfig::CONFIG[ "rubyhdrdir" ], RbConfig::CONFIG[ "arch" ] ),
+        File.join( RbConfig::CONFIG[ "rubyhdrdir" ], "ruby/backward" ),
+        RbConfig::CONFIG[ "rubyhdrdir" ]
+      ]
+    else
+      RUBY_INCLUDES = [ RbConfig::CONFIG[ "archdir" ] ]
+    end
 
 
     ############################################################################
@@ -41,7 +45,7 @@ module PaperHouse
 
 
     def target_file_name
-      @library_name + ".so"
+      library_name + ".so"
     end
 
 

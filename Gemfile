@@ -10,6 +10,8 @@ group :development do
   gem "cucumber", "~> 1.2.3"
   gem "guard", "~> 1.6.2"
   gem "guard-cucumber", "~> 1.3.2"
+  gem "guard-rspec", "~> 2.5.1"
+  gem "guard-spork", "~> 1.5.0"
   gem "rb-fchange", :require => false
   gem "rb-fsevent", :require => false
   gem "rb-inotify", :require => false
