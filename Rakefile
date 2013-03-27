@@ -1,5 +1,5 @@
 require "bundler/gem_tasks"
-require "coveralls/rake/task"
+require "rake/tasklib"
 require "flay"
 require "flay_task"
 require "flog"
@@ -12,8 +12,9 @@ require "yard"
 $ruby_source = FileList[ "lib/**/*.rb" ]
 
 
-task :travis => [ :spec, :cucumber, :quality, "coveralls:push" ]
+task :travis => [ :spec, :cucumber, :quality ]
 task :quality => [ :reek, :flog, :flay ]
+
 
 RSpec::Core::RakeTask.new do | task |
   task.rspec_opts = "--format documentation --color"
@@ -62,9 +63,6 @@ FlayTask.new do | t |
   t.threshold = 0
   t.verbose = $trace
 end
-
-
-Coveralls::RakeTask.new
 
 
 task :relish do
