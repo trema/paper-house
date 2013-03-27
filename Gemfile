@@ -8,6 +8,8 @@ group :development do
   gem "aruba", "~> 0.5.1"
   gem "coveralls", :require => false
   gem "cucumber", "~> 1.2.3"
+  gem "flay", "~> 2.1.0"
+  gem "flog", "~> 3.2.3"
   gem "guard", "~> 1.6.2"
   gem "guard-cucumber", "~> 1.3.2"
   gem "rb-fchange", :require => false
