@@ -35,9 +35,14 @@ module PaperHouse
 
     def run
       puts @command
-      status = POpen4.popen4( @command ) do | stdout, stderr, stdin, pid |
-        stdin.close
-        parse_gcc_h_stderr stderr
+      begin
+        GC.disable
+        status = POpen4.popen4( @command ) do | stdout, stderr, stdin, pid |
+          stdin.close
+          parse_gcc_h_stderr stderr
+        end
+      ensure
+        GC.enable
       end
       raise "gcc failed" if status.exitstatus != 0
     end
