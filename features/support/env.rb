@@ -32,6 +32,8 @@ Spork.prefork do
     Coveralls.wear!
   end
 
+  ENV[ "LD_LIBRARY_PATH" ] = "."
+
   require "aruba/cucumber"
   require "rake"
 end
