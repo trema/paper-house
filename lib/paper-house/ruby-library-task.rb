@@ -19,6 +19,7 @@
 require "paper-house/library-task"
 require "paper-house/linker-options"
 require "paper-house/os"
+require "rbconfig"
 
 
 module PaperHouse
@@ -27,31 +28,24 @@ module PaperHouse
   #
   class RubyLibraryTask < LibraryTask
     include LinkerOptions
+    include RbConfig
 
 
+    C_EXTENSION_EXT = OS.mac? ? ".bundle" : ".so"
+    GCC_SHARED = OS.mac? ? "-dynamic -bundle" : "-shared"
     RUBY_INCLUDES = if RUBY_VERSION >= "1.9.0"
                       [
-                        File.join( RbConfig::CONFIG[ "rubyhdrdir" ], RbConfig::CONFIG[ "arch" ] ),
-                        File.join( RbConfig::CONFIG[ "rubyhdrdir" ], "ruby/backward" ),
-                        RbConfig::CONFIG[ "rubyhdrdir" ]
+                        File.join( CONFIG[ "rubyhdrdir" ], CONFIG[ "arch" ] ),
+                        File.join( CONFIG[ "rubyhdrdir" ], "ruby/backward" ),
+                        CONFIG[ "rubyhdrdir" ]
                       ]
                     else
-                      RUBY_INCLUDES = [ RbConfig::CONFIG[ "archdir" ] ]
+                      [ RbConfig::CONFIG[ "archdir" ] ]
                     end
-
-    GCC_SHARED_OPTION = if OS.mac?
-                          "-dynamic -bundle"
-                        else
-                          "-shared"
-                        end
 
 
     def target_file_name
-      library_name + if OS.mac?
-                       ".bundle"
-                     else
-                       ".so"
-                     end
+      library_name + C_EXTENSION_EXT
     end
 
 
@@ -61,11 +55,11 @@ module PaperHouse
 
 
     def generate_target
-      sh "gcc #{ GCC_SHARED_OPTION } -o #{ target_path } #{ objects.to_s } #{ gcc_options }"
+      sh "gcc #{ GCC_SHARED } -o #{ target_path } #{ objects.to_s } #{ gcc_linker_options }"
     end
 
 
-    def gcc_options
+    def gcc_linker_options
       [
         ldflags.join( " " ),
         gcc_ldflags,
