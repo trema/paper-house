@@ -16,7 +16,7 @@
 #
 
 
-require "popen4"
+require "paper-house/safe-popen"
 
 
 module PaperHouse
@@ -35,14 +35,9 @@ module PaperHouse
 
     def run
       puts @command
-      begin
-        GC.disable
-        status = POpen4.popen4( @command ) do | stdout, stderr, stdin, pid |
-          stdin.close
-          parse_gcc_h_stderr stderr
-        end
-      ensure
-        GC.enable
+      status = SafePopen.popen( @command ) do | stdout, stderr, stdin, pid |
+        stdin.close
+        parse_gcc_h_stderr stderr
       end
       raise "gcc failed" if status.exitstatus != 0
     end
