@@ -1,5 +1,5 @@
 Feature: PaperHouse::RubyLibraryTask
-  Scenario: Generate a Ruby library
+  Scenario: Simple C extension
     Given a file named "hello.c" with:
       """
       #include "ruby.h"
@@ -11,11 +11,14 @@ Feature: PaperHouse::RubyLibraryTask
       """
      And a file named "Rakefile" with:
       """
-      require "paper-house/ruby-library-task"
+      require "paper-house"
 
-      PaperHouse::RubyLibraryTask.new "hello" do | task |
-        task.library_dependencies = [ "ruby" ]
-      end
+      PaperHouse::RubyLibraryTask.new :hello
       """
     When I run rake "hello"
     Then a file named "hello.so" should exist
+     And I successfully run `ruby -rhello -e "p Hello"`
+     And the output should contain:
+       """
+       Hello
+       """
