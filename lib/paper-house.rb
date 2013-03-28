@@ -16,40 +16,10 @@
 #
 
 
-require "paper-house/library-task"
-
-
-module PaperHouse
-  #
-  # Compile *.c files into a static library.
-  #
-  class StaticLibraryTask < LibraryTask
-    def target_file_name
-      library_name + ".a"
-    end
-
-
-    ##########################################################################
-    private
-    ##########################################################################
-
-
-    def generate_target
-      ar
-      ranlib
-    end
-
-
-    def ar
-      sh "ar -cq #{ target_path } #{ objects.to_s }"
-    end
-
-
-    def ranlib
-      sh "ranlib #{ target_path }"
-    end
-  end
-end
+require "paper-house/executable-task"
+require "paper-house/ruby-library-task"
+require "paper-house/shared-library-task"
+require "paper-house/static-library-task"
 
 
 ### Local variables:

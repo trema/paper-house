@@ -12,6 +12,7 @@ require "yard"
 $ruby_source = FileList[ "lib/**/*.rb" ]
 
 
+task :default => :travis
 task :travis => [ :spec, :cucumber, :quality ]
 task :quality => [ :reek, :flog, :flay ]
 

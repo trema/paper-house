@@ -16,37 +16,16 @@
 #
 
 
-require "paper-house/library-task"
+require "rbconfig"
 
 
 module PaperHouse
   #
-  # Compile *.c files into a static library.
+  # OS detector class.
   #
-  class StaticLibraryTask < LibraryTask
-    def target_file_name
-      library_name + ".a"
-    end
-
-
-    ##########################################################################
-    private
-    ##########################################################################
-
-
-    def generate_target
-      ar
-      ranlib
-    end
-
-
-    def ar
-      sh "ar -cq #{ target_path } #{ objects.to_s }"
-    end
-
-
-    def ranlib
-      sh "ranlib #{ target_path }"
+  class OS
+    def self.mac?
+      /darwin|mac os/=~ RbConfig::CONFIG[ "host_os" ]
     end
   end
 end

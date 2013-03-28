@@ -24,12 +24,16 @@ module PaperHouse
   # Common base class for static, shared, and ruby library tasks.
   #
   class LibraryTask < BuildTask
-    attr_accessor :library_name
+    attr_writer :library_name
 
 
-    ############################################################################
-    private
-    ############################################################################
+    def library_name= new_name
+      @library_name = if /\Alib/=~ new_name
+                        new_name
+                      else
+                        "lib" + new_name
+                      end
+    end
 
 
     def library_name
