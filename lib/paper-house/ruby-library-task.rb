@@ -28,19 +28,29 @@ module PaperHouse
     include LinkerOptions
 
 
-    if RUBY_VERSION >= "1.9.0"
-      RUBY_INCLUDES = [
-        File.join( RbConfig::CONFIG[ "rubyhdrdir" ], RbConfig::CONFIG[ "arch" ] ),
-        File.join( RbConfig::CONFIG[ "rubyhdrdir" ], "ruby/backward" ),
-        RbConfig::CONFIG[ "rubyhdrdir" ]
-      ]
-    else
-      RUBY_INCLUDES = [ RbConfig::CONFIG[ "archdir" ] ]
-    end
+    RUBY_INCLUDES = if RUBY_VERSION >= "1.9.0"
+                      [
+                        File.join( RbConfig::CONFIG[ "rubyhdrdir" ], RbConfig::CONFIG[ "arch" ] ),
+                        File.join( RbConfig::CONFIG[ "rubyhdrdir" ], "ruby/backward" ),
+                        RbConfig::CONFIG[ "rubyhdrdir" ]
+                      ]
+                    else
+                      RUBY_INCLUDES = [ RbConfig::CONFIG[ "archdir" ] ]
+                    end
+
+    GCC_SHARED_OPTION = if /darwin/=~ RUBY_PLATFORM
+                          "-dynamic -bundle"
+                        else
+                          "-shared"
+                        end
 
 
     def target_file_name
-      library_name + ".so"
+      library_name + if /darwin/=~ RUBY_PLATFORM
+                       ".bundle"
+                     else
+                       ".so"
+                     end
     end
 
 
@@ -50,7 +60,7 @@ module PaperHouse
 
 
     def generate_target
-      sh "gcc -shared -o #{ target_path } #{ objects.to_s } #{ gcc_options }"
+      sh "gcc #{ GCC_SHARED_OPTION } -o #{ target_path } #{ objects.to_s } #{ gcc_options }"
     end
 
 

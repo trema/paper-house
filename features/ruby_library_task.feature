@@ -13,11 +13,12 @@ Feature: PaperHouse::RubyLibraryTask
       """
       require "paper-house"
 
-      PaperHouse::RubyLibraryTask.new :hello
+      PaperHouse::RubyLibraryTask.new :hello do | task |
+        task.library_dependencies = "ruby"
+      end
       """
     When I run rake "hello"
-    Then a file named "hello.so" should exist
-     And I successfully run `ruby -rhello -e "p Hello"`
+    Then I successfully run `ruby -rhello -e "p Hello"`
      And the output should contain:
        """
        Hello
