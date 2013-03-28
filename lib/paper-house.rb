@@ -17,6 +17,7 @@
 
 
 require "paper-house/executable-task"
+require "paper-house/static-library-task"
 
 
 ### Local variables:
