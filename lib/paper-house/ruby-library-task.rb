@@ -61,10 +61,10 @@ module PaperHouse
 
     def gcc_linker_options
       [
-        ldflags.join( " " ),
+        ldflags,
         gcc_ldflags,
-        gcc_l_options,
-      ].join " "
+        gcc_l_options << "-lruby",
+      ].flatten.join " "
     end
 
 

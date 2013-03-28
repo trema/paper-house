@@ -13,9 +13,7 @@ Feature: PaperHouse::RubyLibraryTask
       """
       require "paper-house"
 
-      PaperHouse::RubyLibraryTask.new :hello do | task |
-        task.library_dependencies = "ruby"
-      end
+      PaperHouse::RubyLibraryTask.new :hello
       """
     When I run rake "hello"
     Then I successfully run `ruby -I. -rhello -e "p Hello"`
