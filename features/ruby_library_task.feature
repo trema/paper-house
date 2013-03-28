@@ -18,7 +18,7 @@ Feature: PaperHouse::RubyLibraryTask
       end
       """
     When I run rake "hello"
-    Then I successfully run `ruby -rhello -e "p Hello"`
+    Then I successfully run `ruby -I. -rhello -e "p Hello"`
      And the output should contain:
        """
        Hello
