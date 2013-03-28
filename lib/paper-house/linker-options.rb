@@ -40,7 +40,7 @@ module PaperHouse
     def gcc_l_options
       library_dependencies.collect do | each |
         "-l#{ each }"
-      end.join( " " )
+      end
     end
   end
 end
