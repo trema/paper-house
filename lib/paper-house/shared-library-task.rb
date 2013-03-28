@@ -40,13 +40,15 @@ module PaperHouse
     end
 
 
-    ############################################################################
-    private
-    ############################################################################
+    def target_file_name
+      fail ":version option is a mandatory." if not @version
+      [ linker_name, @version ].join "."
+    end
+    alias :real_name :target_file_name
 
 
-    def generate_target
-      sh "gcc -shared -Wl,#{ SONAME_OPTION },#{ soname } -o #{ target_path } #{ objects.to_s }"
+    def linker_name
+      library_name + ".so"
     end
 
 
@@ -55,9 +57,13 @@ module PaperHouse
     end
 
 
-    def target_file_name
-      fail ":version option is a mandatory." if not @version
-      library_name + ".so." + @version
+    ############################################################################
+    private
+    ############################################################################
+
+
+    def generate_target
+      sh "gcc -shared -Wl,#{ SONAME_OPTION },#{ soname } -o #{ target_path } #{ objects.to_s }"
     end
   end
 end

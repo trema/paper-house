@@ -24,6 +24,11 @@ module PaperHouse
   # Compile *.c files into a static library.
   #
   class StaticLibraryTask < LibraryTask
+    def target_file_name
+      library_name + ".a"
+    end
+
+
     ##########################################################################
     private
     ##########################################################################
@@ -42,11 +47,6 @@ module PaperHouse
 
     def ranlib
       sh "ranlib #{ target_path }"
-    end
-
-
-    def target_file_name
-      library_name + ".a"
     end
   end
 end

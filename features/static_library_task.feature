@@ -29,10 +29,13 @@ Feature: PaperHouse::StaticLibraryTask
 
       task :hello => :libhello
 
-      PaperHouse::StaticLibraryTask.new :libhello
+      PaperHouse::StaticLibraryTask.new :libhello do | task |
+        task.sources = "hello.c"
+      end
 
       PaperHouse::ExecutableTask.new :hello do | task |
         task.ldflags = "-L."
+        task.sources = "main.c"
         task.library_dependencies = "hello"
       end
       """
