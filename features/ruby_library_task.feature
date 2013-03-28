@@ -17,7 +17,7 @@ Feature: PaperHouse::RubyLibraryTask
       """
     When I run rake "hello"
     Then a file named "hello.so" should exist
-     And I successfully run `ruby -rhello -e "p Hello"`
+     And I successfully run `ruby -I. -rhello -e "p Hello"`
      And the output should contain:
        """
        Hello
