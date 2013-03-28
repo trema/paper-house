@@ -28,9 +28,9 @@ module PaperHouse
   #
   class BuildTask < Rake::TaskLib
     attr_accessor :cflags
-    attr_accessor :includes
     attr_accessor :name
     attr_accessor :target_directory
+    attr_writer :includes
     attr_writer :sources
 
 
@@ -106,9 +106,7 @@ module PaperHouse
 
 
     def objects
-      sources.collect do | each |
-        File.join @target_directory, File.basename( each ).ext( ".o" )
-      end
+      sources.pathmap File.join( @target_directory, "%n.o")
     end
 
 
@@ -144,14 +142,22 @@ module PaperHouse
 
 
     def gcc_i_options
-      ( [ @includes ].flatten + c_includes ).collect do | each |
-        "-I#{ each }"
-      end.join( " " )
+      include_directories.pathmap "-I%p"
     end
 
 
-    def c_includes
-      sources.pathmap( "%d" ).uniq
+    def include_directories
+      ( includes + auto_includes ).uniq
+    end
+
+
+    def includes
+      FileList[ [ @includes ] ]
+    end
+
+
+    def auto_includes
+      FileList[ sources.pathmap( "%d" ).uniq ]
     end
 
 

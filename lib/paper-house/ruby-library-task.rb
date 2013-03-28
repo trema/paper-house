@@ -68,15 +68,8 @@ module PaperHouse
     end
 
 
-    def gcc_i_options
-      include_directories.collect do | each |
-        "-I#{ each }"
-      end.join( " " )
-    end
-
-
     def include_directories
-      [ @includes ].flatten + c_includes + RUBY_INCLUDES
+      ( includes + auto_includes + RUBY_INCLUDES ).uniq
     end
   end
 end
