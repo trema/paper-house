@@ -17,6 +17,7 @@
 
 
 require "paper-house/library-task"
+require "paper-house/os"
 
 
 module PaperHouse
@@ -27,7 +28,7 @@ module PaperHouse
     attr_accessor :version
 
 
-    SONAME_OPTION = if /darwin/=~ RUBY_PLATFORM
+    SONAME_OPTION = if OS.mac?
                       "-install_name"
                     else
                       "-soname"

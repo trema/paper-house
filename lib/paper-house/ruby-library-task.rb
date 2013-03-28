@@ -18,6 +18,7 @@
 
 require "paper-house/library-task"
 require "paper-house/linker-options"
+require "paper-house/os"
 
 
 module PaperHouse
@@ -38,7 +39,7 @@ module PaperHouse
                       RUBY_INCLUDES = [ RbConfig::CONFIG[ "archdir" ] ]
                     end
 
-    GCC_SHARED_OPTION = if /darwin/=~ RUBY_PLATFORM
+    GCC_SHARED_OPTION = if OS.mac?
                           "-dynamic -bundle"
                         else
                           "-shared"
@@ -46,7 +47,7 @@ module PaperHouse
 
 
     def target_file_name
-      library_name + if /darwin/=~ RUBY_PLATFORM
+      library_name + if OS.mac?
                        ".bundle"
                      else
                        ".so"
