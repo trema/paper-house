@@ -31,8 +31,13 @@ module PaperHouse
     include RbConfig
 
 
-    C_EXTENSION_EXT = OS.mac? ? ".bundle" : ".so"
-    GCC_SHARED = OS.mac? ? "-dynamic -bundle" : "-shared"
+    if OS.mac?
+      SHARED_EXT = ".bundle"
+      LDSHARED = "-dynamic -bundle"
+    else
+      SHARED_EXT = ".so"
+      LDSHARED = "-shared"
+    end
     RUBY_INCLUDES = if RUBY_VERSION >= "1.9.0"
                       [
                         File.join( CONFIG[ "rubyhdrdir" ], CONFIG[ "arch" ] ),
@@ -45,7 +50,16 @@ module PaperHouse
 
 
     def target_file_name
-      library_name + C_EXTENSION_EXT
+      library_name + SHARED_EXT
+    end
+
+
+    def library_dependencies
+      if OS.mac?
+        ( [ @library_dependencies ] << "ruby" ).flatten.compact
+      else
+        super
+      end
     end
 
 
@@ -55,7 +69,7 @@ module PaperHouse
 
 
     def generate_target
-      sh "gcc #{ GCC_SHARED } -o #{ target_path } #{ objects.to_s } #{ gcc_linker_options }"
+      sh "gcc #{ LDSHARED } -o #{ target_path } #{ objects.to_s } #{ gcc_linker_options }"
     end
 
 
@@ -63,7 +77,7 @@ module PaperHouse
       [
         ldflags,
         gcc_ldflags,
-        gcc_l_options << "-lruby",
+        gcc_l_options,
       ].flatten.join " "
     end
 
