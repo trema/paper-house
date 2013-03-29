@@ -10,12 +10,12 @@ Paper House
 
 Paper House is a class library to easily build C projects using [Rake](https://github.com/jimweirich/rake). It supports the following build targets:
 
- * Executable file
- * Static library
- * Shared library
- * Ruby extension library in C
+ * [Executable file](https://www.relishapp.com/trema/paper-house/docs/paperhouse-executabletask)
+ * [Static library](https://www.relishapp.com/trema/paper-house/docs/paperhouse-staticlibrarytask)
+ * [Shared library](https://www.relishapp.com/trema/paper-house/docs/paperhouse-sharedlibrarytask)
+ * [Ruby extension library in C](https://www.relishapp.com/trema/paper-house/docs/paperhouse-rubylibrarytask)
 
-Paper House supports Linux and Mac OS X, and is tested on the following Ruby versions.
+Paper House supports Linux and Mac OS X, and is tested on the following Ruby versions:
 
  * 1.8.7
  * 1.9.3
