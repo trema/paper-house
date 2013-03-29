@@ -6,7 +6,7 @@ require "paper-house/version"
 Gem::Specification.new do | gem |
   gem.name = "paper-house"
   gem.version = PaperHouse::VERSION
-  gem.summary = "Rake for C."
+  gem.summary = "Rake for C projects."
   gem.description = "Rake tasks for compiling C projects."
 
   gem.license = "GPL2"
