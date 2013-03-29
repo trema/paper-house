@@ -1,6 +1,12 @@
 # More info at https://github.com/guard/guard#readme
 
 
+guard 'bundler' do
+  watch('Gemfile')
+  watch(/^.+\.gemspec/)
+end
+
+
 guard 'spork' do
   watch('Gemfile')
   watch('Gemfile.lock')

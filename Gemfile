@@ -11,6 +11,7 @@ group :development do
   gem "flay", "~> 2.1.0"
   gem "flog", "~> 3.2.3"
   gem "guard", "~> 1.7.0"
+  gem "guard-bundler", "~> 1.0.0"
   gem "guard-cucumber", "~> 1.3.2"
   gem "guard-rspec", "~> 2.5.1"
   gem "guard-spork", "~> 1.5.0"
