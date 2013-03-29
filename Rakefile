@@ -1,3 +1,21 @@
+#
+# Copyright (C) 2013 NEC Corporation
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License, version 2, as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+
+
 require "bundler/gem_tasks"
 require "rake/tasklib"
 require "flay"
@@ -6,6 +24,7 @@ require "flog"
 require "reek/rake/task"
 require "rspec/core"
 require "rspec/core/rake_task"
+require "yaml"
 require "yard"
 
 
@@ -78,10 +97,17 @@ end
 
 
 desc "Run tests against multiple rubies"
-task :test_rubies do
-  rubies = [ "ruby-1.8.7-p371", "ruby-1.9.3-p392", "ruby-2.0.0-p0" ]
-  rubies.each do | each |
+task :portability do
+  travis_yml = File.join( File.dirname( __FILE__ ), ".travis.yml" )
+  YAML.load_file( travis_yml )[ "rvm" ].each do | each |
     sh "rvm #{ each } exec bundle"
     sh "rvm #{ each } exec bundle exec rake"
   end
 end
+
+
+### Local variables:
+### mode: Ruby
+### coding: utf-8-unix
+### indent-tabs-mode: nil
+### End:
