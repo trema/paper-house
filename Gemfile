@@ -22,6 +22,7 @@ group :development do
   gem "reek", "~> 1.3.1"
   gem "relish", "~> 0.6"
   gem "rspec", "~> 2.13.0"
+  gem "rspec-instafail", "~> 0.2.4"
   gem "terminal-notifier-guard"
   gem "yard", "~> 0.8.5.2"
 end
