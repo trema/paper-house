@@ -28,11 +28,7 @@ module PaperHouse
     attr_accessor :version
 
 
-    SONAME_OPTION = if OS.mac?
-                      "-install_name"
-                    else
-                      "-soname"
-                    end
+    SONAME_OPTION = OS.mac? ? "-install_name" : "-soname"
 
 
     def initialize name, version = nil, &block
