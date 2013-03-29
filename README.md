@@ -39,3 +39,12 @@ Documents
 
  * [Usage document generated with Cucumber and Relish](https://www.relishapp.com/trema/paper-house/docs)
  * [API document generated with YARD](http://rubydoc.info/github/trema/paper-house/master/frames)
+
+
+### Author
+
+[Yasuhito Takamiya](https://github.com/yasuhito) ([@yasuhito](http://twitter.com/yasuhito))
+
+### Contributors
+
+[https://github.com/trema/paper-house/contributors](https://github.com/trema/paper-house/contributors)
