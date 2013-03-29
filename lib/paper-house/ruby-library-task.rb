@@ -49,6 +49,9 @@ module PaperHouse
                     end
 
 
+    attr_writer :library_name
+
+
     def target_file_name
       library_name + SHARED_EXT
     end
