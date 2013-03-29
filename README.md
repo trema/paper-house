@@ -8,7 +8,7 @@ Paper House
 
 <a href="http://www.flickr.com/photos/studiobeerhorst/8221979536/" title="paper houses - 3d woodcut prints by {studiobeerhorst}-bbmarie, on Flickr"><img src="http://farm9.staticflickr.com/8202/8221979536_60404c309d_n.jpg" width="320" height="240" alt="paper houses - 3d woodcut prints" align="right"></a>
 
-Paper House is a class library to easily build C projects using Rake. It supports the following build targets:
+Paper House is a class library to easily build C projects using [Rake](https://github.com/jimweirich/rake). It supports the following build targets:
 
  * Executable file
  * Static library
