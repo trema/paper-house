@@ -25,11 +25,7 @@ module PaperHouse
   #
   class LibraryTask < BuildTask
     def library_name= new_name
-       @library_name = if /\Alib/=~ new_name
-                         new_name
-                       else
-                         "lib" + new_name
-                       end
+       @library_name = /\Alib/=~ new_name ? new_name : "lib" + new_name
     end
 
 
