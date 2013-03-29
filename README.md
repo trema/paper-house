@@ -15,6 +15,25 @@ Paper House is a class library to easily build C projects using Rake. It support
  * Shared library
  * Ruby extension library in C
 
+
+Installation
+------------
+
+The simplest way to install Paper House is to use [Bundler](http://gembundler.com/).
+
+Add Paper House to your `Gemfile`:
+
+```ruby
+gem 'paper-house'
+```
+
+and install it by running Bundler:
+
+```bash
+$ bundle
+```
+
+
 Documents
 ---------
 
