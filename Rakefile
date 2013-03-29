@@ -75,3 +75,13 @@ YARD::Rake::YardocTask.new do | t |
   t.options = [ "--no-private" ]
   t.options << "--debug" << "--verbose" if $trace
 end
+
+
+desc "Run tests against multiple rubies"
+task :test_rubies do
+  rubies = [ "ruby-1.8.7-p371", "ruby-1.9.3-p392", "ruby-2.0.0-p0" ]
+  rubies.each do | each |
+    sh "rvm #{ each } exec bundle"
+    sh "rvm #{ each } exec bundle exec rake"
+  end
+end
