@@ -32,7 +32,7 @@ $ruby_source = FileList[ "lib/**/*.rb" ]
 
 
 task :default => :travis
-task :travis => [ :spec, :cucumber, :quality ]
+task :travis => [ :spec, :cucumber, :quality, "coveralls:push" ]
 task :quality => [ :reek, :flog, :flay ]
 
 
