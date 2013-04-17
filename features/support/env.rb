@@ -29,7 +29,7 @@ Spork.prefork do
 
   if not ENV[ "DRB" ]
     require "coveralls"
-    Coveralls.wear!
+    Coveralls.wear_merged!
   end
 
   ENV[ "LD_LIBRARY_PATH" ] = "."
@@ -44,7 +44,7 @@ Spork.each_run do
 
   if ENV[ "DRB" ]
     require "coveralls"
-    Coveralls.wear!
+    Coveralls.wear_merged!
   end
 end
 
