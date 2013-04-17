@@ -6,7 +6,7 @@ gemspec
 
 group :development do
   gem "aruba", "~> 0.5.1"
-  gem "coveralls", "~> 0.6.3", :require => false
+  gem "coveralls", "~> 0.6.6", :require => false
   gem "cucumber", "~> 1.2.3"
   gem "flay", "~> 2.2.0"
   gem "flog", "~> 3.2.3"
