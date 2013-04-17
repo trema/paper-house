@@ -23,11 +23,13 @@ module PaperHouse
 
 
     def ldflags
+      @ldflags ||= []
       [ @ldflags ].flatten.compact
     end
 
 
     def library_dependencies
+      @library_dependencies ||= []
       [ @library_dependencies ].flatten.compact
     end
 
