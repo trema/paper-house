@@ -17,10 +17,11 @@
 
 
 require "bundler/gem_tasks"
-require "rake/tasklib"
+require "coveralls/rake/task"
 require "flay"
 require "flay_task"
 require "flog"
+require "rake/tasklib"
 require "reek/rake/task"
 require "rspec/core"
 require "rspec/core/rake_task"
@@ -32,8 +33,11 @@ $ruby_source = FileList[ "lib/**/*.rb" ]
 
 
 task :default => :travis
-task :travis => [ :spec, :cucumber, :quality ]
+task :travis => [ :spec, :cucumber, :quality, "coveralls:push" ]
 task :quality => [ :reek, :flog, :flay ]
+
+
+Coveralls::RakeTask.new
 
 
 RSpec::Core::RakeTask.new do | task |
@@ -96,10 +100,25 @@ YARD::Rake::YardocTask.new do | t |
 end
 
 
+def travis_yml
+  File.join File.dirname( __FILE__ ), ".travis.yml"
+end
+
+
+def rubies
+  YAML.load_file( travis_yml )[ "rvm" ]
+end
+
+
 desc "Run tests against multiple rubies"
-task :portability do
-  travis_yml = File.join( File.dirname( __FILE__ ), ".travis.yml" )
-  YAML.load_file( travis_yml )[ "rvm" ].each do | each |
+task :portability
+
+rubies.each do | each |
+  portability_task_name = "portability:#{ each }"
+  task :portability => portability_task_name
+
+  desc "Run tests against Ruby#{ each }"
+  task portability_task_name do
     sh "rvm #{ each } exec bundle"
     sh "rvm #{ each } exec bundle exec rake"
   end

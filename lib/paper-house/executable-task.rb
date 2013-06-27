@@ -32,7 +32,7 @@ module PaperHouse
 
 
     def executable_name
-      @executable_name || @name
+      @executable_name ||= @name
     end
     alias :target_file_name :executable_name
 
