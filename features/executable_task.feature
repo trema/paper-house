@@ -32,9 +32,7 @@ Feature: PaperHouse::ExecutableTask
 
       int
       main( int argc, char *argv[] ) {
-        if ( argc > 1 ) {
-          print_sqrt( atof( argv[ 1 ] ) );
-        }
+        print_sqrt( atof( argv[ 1 ] ) );
         return 0;
       }
       """
@@ -61,7 +59,7 @@ Feature: PaperHouse::ExecutableTask
         task.target_directory = "objects"
         task.sources = "sources/*.c"
         task.includes = "includes"
-        task.cflags = [ "-Werror", "-Wall", "-Wextra" ]
+        task.cflags = [ "-Wall", "-Wextra" ]
         task.library_dependencies = "m"
       end
       """

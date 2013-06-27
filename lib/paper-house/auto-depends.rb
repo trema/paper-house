@@ -69,7 +69,7 @@ module PaperHouse
 
     def filter_out_include_guards_warnings stderr
       stderr.each do | each |
-        if each =~ /:$/
+        if /:$/=~ each
           puts each
           return
         end

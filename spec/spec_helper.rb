@@ -29,7 +29,7 @@ Spork.prefork do
 
   if not ENV[ "DRB" ]
     require "coveralls"
-    # Coveralls.wear!
+    Coveralls.wear_merged!
   end
 
   require "rspec"
@@ -41,7 +41,7 @@ Spork.each_run do
 
   if ENV[ "DRB" ]
     require "coveralls"
-    # Coveralls.wear!
+    Coveralls.wear_merged!
   end
 end
 
