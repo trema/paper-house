@@ -19,6 +19,8 @@ Paper House is a class library to easily build C projects using [Rake](https://g
 Examples
 --------
 
+# Build an executable from one *.c file
+
 Rakefile:
 ```ruby
 require "paper-house"
@@ -32,7 +34,7 @@ hello.c:
 
 int
 main() {
-  printf( "Hello, PaperHouse!\n");
+  printf( "Hello, PaperHouse!\n" );
   return 0;
 }
 ```
@@ -43,6 +45,46 @@ $ rake hello
 $ ./hello
 Hello, PaperHouse!
 ```
+
+# Build an executable from multiple *.c files
+
+Rakefile:
+```ruby
+require "paper-house"
+
+PaperHouse::ExecutableTask.new :sqrt do | task |
+  task.executable_name = "print_sqrt"
+  task.target_directory = "objects"
+  task.sources = "sources/*.c"
+  task.includes = "includes"
+  task.cflags = [ "-Wall", "-Wextra" ]
+  task.library_dependencies = "m"
+end
+```
+
+sources/sqrt.c:
+```c
+#include <stdio.h>
+#include <math.h>
+
+void
+print_sqrt( double number ) {
+  printf( "sqrt(%.1f) = %.1f\n", number, sqrt( number ) );
+}
+```
+
+includes/sqrt.h:
+```c
+void print_sqrt( double number );
+```
+
+The sqrt.c should build and run:
+```shell
+$ rake sqrt
+$ ./objects/print_sqrt 4
+sqrt(4.0) = 2.0
+```
+
 
 Supported Platforms
 -------------------
