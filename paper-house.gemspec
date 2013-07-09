@@ -22,8 +22,8 @@ Gem::Specification.new do | gem |
   gem.extra_rdoc_files = [ "README.md" ]
   gem.test_files = `git ls-files -- {spec,features}/*`.split( "\n" )
 
-  gem.add_dependency "popen4", "~> 0.1.2"
-  gem.add_dependency "rake", "~> 10.0.4"
+  gem.add_dependency "POpen4", "~> 0.1.4"
+  gem.add_dependency "rake", "~> 10.1.0"
 end
 
 

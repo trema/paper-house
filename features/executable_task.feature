@@ -24,6 +24,31 @@ Feature: PaperHouse::ExecutableTask
        Hello, PaperHouse!
        """
 
+  Scenario: Build simple C project with specifying 'CC=' option
+    Given a file named "hello.c" with:
+      """
+      #include <stdio.h>
+
+      int
+      main() {
+        printf( "Hello, PaperHouse!\n");
+        return 0;
+      }
+      """
+     And a file named "Rakefile" with:
+      """
+      require "paper-house"
+
+      PaperHouse::ExecutableTask.new :hello
+      """
+    When I run rake "hello CC=/usr/bin/llvm-gcc"
+    Then a file named "hello" should exist
+     And I successfully run `./hello`
+     And the output should contain:
+       """
+       Hello, PaperHouse!
+       """
+
   Scenario: C project with subdirectories
     Given a file named "sources/main.c" with:
       """
