@@ -10,10 +10,10 @@ Paper House
 
 Paper House is a class library to easily build C projects using [Rake](https://github.com/jimweirich/rake). It supports the following build targets:
 
- * [Executable file](https://www.relishapp.com/trema/paper-house/docs/paperhouse-executabletask)
- * [Static library](https://www.relishapp.com/trema/paper-house/docs/paperhouse-staticlibrarytask)
- * [Shared library](https://www.relishapp.com/trema/paper-house/docs/paperhouse-sharedlibrarytask)
- * [Ruby extension library in C](https://www.relishapp.com/trema/paper-house/docs/paperhouse-rubylibrarytask)
+ * [Executable file](http://rubydoc.info/github/trema/paper-house/master/PaperHouse/ExecutableTask)
+ * [Static library](http://rubydoc.info/github/trema/paper-house/master/PaperHouse/StaticLibraryTask)
+ * [Shared library](http://rubydoc.info/github/trema/paper-house/master/PaperHouse/SharedLibraryTask)
+ * [Ruby extension library in C](http://rubydoc.info/github/trema/paper-house/master/PaperHouse/RubyLibraryTask)
 
 
 Examples
@@ -137,6 +137,7 @@ $ ./hello
 Hello, PaperHouse!
 ```
 
+
 ### Building a shared library
 
 `Rakefile`:
@@ -198,6 +199,7 @@ $ rake hello
 $ ruby -I. -rhello -e "p Hello"
 Hello
 ```
+
 
 Supported Platforms
 -------------------
