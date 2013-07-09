@@ -16,6 +16,7 @@
 #
 
 
+require "paper-house/cc"
 require "paper-house/safe-popen"
 
 
@@ -24,22 +25,22 @@ module PaperHouse
   # Automatically detects compilation dependencies.
   #
   class AutoDepends
+    include CC
+
+
     attr_reader :data
 
 
-    def initialize c_file, o_file, gcc_options
-      @command = "gcc -H #{ gcc_options } -c #{ c_file } -o #{ o_file }"
+    def initialize c_file, o_file, cc_options
+      @command = "#{ cc } -H #{ cc_options } -c #{ c_file } -o #{ o_file }"
       @data = []
     end
 
 
     def run
       puts @command
-      status = SafePopen.popen( @command ) do | stdout, stderr, stdin, pid |
-        stdin.close
-        parse_gcc_h_stderr stderr
-      end
-      raise "gcc failed" if status.exitstatus != 0
+      exit_status = popen_command
+      raise "#{ cc } failed" if exit_status != 0
     end
 
 
@@ -48,14 +49,22 @@ module PaperHouse
     ############################################################################
 
 
-    def parse_gcc_h_stderr stderr
+    def popen_command
+      SafePopen.popen( @command ) do | stdout, stderr, stdin, |
+        stdin.close
+        parse_cc_h_stderr stderr
+      end.exitstatus
+    end
+
+
+    def parse_cc_h_stderr stderr
       stderr.each do | each |
-        parse_gcc_h_stderr_line( each, stderr )
+        parse_cc_h_stderr_line( each, stderr )
       end
     end
 
 
-    def parse_gcc_h_stderr_line line, stderr
+    def parse_cc_h_stderr_line line, stderr
       case line
       when /^\./
         @data << line.sub( /^\.+\s+/, "" ).strip

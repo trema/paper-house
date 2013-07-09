@@ -125,7 +125,7 @@ module PaperHouse
 
     def compile o_file, c_file
       return if no_need_to_compile?( o_file, c_file )
-      auto_depends = AutoDepends.new( c_file, o_file, auto_depends_gcc_options )
+      auto_depends = AutoDepends.new( c_file, o_file, auto_depends_cc_options )
       auto_depends.run
       dependency.write o_file, auto_depends.data
     end
@@ -136,12 +136,12 @@ module PaperHouse
     end
 
 
-    def auto_depends_gcc_options
-      "#{ @cflags.join " " } -fPIC #{ gcc_i_options }"
+    def auto_depends_cc_options
+      "#{ @cflags.join " " } -fPIC #{ cc_i_options }"
     end
 
 
-    def gcc_i_options
+    def cc_i_options
       include_directories.pathmap "-I%p"
     end
 
