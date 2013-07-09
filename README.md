@@ -130,13 +130,48 @@ main() {
 }
 ```
 
-The `hello` and `libhello.a` should build and run:
-```c
+The `libhello.a` and `hello` should build and run:
+```shell
 $ rake hello
 $ ./hello
 Hello, PaperHouse!
 ```
 
+### Building a shared library
+
+`Rakefile`:
+```ruby
+require "paper-house"
+
+
+libhello = PaperHouse::SharedLibraryTask.new :libhello do | task |
+  task.version = "0.1.0"
+  task.sources = "hello.c"
+end
+
+task :hello => [ libhello.linker_name, libhello.soname ]
+
+file libhello.linker_name => :libhello do | task |
+  symlink libhello.target_file_name, task.name
+end
+
+file libhello.soname => :libhello do | task |
+  symlink libhello.target_file_name, task.name
+end
+
+PaperHouse::ExecutableTask.new :hello do | task |
+  task.sources = "main.c"
+  task.ldflags = "-L."
+  task.library_dependencies = "hello"
+end
+```
+
+The `libhello.so.0.1.0` and `hello` should build and run:
+```shell
+$ rake hello
+$ ./hello
+Hello, PaperHouse!
+```
 
 Supported Platforms
 -------------------
