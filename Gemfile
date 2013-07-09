@@ -7,7 +7,7 @@ gemspec
 group :development do
   gem "aruba", "~> 0.5.3"
   gem "coveralls", "~> 0.6.7", :require => false
-  gem "cucumber", "~> 1.3.2"
+  gem "cucumber", "~> 1.3.3"
   gem "flay", "~> 2.3.0"
   gem "flog", "~> 4.1.0"
   gem "guard", "~> 1.8.1"
@@ -21,10 +21,10 @@ group :development do
   gem "redcarpet", "~> 2.3.0"
   gem "reek", "~> 1.3.1"
   gem "relish", "~> 0.7"
-  gem "rspec", "~> 2.13.0"
+  gem "rspec", "~> 2.14.0"
   gem "rspec-instafail", "~> 0.2.4"
   gem "terminal-notifier-guard", "~> 1.5.3"
-  gem "yard", "~> 0.8.6.1"
+  gem "yard", "~> 0.8.6.2"
 end
 
 

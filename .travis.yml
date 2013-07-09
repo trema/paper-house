@@ -12,3 +12,6 @@ branches:
     - master
     - develop
 
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq llvm-gcc-4.6

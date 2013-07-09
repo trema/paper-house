@@ -1,5 +1,5 @@
 Feature: PaperHouse::SharedLibraryTask
-  Scenario: Simple C project
+  Scenario: Build simple shared library
     Given a file named "hello.c" with:
       """
       #include <stdio.h>
@@ -50,6 +50,65 @@ Feature: PaperHouse::SharedLibraryTask
       end
       """
     When I run rake "hello"
+    Then a file named "libhello.so.0.1.0" should exist
+     And a file named "hello" should exist
+     And I successfully run `./hello`
+     And the output should contain:
+       """
+       Hello, PaperHouse!
+       """
+
+  Scenario: Build simple shared library with specifying 'CC=' option
+    Given a file named "hello.c" with:
+      """
+      #include <stdio.h>
+
+      void
+      hello() {
+        printf( "Hello, PaperHouse!\n");
+      }
+      """
+     And a file named "hello.h" with:
+      """
+      void hello();
+      """
+     And a file named "main.c" with:
+      """
+      #include "hello.h"
+
+      int
+      main() {
+        hello();
+        return 0;
+      }
+      """
+     And a file named "Rakefile" with:
+      """
+      require "paper-house"
+
+    
+      libhello = PaperHouse::SharedLibraryTask.new :libhello do | task |
+        task.version = "0.1.0"
+        task.sources = "hello.c"
+      end
+
+      task :hello => [ libhello.linker_name, libhello.soname ]
+
+      file libhello.linker_name => :libhello do | task |
+        symlink libhello.target_file_name, task.name
+      end
+
+      file libhello.soname => :libhello do | task |
+        symlink libhello.target_file_name, task.name
+      end
+
+      PaperHouse::ExecutableTask.new :hello do | task |
+        task.sources = "main.c"
+        task.ldflags = "-L."
+        task.library_dependencies = "hello"
+      end
+      """
+    When I run rake "hello CC=/usr/bin/llvm-gcc"
     Then a file named "libhello.so.0.1.0" should exist
      And a file named "hello" should exist
      And I successfully run `./hello`
