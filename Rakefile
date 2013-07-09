@@ -106,7 +106,7 @@ end
 
 
 def rubies
-  ( YAML.load_file( travis_yml )[ "rvm" ] + [ "1.8.7" ] ).uniq
+  ( [ "1.8.7" ] + YAML.load_file( travis_yml )[ "rvm" ] ).uniq.sort
 end
 
 
