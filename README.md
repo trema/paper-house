@@ -1,4 +1,4 @@
-Paper House 
+Paper House
 ===========
 [![Gem Version](https://badge.fury.io/rb/paper-house.png)](http://badge.fury.io/rb/paper-house)
 [![Build Status](https://travis-ci.org/trema/paper-house.png?branch=master)](https://travis-ci.org/trema/paper-house)
@@ -14,6 +14,38 @@ Paper House is a class library to easily build C projects using [Rake](https://g
  * [Static library](https://www.relishapp.com/trema/paper-house/docs/paperhouse-staticlibrarytask)
  * [Shared library](https://www.relishapp.com/trema/paper-house/docs/paperhouse-sharedlibrarytask)
  * [Ruby extension library in C](https://www.relishapp.com/trema/paper-house/docs/paperhouse-rubylibrarytask)
+
+
+Examples
+--------
+
+Rakefile:
+```ruby
+require "paper-house"
+
+PaperHouse::ExecutableTask.new :hello
+```
+
+hello.c:
+```c
+#include <stdio.h>
+
+int
+main() {
+  printf( "Hello, PaperHouse!\n");
+  return 0;
+}
+```
+
+The hello.c should build and run:
+```shell
+$ rake hello
+$ ./hello
+Hello, PaperHouse!
+```
+
+Supported Platforms
+-------------------
 
 Paper House supports Linux and Mac OS X, and is tested on the following Ruby versions:
 
