@@ -19,7 +19,7 @@ Paper House is a class library to easily build C projects using [Rake](https://g
 Examples
 --------
 
-# Build an executable from one *.c file
+### Build an executable from one *.c file
 
 Rakefile:
 ```ruby
@@ -46,7 +46,7 @@ $ ./hello
 Hello, PaperHouse!
 ```
 
-# Build an executable from multiple *.c files
+### Build an executable from multiple *.c files
 
 Rakefile:
 ```ruby
