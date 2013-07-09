@@ -19,16 +19,16 @@ Paper House is a class library to easily build C projects using [Rake](https://g
 Examples
 --------
 
-### Build an executable from one *.c file
+### Building an executable from one *.c file
 
-Rakefile:
+`Rakefile`:
 ```ruby
 require "paper-house"
 
 PaperHouse::ExecutableTask.new :hello
 ```
 
-hello.c:
+`hello.c`:
 ```c
 #include <stdio.h>
 
@@ -39,16 +39,16 @@ main() {
 }
 ```
 
-The hello.c should build and run:
+The `hello` should build and run:
 ```shell
 $ rake hello
 $ ./hello
 Hello, PaperHouse!
 ```
 
-### Build an executable from multiple *.c files
+### Building an executable from multiple *.c files
 
-Rakefile:
+`Rakefile`:
 ```ruby
 require "paper-house"
 
@@ -62,7 +62,7 @@ PaperHouse::ExecutableTask.new :sqrt do | task |
 end
 ```
 
-sources/sqrt.c:
+`sources/sqrt.c`:
 ```c
 #include <stdio.h>
 #include <math.h>
@@ -73,16 +73,68 @@ print_sqrt( double number ) {
 }
 ```
 
-includes/sqrt.h:
+`includes/sqrt.h`:
 ```c
 void print_sqrt( double number );
 ```
 
-The sqrt.c should build and run:
+The `print_sqrt` should build and run:
 ```shell
 $ rake sqrt
 $ ./objects/print_sqrt 4
 sqrt(4.0) = 2.0
+```
+
+### Building a static library
+
+`Rakefile`:
+```ruby
+require "paper-house"
+
+task :hello => :libhello
+
+PaperHouse::StaticLibraryTask.new :libhello do | task |
+  task.sources = "hello.c"
+end
+
+PaperHouse::ExecutableTask.new :hello do | task |
+  task.ldflags = "-L."
+  task.sources = "main.c"
+  task.library_dependencies = "hello"
+end
+```
+
+`hello.c`:
+```c
+#include <stdio.h>
+
+void
+hello() {
+  printf( "Hello, PaperHouse!\n");
+}
+```
+
+`hello.h`:
+```c
+void hello();
+```
+
+`main.c`:
+```c
+#include "hello.h"
+
+int
+main() {
+  hello();
+  return 0;
+}
+```
+
+The `hello` and `libhello.a` should build and run:
+```c
+$ rake hello
+$ ./hello
+Hello, PaperHouse!
 ```
 
 
