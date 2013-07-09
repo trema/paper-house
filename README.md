@@ -194,6 +194,7 @@ Init_hello() {
 
 The `hello.so` should build and run:
 ```shell
+$ rake hello
 $ ruby -I. -rhello -e "p Hello"
 Hello
 ```
