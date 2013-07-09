@@ -16,46 +16,10 @@
 #
 
 
-require "paper-house/cc"
-require "paper-house/build-task"
-require "paper-house/linker-options"
-
-
 module PaperHouse
-  #
-  # Compile *.c files into an executable file.
-  #
-  class ExecutableTask < BuildTask
-    include CC
-    include LinkerOptions
-
-
-    attr_writer :executable_name
-
-
-    def executable_name
-      @executable_name ||= @name
-    end
-    alias :target_file_name :executable_name
-
-
-    ############################################################################
-    private
-    ############################################################################
-
-
-    def generate_target
-      sh "#{ cc } -o #{ target_path } #{ objects.to_s } #{ cc_options }"
-    end
-
-
-    def cc_options
-      [ cc_ldflags, cc_l_options ].join " "
-    end
-
-
-    def cc_ldflags
-      ldflags.join " "
+  module CC
+    def cc
+      ENV[ "CC" ] || "gcc"
     end
   end
 end
