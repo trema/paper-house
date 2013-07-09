@@ -173,6 +173,31 @@ $ ./hello
 Hello, PaperHouse!
 ```
 
+### Building a C extension library for Ruby
+
+`Rakefile`:
+```ruby
+require "paper-house"
+
+PaperHouse::RubyLibraryTask.new :hello
+```
+
+`hello.c`:
+```c
+#include "ruby.h"
+
+void
+Init_hello() {
+  VALUE cHello = rb_define_class( "Hello", rb_cObject );
+}
+```
+
+The `hello.so` should build and run:
+```shell
+$ ruby -I. -rhello -e "p Hello"
+Hello
+```
+
 Supported Platforms
 -------------------
 
