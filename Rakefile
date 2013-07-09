@@ -63,7 +63,7 @@ end
 desc "Analyze for code complexity"
 task :flog do
   flog = Flog.new( :continue => true )
-  flog.flog *$ruby_source
+  flog.flog( *$ruby_source )
   threshold = 10
 
   bad_methods = flog.totals.select do | name, score |
