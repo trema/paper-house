@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "includes/sqrt.h"
+#include "sqrt.h"
 
 int
 main( int argc, char *argv[] ) {
