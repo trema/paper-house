@@ -1,0 +1,18 @@
+require "paper-house"
+
+task :sqrt => :libsqrt
+
+PaperHouse::StaticLibraryTask.new :libsqrt do | task |
+  task.library_name = "printsqrt"
+  task.target_directory = "objects"
+  task.sources = "sources/sqrt.c"
+  task.includes = "includes"
+  task.cflags = [ "-Werror", "-Wall", "-Wextra" ]
+end
+
+PaperHouse::ExecutableTask.new :sqrt do | task |
+  task.sources = "sources/main.c"
+  task.includes = "includes"
+  task.ldflags = "-Lobjects"
+  task.library_dependencies = [ "printsqrt", "m" ]
+end

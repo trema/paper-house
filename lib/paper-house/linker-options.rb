@@ -23,11 +23,13 @@ module PaperHouse
 
 
     def ldflags
+      @ldflags ||= []
       [ @ldflags ].flatten.compact
     end
 
 
     def library_dependencies
+      @library_dependencies ||= []
       [ @library_dependencies ].flatten.compact
     end
 
@@ -37,7 +39,7 @@ module PaperHouse
     ############################################################################
 
 
-    def gcc_l_options
+    def cc_l_options
       library_dependencies.collect do | each |
         "-l#{ each }"
       end

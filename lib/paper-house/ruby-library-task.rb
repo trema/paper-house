@@ -16,6 +16,7 @@
 #
 
 
+require "paper-house/cc"
 require "paper-house/library-task"
 require "paper-house/linker-options"
 require "paper-house/os"
@@ -27,6 +28,7 @@ module PaperHouse
   # Compile *.c files into a Ruby extension library.
   #
   class RubyLibraryTask < LibraryTask
+    include CC
     include LinkerOptions
     include RbConfig
 
@@ -72,20 +74,20 @@ module PaperHouse
 
 
     def generate_target
-      sh "gcc #{ LDSHARED } -o #{ target_path } #{ objects.to_s } #{ gcc_linker_options }"
+      sh "#{ cc } #{ LDSHARED } -o #{ target_path } #{ objects.to_s } #{ cc_linker_options }"
     end
 
 
-    def gcc_linker_options
+    def cc_linker_options
       [
         ldflags,
-        gcc_ldflags,
-        gcc_l_options,
+        cc_ldflags,
+        cc_l_options,
       ].flatten.join " "
     end
 
 
-    def gcc_ldflags
+    def cc_ldflags
       "-L#{ RbConfig::CONFIG[ "libdir" ] }"
     end
 

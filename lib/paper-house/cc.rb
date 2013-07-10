@@ -16,17 +16,12 @@
 #
 
 
-require "paper-house/ruby-library-task"
-
-
-describe PaperHouse::RubyLibraryTask do
-  subject { PaperHouse::RubyLibraryTask.new :libtest }
-
-  its( :name ) { should eq "libtest" }
-  its( :target_directory ) { should eq "." }
-  its( :sources ) { should be_empty  }
-  its( :cflags ) { should be_empty }
-  its( :includes ) { should be_empty }
+module PaperHouse
+  module CC
+    def cc
+      ENV[ "CC" ] || "gcc"
+    end
+  end
 end
 
 

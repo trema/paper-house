@@ -16,6 +16,7 @@
 #
 
 
+require "paper-house/cc"
 require "paper-house/build-task"
 require "paper-house/linker-options"
 
@@ -25,6 +26,7 @@ module PaperHouse
   # Compile *.c files into an executable file.
   #
   class ExecutableTask < BuildTask
+    include CC
     include LinkerOptions
 
 
@@ -32,7 +34,7 @@ module PaperHouse
 
 
     def executable_name
-      @executable_name || @name
+      @executable_name ||= @name
     end
     alias :target_file_name :executable_name
 
@@ -43,16 +45,16 @@ module PaperHouse
 
 
     def generate_target
-      sh "gcc -o #{ target_path } #{ objects.to_s } #{ gcc_options }"
+      sh "#{ cc } -o #{ target_path } #{ objects.to_s } #{ cc_options }"
     end
 
 
-    def gcc_options
-      [ gcc_ldflags, gcc_l_options ].join " "
+    def cc_options
+      [ cc_ldflags, cc_l_options ].join " "
     end
 
 
-    def gcc_ldflags
+    def cc_ldflags
       ldflags.join " "
     end
   end

@@ -6,7 +6,7 @@ require "paper-house/version"
 Gem::Specification.new do | gem |
   gem.name = "paper-house"
   gem.version = PaperHouse::VERSION
-  gem.summary = "Rake for C."
+  gem.summary = "Rake for C projects."
   gem.description = "Rake tasks for compiling C projects."
 
   gem.license = "GPL2"
@@ -22,8 +22,8 @@ Gem::Specification.new do | gem |
   gem.extra_rdoc_files = [ "README.md" ]
   gem.test_files = `git ls-files -- {spec,features}/*`.split( "\n" )
 
-  gem.add_dependency "popen4", "~> 0.1.2"
-  gem.add_dependency "rake", "~> 10.0.3"
+  gem.add_dependency "POpen4", "~> 0.1.4"
+  gem.add_dependency "rake", "~> 10.1.0"
 end
 
 

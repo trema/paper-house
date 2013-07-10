@@ -29,6 +29,7 @@ module PaperHouse
 
 
     def initialize name
+      @name = name
       @path = File.join( Rake.original_dir, ".#{ name }.depends" )
       @cache = {}
     end

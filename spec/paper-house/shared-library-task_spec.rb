@@ -20,8 +20,8 @@ require "paper-house/shared-library-task"
 
 
 module PaperHouse
-  describe PaperHouse::SharedLibraryTask, %{.new( :libtest, "0.1.0" )} do
-    subject { PaperHouse::SharedLibraryTask.new :libtest, "0.1.0" }
+  describe SharedLibraryTask, %{.new( :libtest, "0.1.0" )} do
+    subject { SharedLibraryTask.new :libtest, "0.1.0" }
 
     its( :name ) { should eq "libtest" }
     its( :version ) { should eq "0.1.0" }
@@ -32,10 +32,32 @@ module PaperHouse
   end
 
 
-  describe PaperHouse::SharedLibraryTask, %{.new( :libtest )} do
+  describe SharedLibraryTask, %{(:library_name = "libtest")} do
+    subject {
+      SharedLibraryTask.new( :libtest, "0.1.0" ) do | task |
+        task.library_name = "libtest"
+      end
+    }
+
+    its( :library_name ) { should eq "libtest" }
+  end
+
+
+  describe SharedLibraryTask, %{(:library_name = "test")} do
+    subject {
+      SharedLibraryTask.new( :libtest, "0.1.0" ) do | task |
+        task.library_name = "test"
+      end
+    }
+
+    its( :library_name ) { should eq "libtest" }
+  end
+
+
+  describe SharedLibraryTask, %{.new( :libtest )} do
     it "should raise an error if :version option is missing" do
       expect {
-        PaperHouse::SharedLibraryTask.new "libtest"
+        SharedLibraryTask.new "libtest"
       }.to raise_error( ":version option is a mandatory." )
     end
   end

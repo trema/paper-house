@@ -16,35 +16,29 @@
 #
 
 
-require "rubygems"
-require "spork"
-#uncomment the following line to use spork with the debugger
-#require "spork/ext/ruby-debug"
+require "paper-house/ruby-library-task"
 
 
-Spork.prefork do
-  # Loading more in this block will cause your tests to run faster. However,
-  # if you change any configuration or code from libraries loaded here, you'll
-  # need to restart spork for it take effect.
+module PaperHouse
+  describe RubyLibraryTask, ".new :libtest" do
+    subject { RubyLibraryTask.new :libtest }
 
-  if not ENV[ "DRB" ]
-    require "coveralls"
-    Coveralls.wear_merged!
+    its( :name ) { should eq "libtest" }
+    its( :target_directory ) { should eq "." }
+    its( :sources ) { should be_empty  }
+    its( :cflags ) { should be_empty }
+    its( :includes ) { should be_empty }
   end
 
-  ENV[ "LD_LIBRARY_PATH" ] = "."
 
-  require "aruba/cucumber"
-  require "rake"
-end
+  describe RubyLibraryTask, ".new( :libtest ) do ... end" do
+    subject {
+      RubyLibraryTask.new :libtest do | task |
+        task.library_name = "test"
+      end
+    }
 
-
-Spork.each_run do
-  # This code will be run each time you run your specs.
-
-  if ENV[ "DRB" ]
-    require "coveralls"
-    Coveralls.wear_merged!
+    its( :library_name ) { should eq "test" }
   end
 end
 

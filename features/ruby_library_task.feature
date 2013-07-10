@@ -1,23 +1,23 @@
 Feature: PaperHouse::RubyLibraryTask
-  Scenario: Simple C extension
-    Given a file named "hello.c" with:
-      """
-      #include "ruby.h"
 
-      void
-      Init_hello() {
-        VALUE cHello = rb_define_class( "Hello", rb_cObject );
-      }
-      """
-     And a file named "Rakefile" with:
-      """
-      require "paper-house"
+  PaperHouse offers a rake task called `PaperHouse::RubyLibraryTask`
+  that can build a C extention library from *.c and *.h files. These source
+  files can be located in multiple subdirectories.
 
-      PaperHouse::RubyLibraryTask.new :hello
-      """
+  Scenario: Build a C extension from one *.c and *.h file
+    Given the current project directory is "examples/c_extension"
     When I run rake "hello"
     Then I successfully run `ruby -I. -rhello -e "p Hello"`
-     And the output should contain:
-       """
-       Hello
-       """
+    And the output should contain:
+    """
+    Hello
+    """
+
+  Scenario: Build a C extension from one *.c and *.h file by specifying 'CC=' option
+    Given the current project directory is "examples/c_extension"
+    When I run rake "hello CC=/usr/bin/llvm-gcc"
+    Then I successfully run `ruby -I. -rhello -e "p Hello"`
+    And the output should contain:
+    """
+    Hello
+    """

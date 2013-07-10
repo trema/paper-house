@@ -16,6 +16,7 @@
 #
 
 
+require "paper-house/cc"
 require "paper-house/library-task"
 require "paper-house/os"
 
@@ -25,14 +26,13 @@ module PaperHouse
   # Compile *.c files into a shared library.
   #
   class SharedLibraryTask < LibraryTask
+    include CC
+
+
     attr_accessor :version
 
 
-    SONAME_OPTION = if OS.mac?
-                      "-install_name"
-                    else
-                      "-soname"
-                    end
+    SONAME_OPTION = OS.mac? ? "-install_name" : "-soname"
 
 
     def initialize name, version = nil, &block
@@ -64,7 +64,7 @@ module PaperHouse
 
 
     def generate_target
-      sh "gcc -shared -Wl,#{ SONAME_OPTION },#{ soname } -o #{ target_path } #{ objects.to_s }"
+      sh "#{ cc } -shared -Wl,#{ SONAME_OPTION },#{ soname } -o #{ target_path } #{ objects.to_s }"
     end
   end
 end
