@@ -10,10 +10,10 @@ Paper House
 
 Paper House is a class library to easily build C projects using [Rake](https://github.com/jimweirich/rake). It supports the following build targets:
 
- * [Executable file](http://rubydoc.info/github/trema/paper-house/master/PaperHouse/ExecutableTask)
- * [Static library](http://rubydoc.info/github/trema/paper-house/master/PaperHouse/StaticLibraryTask)
- * [Shared library](http://rubydoc.info/github/trema/paper-house/master/PaperHouse/SharedLibraryTask)
- * [Ruby extension library in C](http://rubydoc.info/github/trema/paper-house/master/PaperHouse/RubyLibraryTask)
+ * [Executable file](http://rubydoc.info/github/trema/paper-house/PaperHouse/ExecutableTask)
+ * [Static library](http://rubydoc.info/github/trema/paper-house/PaperHouse/StaticLibraryTask)
+ * [Shared library](http://rubydoc.info/github/trema/paper-house/PaperHouse/SharedLibraryTask)
+ * [Ruby extension library in C](http://rubydoc.info/github/trema/paper-house/PaperHouse/RubyLibraryTask)
 
 
 Examples
