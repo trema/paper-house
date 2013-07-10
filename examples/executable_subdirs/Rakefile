@@ -1,0 +1,10 @@
+require "paper-house"
+
+PaperHouse::ExecutableTask.new :sqrt do | task |
+  task.executable_name = "print_sqrt"
+  task.target_directory = "objects"
+  task.sources = "sources/*.c"
+  task.includes = "includes"
+  task.cflags = [ "-Wall", "-Wextra" ]
+  task.library_dependencies = "m"
+end
