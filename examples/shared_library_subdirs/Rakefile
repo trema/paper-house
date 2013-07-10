@@ -1,0 +1,27 @@
+require "paper-house"
+
+task :sqrt => :libsqrt
+
+libsqrt = PaperHouse::SharedLibraryTask.new :libsqrt do | task |
+  task.library_name = "printsqrt"
+  task.version = "0.1.0"
+  task.target_directory = "objects"
+  task.sources = "sources/*.c"
+  task.includes = "includes"
+  task.cflags = [ "-Werror", "-Wall", "-Wextra" ]
+end
+
+task :sqrt => [ libsqrt.linker_name, libsqrt.soname ]
+
+file libsqrt.linker_name => :libsqrt do | task |
+  symlink File.join( "objects", libsqrt.target_file_name ), task.name
+end
+
+file libsqrt.soname => :libsqrt do | task |
+  symlink File.join( "objects", libsqrt.target_file_name ), task.name
+end
+
+PaperHouse::ExecutableTask.new :sqrt do | task |
+  task.ldflags = "-L."
+  task.library_dependencies = [ "printsqrt", "m" ]
+end
