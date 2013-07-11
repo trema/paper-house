@@ -29,7 +29,7 @@ module PaperHouse
 
 
     # @!attribute executable_name
-    #   Name of target executable file
+    #   Name of target executable file.
     attr_writer :executable_name
 
     def executable_name

@@ -24,6 +24,7 @@ module PaperHouse
   # Compile *.c files into a static library.
   #
   class StaticLibraryTask < LibraryTask
+    # Name of target library.
     def target_file_name
       library_name + ".a"
     end
