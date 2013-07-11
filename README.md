@@ -49,8 +49,8 @@ $ bundle
 Documents
 ---------
 
+ * [API document generated with YARD](http://rubydoc.info/github/trema/paper-house/frames/file/README.md)
  * [Usage document generated with Cucumber and Relish](https://www.relishapp.com/trema/paper-house/docs)
- * [API document generated with YARD](http://rubydoc.info/github/trema/paper-house/master/frames)
 
 
 ### Author
