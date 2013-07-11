@@ -1,3 +1,3 @@
 require "paper-house"
 
-PaperHouse::RubyLibraryTask.new :hello
+PaperHouse::CExtensionTask.new :hello

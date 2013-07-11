@@ -27,7 +27,7 @@ module PaperHouse
   #
   # Compile *.c files into a Ruby extension library.
   #
-  class RubyLibraryTask < LibraryTask
+  class CExtensionTask < LibraryTask
     include CC
     include LinkerOptions
     include RbConfig
@@ -96,6 +96,9 @@ module PaperHouse
       ( includes + auto_includes + RUBY_INCLUDES ).uniq
     end
   end
+
+
+  RubyLibraryTask = CExtensionTask
 end
 
 

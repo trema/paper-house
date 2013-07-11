@@ -16,8 +16,8 @@
 #
 
 
+require "paper-house/c-extension-task"
 require "paper-house/executable-task"
-require "paper-house/ruby-library-task"
 require "paper-house/shared-library-task"
 require "paper-house/static-library-task"
 

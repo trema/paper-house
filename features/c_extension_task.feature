@@ -1,6 +1,6 @@
-Feature: PaperHouse::RubyLibraryTask
+Feature: PaperHouse::CExtensionTask
 
-  PaperHouse offers a rake task called `PaperHouse::RubyLibraryTask`
+  PaperHouse offers a rake task called `PaperHouse::CExtensionTask`
   that can build a C extention library from *.c and *.h files. These source
   files can be located in multiple subdirectories.
 

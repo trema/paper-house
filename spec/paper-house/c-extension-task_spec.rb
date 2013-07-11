@@ -16,29 +16,31 @@
 #
 
 
-require "paper-house/ruby-library-task"
+require "paper-house/c-extension-task"
 
 
 module PaperHouse
-  describe RubyLibraryTask, ".new :libtest" do
-    subject { RubyLibraryTask.new :libtest }
+  [ CExtensionTask, RubyLibraryTask ].each do | klass |
+    describe klass, ".new :libtest" do
+      subject { klass.new :libtest }
 
-    its( :name ) { should eq "libtest" }
-    its( :target_directory ) { should eq "." }
-    its( :sources ) { should be_empty  }
-    its( :cflags ) { should be_empty }
-    its( :includes ) { should be_empty }
-  end
+      its( :name ) { should eq "libtest" }
+      its( :target_directory ) { should eq "." }
+      its( :sources ) { should be_empty  }
+      its( :cflags ) { should be_empty }
+      its( :includes ) { should be_empty }
+    end
 
 
-  describe RubyLibraryTask, ".new( :libtest ) do ... end" do
-    subject {
-      RubyLibraryTask.new :libtest do | task |
-        task.library_name = "test"
-      end
-    }
+    describe klass, ".new( :libtest ) do ... end" do
+      subject {
+        klass.new :libtest do | task |
+          task.library_name = "test"
+        end
+      }
 
-    its( :library_name ) { should eq "test" }
+      its( :library_name ) { should eq "test" }
+    end
   end
 end
 
