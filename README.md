@@ -15,7 +15,43 @@ Paper House is a class library to easily build C projects using [Rake](https://g
  * [Shared library](http://rubydoc.info/github/trema/paper-house/PaperHouse/SharedLibraryTask)
  * [Ruby extension library in C](http://rubydoc.info/github/trema/paper-house/PaperHouse/RubyLibraryTask)
 
-You can find these examples in the [examples/](https://github.com/trema/paper-house/tree/master/examples) directory.
+
+Examples
+--------
+
+Its usage is dead simple: to build an executable from all the `*.c`
+and `*.h` files in the current directory, just add the following lines
+to your `Rakefile`.
+
+```ruby
+require "paper-house"
+
+PaperHouse::ExecutableTask.new :hello
+```
+
+This defines a new task `hello`, and `rake hello` will automatically
+analyze the file dependencies between the source files, then compile
+them into a file named `hello`.
+
+If you want to customize the build behavior, please set the following
+options defined in `PaperHouse::ExecutableTask`:
+
+```ruby
+PaperHouse::ExecutableTask.new :hello do | task |
+  task.executable_name = "hello_world"
+  task.target_directory = "objects"
+  task.cc = "llvm-gcc"
+  task.includes = "includes"
+  task.sources = "sources"
+  task.cflags = [ "-Werror", "-Wall", "-Wextra" ]
+  task.ldflags = "-L/some/path"
+  task.library_dependencies = [ "mylib", "m" ]
+end
+```
+
+You can find more examples in the
+[examples/](https://github.com/trema/paper-house/tree/master/examples)
+directory.
 
 
 Supported Platforms
