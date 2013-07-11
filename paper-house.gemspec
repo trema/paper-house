@@ -9,7 +9,7 @@ Gem::Specification.new do | gem |
   gem.summary = "Rake for C projects."
   gem.description = "Rake tasks for compiling C projects."
 
-  gem.license = "GPL2"
+  gem.license = "GPL3"
 
   gem.authors = [ "Yasuhito Takamiya" ]
   gem.email = [ "yasuhito@gmail.com" ]

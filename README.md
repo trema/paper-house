@@ -60,3 +60,11 @@ Documents
 ### Contributors
 
 [https://github.com/trema/paper-house/contributors](https://github.com/trema/paper-house/contributors)
+
+
+License
+-------
+
+Trema is released under the GNU General Public License version 3.0:
+
+* http://www.gnu.org/licenses/gpl.html
