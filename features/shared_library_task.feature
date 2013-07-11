@@ -15,7 +15,18 @@ Feature: PaperHouse::SharedLibraryTask
     Hello, PaperHouse!
     """
 
-  Scenario: Build a shared library from one *.c and *.h file by specifying `CC=` option
+  Scenario: Build a shared library from one *.c and *.h file using llvm-gcc
+    Given the current project directory is "examples/shared_library"
+    When I run rake "llvm_hello"
+    Then a file named "libhello.so.0.1.0" should exist
+    And a file named "llvm_hello" should exist
+    And I successfully run `./llvm_hello`
+    And the output should contain:
+    """
+    Hello, PaperHouse!
+    """
+
+  Scenario: Build a shared library from one *.c and *.h file using llvm-gcc by specifying `CC=` option
     Given the current project directory is "examples/shared_library"
     When I run rake "hello CC=/usr/bin/llvm-gcc"
     Then a file named "libhello.so.0.1.0" should exist

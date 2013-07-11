@@ -21,6 +21,11 @@ module PaperHouse
     def cc
       ENV[ "CC" ] || "gcc"
     end
+
+
+    def cc= compiler
+      ENV[ "CC" ] = compiler
+    end
   end
 end
 

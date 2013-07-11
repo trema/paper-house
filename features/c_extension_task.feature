@@ -13,9 +13,18 @@ Feature: PaperHouse::CExtensionTask
     Hello
     """
 
-  Scenario: Build a C extension from one *.c and *.h file by specifying 'CC=' option
+  Scenario: Build a C extension from one *.c and *.h file using llvm-gcc
     Given the current project directory is "examples/c_extension"
-    When I run rake "hello CC=/usr/bin/llvm-gcc"
+    When I run rake "llvm_hello"
+    Then I successfully run `ruby -I. -rhello -e "p Hello"`
+    And the output should contain:
+    """
+    Hello
+    """
+
+  Scenario: Build a C extension from one *.c and *.h file using llvm-gcc by specifying 'CC=' option
+    Given the current project directory is "examples/c_extension"
+    When I run rake "hello CC=llvm-gcc"
     Then I successfully run `ruby -I. -rhello -e "p Hello"`
     And the output should contain:
     """

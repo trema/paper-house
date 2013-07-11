@@ -1,3 +1,16 @@
 require "paper-house"
 
 PaperHouse::CExtensionTask.new :hello
+
+
+################################################################################
+#
+# If you want to use non-default compiler like llvm-gcc,
+# please specify the cc= property or pass the CC= option to rake command.
+#
+################################################################################
+
+PaperHouse::CExtensionTask.new :llvm_hello do | task |
+  task.library_name = "hello"
+  task.cc = "llvm-gcc"
+end
