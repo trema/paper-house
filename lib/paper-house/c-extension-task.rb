@@ -18,8 +18,7 @@
 
 require "paper-house/library-task"
 require "paper-house/linker-options"
-require "paper-house/os"
-require "rbconfig"
+require "paper-house/platform"
 
 
 module PaperHouse
@@ -28,37 +27,22 @@ module PaperHouse
   #
   class CExtensionTask < LibraryTask
     include LinkerOptions
-    include RbConfig
+    include Platform
 
 
-    if OS.mac?
-      SHARED_EXT = ".bundle"
-      LDSHARED = "-dynamic -bundle"
-    else
-      SHARED_EXT = ".so"
-      LDSHARED = "-shared"
-    end
-    RUBY_INCLUDES = if RUBY_VERSION >= "1.9.0"
-                      [
-                        File.join( CONFIG[ "rubyhdrdir" ], CONFIG[ "arch" ] ),
-                        File.join( CONFIG[ "rubyhdrdir" ], "ruby/backward" ),
-                        CONFIG[ "rubyhdrdir" ]
-                      ]
-                    else
-                      [ RbConfig::CONFIG[ "archdir" ] ]
-                    end
-
-
+    # Name of target library.
     attr_writer :library_name
 
 
+    # Name of target library file.
     def target_file_name
       library_name + SHARED_EXT
     end
 
 
+    # List of libraries to link.
     def library_dependencies
-      if OS.mac?
+      if Platform::MAC
         ( [ @library_dependencies ] << "ruby" ).flatten.compact
       else
         super
@@ -86,7 +70,7 @@ module PaperHouse
 
 
     def cc_ldflags
-      "-L#{ RbConfig::CONFIG[ "libdir" ] }"
+      "-L#{ RUBY_LIBDIR }"
     end
 
 

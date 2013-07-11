@@ -17,7 +17,7 @@
 
 
 require "paper-house/library-task"
-require "paper-house/os"
+require "paper-house/platform"
 
 
 module PaperHouse
@@ -25,6 +25,9 @@ module PaperHouse
   # Compile *.c files into a shared library.
   #
   class SharedLibraryTask < LibraryTask
+    include Platform
+
+
     # Library version string.
     attr_accessor :version
 
@@ -61,12 +64,7 @@ module PaperHouse
 
 
     def generate_target
-      sh "#{ cc } -shared -Wl,#{ soname_option },#{ soname } -o #{ target_path } #{ objects.to_s }"
-    end
-
-
-    def soname_option
-      OS.mac? ? "-install_name" : "-soname"
+      sh "#{ cc } -shared -Wl,#{ SONAME_OPTION },#{ soname } -o #{ target_path } #{ objects.to_s }"
     end
   end
 end

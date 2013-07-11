@@ -21,12 +21,37 @@ require "rbconfig"
 
 module PaperHouse
   #
-  # OS detector class.
+  # Platform-dependent stuff.
   #
-  class OS
-    def self.mac?
-      /darwin|mac os/=~ RbConfig::CONFIG[ "host_os" ]
+  module Platform
+    include RbConfig
+
+
+    MAC = ( /darwin|mac os/=~ CONFIG[ "host_os" ] )
+
+
+    if MAC
+      SHARED_EXT = ".bundle"
+      LDSHARED = "-dynamic -bundle"
+      SONAME_OPTION = "-install_name"
+    else
+      SHARED_EXT = ".so"
+      LDSHARED = "-shared"
+      SONAME_OPTION = "-soname"
     end
+
+
+    RUBY_INCLUDES = if RUBY_VERSION >= "1.9.0"
+                      [
+                        File.join( CONFIG[ "rubyhdrdir" ], CONFIG[ "arch" ] ),
+                        File.join( CONFIG[ "rubyhdrdir" ], "ruby/backward" ),
+                        CONFIG[ "rubyhdrdir" ]
+                      ]
+                    else
+                      [ CONFIG[ "archdir" ] ]
+                    end
+
+    RUBY_LIBDIR = CONFIG[ "libdir" ]
   end
 end
 
