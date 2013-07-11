@@ -28,8 +28,9 @@ module PaperHouse
     include LinkerOptions
 
 
+    # @!attribute executable_name
+    #   Name of target executable file
     attr_writer :executable_name
-
 
     def executable_name
       @executable_name ||= @name

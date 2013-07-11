@@ -18,6 +18,8 @@
 
 module PaperHouse
   module CC
+    # @!attribute cc
+    # C compiler name or path.
     def cc
       ENV[ "CC" ] || "gcc"
     end
