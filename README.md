@@ -98,6 +98,15 @@ Documents
 [https://github.com/trema/paper-house/contributors](https://github.com/trema/paper-house/contributors)
 
 
+Alternatives
+------------
+
+ * rake-compiler: https://github.com/luislavena/rake-compiler
+ * rake-builder: https://github.com/joeyates/rake-builder
+ * Rant: http://rant.rubyforge.org/
+ * cxxproject: https://github.com/marcmo/cxxproject
+
+
 License
 -------
 
