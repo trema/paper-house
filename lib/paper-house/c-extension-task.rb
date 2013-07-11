@@ -16,7 +16,6 @@
 #
 
 
-require "paper-house/cc"
 require "paper-house/library-task"
 require "paper-house/linker-options"
 require "paper-house/os"
@@ -28,7 +27,6 @@ module PaperHouse
   # Compile *.c files into a Ruby extension library.
   #
   class CExtensionTask < LibraryTask
-    include CC
     include LinkerOptions
     include RbConfig
 

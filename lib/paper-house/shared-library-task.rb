@@ -16,7 +16,6 @@
 #
 
 
-require "paper-house/cc"
 require "paper-house/library-task"
 require "paper-house/os"
 
@@ -26,9 +25,6 @@ module PaperHouse
   # Compile *.c files into a shared library.
   #
   class SharedLibraryTask < LibraryTask
-    include CC
-
-
     attr_accessor :version
 
 

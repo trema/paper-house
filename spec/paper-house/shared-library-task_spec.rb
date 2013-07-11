@@ -25,6 +25,7 @@ module PaperHouse
 
     its( :name ) { should eq "libtest" }
     its( :version ) { should eq "0.1.0" }
+    its( :cc ) { should eq "gcc" }
     its( :target_directory ) { should eq "." }
     its( :sources ) { should be_empty  }
     its( :cflags ) { should be_empty }

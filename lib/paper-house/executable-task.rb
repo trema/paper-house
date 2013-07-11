@@ -16,7 +16,6 @@
 #
 
 
-require "paper-house/cc"
 require "paper-house/build-task"
 require "paper-house/linker-options"
 
@@ -26,7 +25,6 @@ module PaperHouse
   # Compile *.c files into an executable file.
   #
   class ExecutableTask < BuildTask
-    include CC
     include LinkerOptions
 
 

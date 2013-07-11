@@ -17,6 +17,7 @@
 
 
 require "paper-house/auto-depends"
+require "paper-house/cc"
 require "paper-house/dependency"
 require "rake/clean"
 require "rake/tasklib"
@@ -27,6 +28,9 @@ module PaperHouse
   # Common base class for *.c compilation tasks.
   #
   class BuildTask < Rake::TaskLib
+    include CC
+
+
     attr_accessor :cflags
     attr_accessor :name
     attr_accessor :target_directory

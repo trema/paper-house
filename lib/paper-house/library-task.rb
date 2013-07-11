@@ -16,6 +16,7 @@
 #
 
 
+require "paper-house/cc"
 require "paper-house/build-task"
 
 
@@ -24,6 +25,9 @@ module PaperHouse
   # Common base class for static, shared, and ruby library tasks.
   #
   class LibraryTask < BuildTask
+    include CC
+
+
     def initialize name, &block
       @library_dependencies = []
       super name, &block
