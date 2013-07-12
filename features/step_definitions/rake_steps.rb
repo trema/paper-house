@@ -19,6 +19,6 @@ When(/^I run rake "(.*?)"$/) do | args |
   end
 
   in_current_dir do
-    step "I run `rake #{ task }`"
+    step "I successfully run `rake #{ task }`"
   end
 end
