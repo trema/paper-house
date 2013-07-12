@@ -21,12 +21,12 @@ module PaperHouse
     # @!attribute cc
     #   C compiler name or path.
     def cc
-      ENV[ "CC" ] || "gcc"
+      ENV[ "CC" ] || @cc || "gcc"
     end
 
 
     def cc= compiler
-      ENV[ "CC" ] = compiler
+      @cc = compiler
     end
   end
 end
