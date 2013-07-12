@@ -8,7 +8,7 @@ Paper House
 
 <a href="http://www.flickr.com/photos/studiobeerhorst/8221979536/" title="paper houses - 3d woodcut prints by Rick&Brenda Beerhorst, on Flickr"><img src="http://farm9.staticflickr.com/8202/8221979536_60404c309d_n.jpg" width="320" height="240" alt="paper houses - 3d woodcut prints" align="right"></a>
 
-Paper House is a class library to easily build C projects using [Rake](https://github.com/jimweirich/rake). It supports the following build targets:
+Paper House is a ruby gem to easily build C projects using [Rake](https://github.com/jimweirich/rake). It supports the following build targets:
 
  * [Executable](http://rubydoc.info/github/trema/paper-house/PaperHouse/ExecutableTask)
  * [Static library](http://rubydoc.info/github/trema/paper-house/PaperHouse/StaticLibraryTask)
@@ -16,16 +16,15 @@ Paper House is a class library to easily build C projects using [Rake](https://g
  * [C extension for Ruby](http://rubydoc.info/github/trema/paper-house/PaperHouse/CExtensionTask)
 
 
-Feature Overview
-----------------
+Features Overview
+-----------------
 
- * Simple yet powerful syntax. Offers predefined Rake tasks to build
-   executables, static and shared libraries, and C extensions for
-   Ruby.
- * Pure Ruby. No additional dependency on external tools (`makedepend`
-   etc.) to resolve file dependencies.
- * Multi-platform. Runs on both Linux and MacOSX, and supports most
-   major versions of the Ruby platform (1.8.7, 1.9.3, and 2.0.0).
+ * Provides a simple yet a powerful syntax to build above mentioned
+   targets using predefined Rake tasks.
+ * Pure Ruby. No additional dependency on other external tools
+   (`makedepend` etc.) to resolve file dependencies.
+ * Multi-Platform. Runs on both Linux and MacOSX, and supports all
+   major version of Ruby (1.8.7, 1.9.3, 2.0.0).
 
 
 Example
@@ -42,11 +41,11 @@ PaperHouse::ExecutableTask.new :hello
 ```
 
 This defines a new task `hello`, and `rake hello` will automatically
-analyze the file dependencies between the source files, then compile
-them into a file named `hello`.
+analyze all file dependencies of the source files, compile them into
+an executable named `hello``.
 
-If you want to customize the build behavior, please set the following
-options defined in `PaperHouse::ExecutableTask`:
+If you wish to customize the build process more, please set the
+following options defined in `PaperHouse::ExecutableTask`:
 
 ```ruby
 PaperHouse::ExecutableTask.new :hello do | task |
