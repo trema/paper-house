@@ -6,7 +6,7 @@ Feature: PaperHouse::StaticLibraryTask
 
   Scenario: Build a static library from one *.c and *.h file
     Given the current project directory is "examples/static_library"
-    When I run rake "hello"
+    When I successfully run `rake hello`
     Then a file named "libhello.a" should exist
     And a file named "hello" should exist
     And I successfully run `./hello`
@@ -17,7 +17,7 @@ Feature: PaperHouse::StaticLibraryTask
 
   Scenario: Build a static library from one *.c and *.h file using llvm-gcc
     Given the current project directory is "examples/static_library"
-    When I run rake "llvm_hello"
+    When I successfully run `rake llvm_hello`
     Then a file named "libhello.a" should exist
     And a file named "llvm_hello" should exist
     And I successfully run `./llvm_hello`
@@ -28,7 +28,7 @@ Feature: PaperHouse::StaticLibraryTask
 
   Scenario: Build a static library from one *.c and *.h file using llvm-gcc by specifying `CC=` option
     Given the current project directory is "examples/static_library"
-    When I run rake "hello CC=llvm-gcc"
+    When I successfully run `rake hello CC=llvm-gcc`
     Then a file named "libhello.a" should exist
     And a file named "hello" should exist
     And I successfully run `./hello`
@@ -39,7 +39,7 @@ Feature: PaperHouse::StaticLibraryTask
 
   Scenario: Build a static library from multiple *.c and *.h files in subcirectories
     Given the current project directory is "examples/static_library_subdirs"
-    When I run rake "sqrt"
+    When I successfully run `rake sqrt`
     Then a file named "objects/libprintsqrt.a" should exist
     And a file named "sqrt" should exist
     And I successfully run `./sqrt 4`
