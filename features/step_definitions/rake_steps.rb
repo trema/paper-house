@@ -19,7 +19,6 @@ When(/^I run rake "(.*?)"$/) do | args |
   end
 
   in_current_dir do
-    load "Rakefile"
-    Rake::Task[ task ].invoke
+    step "I run `rake #{ task }`"
   end
 end
