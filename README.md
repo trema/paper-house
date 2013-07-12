@@ -13,13 +13,13 @@ Paper House is a class library to easily build C projects using [Rake](https://g
  * [Executable](http://rubydoc.info/github/trema/paper-house/PaperHouse/ExecutableTask)
  * [Static library](http://rubydoc.info/github/trema/paper-house/PaperHouse/StaticLibraryTask)
  * [Shared library](http://rubydoc.info/github/trema/paper-house/PaperHouse/SharedLibraryTask)
- * [Ruby extension library in C](http://rubydoc.info/github/trema/paper-house/PaperHouse/RubyLibraryTask)
+ * [C extension for Ruby](http://rubydoc.info/github/trema/paper-house/PaperHouse/CExtensionTask)
 
 
 Feature Overview
 ----------------
 
- * Simple yet powerful syntax. Offers predefined tasks to build
+ * Simple yet powerful syntax. Offers predefined Rake tasks to build
    executables, static and shared libraries, and C extensions for
    Ruby.
  * Pure Ruby. No additional dependency on external tools (`makedepend`
