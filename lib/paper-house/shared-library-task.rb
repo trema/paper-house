@@ -16,9 +16,8 @@
 #
 
 
-require "paper-house/cc"
 require "paper-house/library-task"
-require "paper-house/os"
+require "paper-house/platform"
 
 
 module PaperHouse
@@ -26,13 +25,11 @@ module PaperHouse
   # Compile *.c files into a shared library.
   #
   class SharedLibraryTask < LibraryTask
-    include CC
+    include Platform
 
 
+    # Library version string.
     attr_accessor :version
-
-
-    SONAME_OPTION = OS.mac? ? "-install_name" : "-soname"
 
 
     def initialize name, version = nil, &block
@@ -41,6 +38,7 @@ module PaperHouse
     end
 
 
+    # Real name of target library.
     def target_file_name
       fail ":version option is a mandatory." if not @version
       [ linker_name, @version ].join "."
@@ -48,11 +46,13 @@ module PaperHouse
     alias :real_name :target_file_name
 
 
+    # Name of library used by linkers.
     def linker_name
       library_name + ".so"
     end
 
 
+    # Soname of target library.
     def soname
       File.basename( target_file_name ).sub( /\.\d+\.\d+\Z/, "" )
     end

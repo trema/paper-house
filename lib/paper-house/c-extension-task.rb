@@ -16,26 +16,38 @@
 #
 
 
-require "paper-house/build-task"
+require "paper-house/library-task"
 require "paper-house/linker-options"
+require "paper-house/platform"
 
 
 module PaperHouse
   #
-  # Compile *.c files into an executable file.
+  # Compile *.c files into a Ruby extension library.
   #
-  class ExecutableTask < BuildTask
+  class CExtensionTask < LibraryTask
     include LinkerOptions
+    include Platform
 
 
-    # @!attribute executable_name
-    #   Name of target executable file.
-    attr_writer :executable_name
+    # Name of target library.
+    attr_writer :library_name
 
-    def executable_name
-      @executable_name ||= @name
+
+    # Name of target library file.
+    def target_file_name
+      library_name + SHARED_EXT
     end
-    alias :target_file_name :executable_name
+
+
+    # List of libraries to link.
+    def library_dependencies
+      if Platform::MAC
+        ( [ @library_dependencies ] << "ruby" ).flatten.compact
+      else
+        super
+      end
+    end
 
 
     ############################################################################
@@ -44,19 +56,31 @@ module PaperHouse
 
 
     def generate_target
-      sh "#{ cc } -o #{ target_path } #{ objects.to_s } #{ cc_options }"
+      sh "#{ cc } #{ LDSHARED } -o #{ target_path } #{ objects.to_s } #{ cc_linker_options }"
     end
 
 
-    def cc_options
-      [ cc_ldflags, cc_l_options ].join " "
+    def cc_linker_options
+      [
+        ldflags,
+        cc_ldflags,
+        cc_l_options,
+      ].flatten.join " "
     end
 
 
     def cc_ldflags
-      ldflags.join " "
+      "-L#{ RUBY_LIBDIR }"
+    end
+
+
+    def include_directories
+      ( includes + auto_includes + RUBY_INCLUDES ).uniq
     end
   end
+
+
+  RubyLibraryTask = CExtensionTask
 end
 
 

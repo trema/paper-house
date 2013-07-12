@@ -15,14 +15,14 @@ guard 'spork' do
 end
 
 
-guard 'rspec', :cli => "--color --drb -r rspec/instafail -f RSpec::Instafail", :all_on_start => false do
-  watch(%r{^spec/.+_spec\.rb$})
-  watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
+guard 'rspec', :cli => "--color --drb -r rspec/instafail -f RSpec::Instafail", :rvm => [ "1.8.7", "1.9.3", "2.0.0" ], :all_on_start => false do
+  watch(%r{^spec/paper-house/.+_spec\.rb$})
+  watch(%r{^lib/paper-house/(.+)\.rb$})     { |m| "spec/paper-house/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }
 end
 
 
-guard 'cucumber', :cli => "--drb", :all_on_start => false do
+guard 'cucumber', :rvm => [ "1.8.7", "1.9.3", "2.0.0" ], :all_on_start => false do
   watch(%r{^features/.+\.feature$})
   watch(%r{^features/support/.+$})          { 'features' }
   watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'features' }

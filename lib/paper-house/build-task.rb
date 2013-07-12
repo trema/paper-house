@@ -17,6 +17,7 @@
 
 
 require "paper-house/auto-depends"
+require "paper-house/cc"
 require "paper-house/dependency"
 require "rake/clean"
 require "rake/tasklib"
@@ -27,11 +28,17 @@ module PaperHouse
   # Common base class for *.c compilation tasks.
   #
   class BuildTask < Rake::TaskLib
+    include CC
+
+
+    # Compile options pass to C compiler.
     attr_accessor :cflags
+
+    # Name of task.
     attr_accessor :name
+
+    # Directory where *.o files are created.
     attr_accessor :target_directory
-    attr_writer :includes
-    attr_writer :sources
 
 
     def initialize name, &block
@@ -41,6 +48,19 @@ module PaperHouse
       define
     end
 
+
+    # @!attribute includes
+    #   Glob pattern to match include directories.
+    attr_writer :includes
+
+    def includes
+      FileList[ [ @includes ] ]
+    end
+
+
+    # @!attribute sources
+    #   Glob pattern to match source files.
+    attr_writer :sources
 
     def sources
       FileList.new @sources
@@ -148,11 +168,6 @@ module PaperHouse
 
     def include_directories
       ( includes + auto_includes ).uniq
-    end
-
-
-    def includes
-      FileList[ [ @includes ] ]
     end
 
 

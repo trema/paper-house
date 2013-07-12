@@ -24,6 +24,7 @@ describe PaperHouse::ExecutableTask, ".new( :test )" do
 
   its( :name ) { should eq "test" }
   its( :executable_name ) { should eq "test" }
+  its( :cc ) { should eq "gcc" }
   its( :target_directory ) { should eq "." }
   its( :sources ) { should be_empty  }
   its( :cflags ) { should be_empty }

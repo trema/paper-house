@@ -20,3 +20,20 @@ PaperHouse::ExecutableTask.new :hello do | task |
   task.ldflags = "-L."
   task.library_dependencies = "hello"
 end
+
+
+################################################################################
+#
+# If you want to use non-default compiler like llvm-gcc,
+# please specify the cc= property or pass the CC= option to rake command.
+#
+################################################################################
+
+task :llvm_hello => [ libhello.linker_name, libhello.soname ]
+
+PaperHouse::ExecutableTask.new :llvm_hello do | task |
+  task.sources = "main.c"
+  task.cc = "llvm-gcc"
+  task.ldflags = "-L."
+  task.library_dependencies = "hello"
+end

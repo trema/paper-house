@@ -16,16 +16,31 @@
 #
 
 
-require "rbconfig"
+require "paper-house/c-extension-task"
 
 
 module PaperHouse
-  #
-  # OS detector class.
-  #
-  class OS
-    def self.mac?
-      /darwin|mac os/=~ RbConfig::CONFIG[ "host_os" ]
+  [ CExtensionTask, RubyLibraryTask ].each do | klass |
+    describe klass, ".new :libtest" do
+      subject { klass.new :libtest }
+
+      its( :name ) { should eq "libtest" }
+      its( :cc ) { should eq "gcc" }
+      its( :target_directory ) { should eq "." }
+      its( :sources ) { should be_empty  }
+      its( :cflags ) { should be_empty }
+      its( :includes ) { should be_empty }
+    end
+
+
+    describe klass, ".new( :libtest ) do ... end" do
+      subject {
+        klass.new :libtest do | task |
+          task.library_name = "test"
+        end
+      }
+
+      its( :library_name ) { should eq "test" }
     end
   end
 end

@@ -16,30 +16,31 @@
 #
 
 
-require "paper-house/cc"
-require "paper-house/library-task"
-require "paper-house/linker-options"
-require "paper-house/os"
 require "rbconfig"
 
 
 module PaperHouse
   #
-  # Compile *.c files into a Ruby extension library.
+  # Platform-dependent stuff.
   #
-  class RubyLibraryTask < LibraryTask
-    include CC
-    include LinkerOptions
+  module Platform
     include RbConfig
 
 
-    if OS.mac?
+    MAC = ( /darwin|mac os/=~ CONFIG[ "host_os" ] )
+
+
+    if MAC
       SHARED_EXT = ".bundle"
       LDSHARED = "-dynamic -bundle"
+      SONAME_OPTION = "-install_name"
     else
       SHARED_EXT = ".so"
       LDSHARED = "-shared"
+      SONAME_OPTION = "-soname"
     end
+
+
     RUBY_INCLUDES = if RUBY_VERSION >= "1.9.0"
                       [
                         File.join( CONFIG[ "rubyhdrdir" ], CONFIG[ "arch" ] ),
@@ -47,54 +48,10 @@ module PaperHouse
                         CONFIG[ "rubyhdrdir" ]
                       ]
                     else
-                      [ RbConfig::CONFIG[ "archdir" ] ]
+                      [ CONFIG[ "archdir" ] ]
                     end
 
-
-    attr_writer :library_name
-
-
-    def target_file_name
-      library_name + SHARED_EXT
-    end
-
-
-    def library_dependencies
-      if OS.mac?
-        ( [ @library_dependencies ] << "ruby" ).flatten.compact
-      else
-        super
-      end
-    end
-
-
-    ############################################################################
-    private
-    ############################################################################
-
-
-    def generate_target
-      sh "#{ cc } #{ LDSHARED } -o #{ target_path } #{ objects.to_s } #{ cc_linker_options }"
-    end
-
-
-    def cc_linker_options
-      [
-        ldflags,
-        cc_ldflags,
-        cc_l_options,
-      ].flatten.join " "
-    end
-
-
-    def cc_ldflags
-      "-L#{ RbConfig::CONFIG[ "libdir" ] }"
-    end
-
-
-    def include_directories
-      ( includes + auto_includes + RUBY_INCLUDES ).uniq
-    end
+    RUBY_LIBDIR = CONFIG[ "libdir" ]
   end
 end
 

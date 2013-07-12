@@ -1,12 +1,13 @@
 Feature: PaperHouse::SharedLibraryTask
 
-  PaperHouse offers a rake task called `PaperHouse::SharedLibraryTask`
-  that can build a shared library from *.c and *.h files. These source
-  files can be located in multiple subdirectories.
+  PaperHouse provides a rake task called
+  `PaperHouse::SharedLibraryTask` that can build a shared library from
+  *.c and *.h files. These source files can be located in multiple
+  subdirectories.
 
   Scenario: Build a shared library from one *.c and *.h file
     Given the current project directory is "examples/shared_library"
-    When I run rake "hello"
+    When I successfully run `rake hello`
     Then a file named "libhello.so.0.1.0" should exist
     And a file named "hello" should exist
     And I successfully run `./hello`
@@ -15,9 +16,20 @@ Feature: PaperHouse::SharedLibraryTask
     Hello, PaperHouse!
     """
 
-  Scenario: Build a shared library from one *.c and *.h file by specifying `CC=` option
+  Scenario: Build a shared library from one *.c and *.h file using llvm-gcc
     Given the current project directory is "examples/shared_library"
-    When I run rake "hello CC=/usr/bin/llvm-gcc"
+    When I successfully run `rake llvm_hello`
+    Then a file named "libhello.so.0.1.0" should exist
+    And a file named "llvm_hello" should exist
+    And I successfully run `./llvm_hello`
+    And the output should contain:
+    """
+    Hello, PaperHouse!
+    """
+
+  Scenario: Build a shared library from one *.c and *.h file using llvm-gcc by specifying `CC=` option
+    Given the current project directory is "examples/shared_library"
+    When I successfully run `rake hello CC=/usr/bin/llvm-gcc`
     Then a file named "libhello.so.0.1.0" should exist
     And a file named "hello" should exist
     And I successfully run `./hello`
@@ -28,7 +40,7 @@ Feature: PaperHouse::SharedLibraryTask
 
   Scenario: Build a shared library from multiple *.c and *.h files in subcirectories
     Given the current project directory is "examples/shared_library_subdirs"
-    When I run rake "sqrt"
+    When I successfully run `rake sqrt`
     Then a file named "objects/libprintsqrt.so.0.1.0" should exist
     And a file named "sqrt" should exist
     And I successfully run `./sqrt 4`

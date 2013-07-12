@@ -18,15 +18,19 @@
 
 module PaperHouse
   module LinkerOptions
+    # @!attribute ldflags
+    # Linker options pass to C compiler.
     attr_writer :ldflags
-    attr_writer :library_dependencies
-
 
     def ldflags
       @ldflags ||= []
       [ @ldflags ].flatten.compact
     end
 
+
+    # @!attribute library_dependencies
+    #   List of libraries to link.
+    attr_writer :library_dependencies
 
     def library_dependencies
       @library_dependencies ||= []
