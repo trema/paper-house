@@ -66,16 +66,6 @@ You can find more examples in the
 directory.
 
 
-Supported Platforms
--------------------
-
-Paper House supports Linux and Mac OS X, and is tested on the following Ruby versions:
-
- * 1.8.7
- * 1.9.3
- * 2.0.0
-
-
 Installation
 ------------
 
