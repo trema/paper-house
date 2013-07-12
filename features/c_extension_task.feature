@@ -1,8 +1,8 @@
 Feature: PaperHouse::CExtensionTask
 
-  PaperHouse offers a rake task called `PaperHouse::CExtensionTask`
-  that can build a C extention library from *.c and *.h files. These source
-  files can be located in multiple subdirectories.
+  PaperHouse provides a rake task called `PaperHouse::CExtensionTask`
+  that can build a C extention library from *.c and *.h files. These
+  source files can be located in multiple subdirectories.
 
   Scenario: Build a C extension from one *.c and *.h file
     Given the current project directory is "examples/c_extension"
