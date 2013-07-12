@@ -18,7 +18,11 @@ group :development do
   gem "rb-fchange", "~> 0.0.6", :require => false
   gem "rb-fsevent", "~> 0.9.3", :require => false
   gem "rb-inotify", "~> 0.9.0", :require => false
-  gem "redcarpet", "~> 3.0.0"
+  if RUBY_VERSION >= "1.9.0"
+    gem "redcarpet", "~> 3.0.0"
+  else
+    gem "redcarpet", "~> 2.3.0"
+  end
   gem "reek", "~> 1.3.1"
   gem "relish", "~> 0.7"
   gem "rspec", "~> 2.14.1"
