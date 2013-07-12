@@ -1,8 +1,9 @@
 Feature: PaperHouse::StaticLibraryTask
 
-  PaperHouse offers a rake task called `PaperHouse::StaticLibraryTask`
-  that can build a static library from *.c and *.h files. These source
-  files can be located in multiple subdirectories.
+  PaperHouse provides a rake task called
+  `PaperHouse::StaticLibraryTask` that can build a static library from
+  *.c and *.h files. These source files can be located in multiple
+  subdirectories.
 
   Scenario: Build a static library from one *.c and *.h file
     Given the current project directory is "examples/static_library"

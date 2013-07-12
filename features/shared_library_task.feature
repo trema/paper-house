@@ -1,8 +1,9 @@
 Feature: PaperHouse::SharedLibraryTask
 
-  PaperHouse offers a rake task called `PaperHouse::SharedLibraryTask`
-  that can build a shared library from *.c and *.h files. These source
-  files can be located in multiple subdirectories.
+  PaperHouse provides a rake task called
+  `PaperHouse::SharedLibraryTask` that can build a shared library from
+  *.c and *.h files. These source files can be located in multiple
+  subdirectories.
 
   Scenario: Build a shared library from one *.c and *.h file
     Given the current project directory is "examples/shared_library"

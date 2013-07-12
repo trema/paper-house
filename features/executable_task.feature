@@ -1,6 +1,6 @@
 Feature: PaperHouse::ExecutableTask
 
-  PaperHouse offers a rake task called `PaperHouse::ExecutableTask`
+  PaperHouse provides a rake task called `PaperHouse::ExecutableTask`
   that can build an executable from *.c and *.h files. These source
   files can be located in multiple subdirectories.
 
