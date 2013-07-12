@@ -16,8 +16,8 @@ end
 
 
 guard 'rspec', :cli => "--color --drb -r rspec/instafail -f RSpec::Instafail", :all_on_start => false do
-  watch(%r{^spec/.+_spec\.rb$})
-  watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
+  watch(%r{^spec/paper-house/.+_spec\.rb$})
+  watch(%r{^lib/paper-house/(.+)\.rb$})     { |m| "spec/paper-house/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }
 end
 
