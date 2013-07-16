@@ -182,7 +182,7 @@ module PaperHouse
 
 
     def auto_depends_cc_options
-      "#{ @cflags.join " " } -fPIC #{ cc_i_options }"
+      ( @cflags + [ "-fPIC" ] + cc_i_options ).join " "
     end
 
 

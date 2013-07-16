@@ -8,7 +8,15 @@ Feature: PaperHouse::StaticLibraryTask
   Scenario: Build a static library from one *.c and *.h file
     Given the current project directory is "examples/static_library"
     When I successfully run `rake hello`
-    Then a file named "libhello.a" should exist
+    Then the output should contain:
+    """
+    gcc -H -fPIC -I. -c hello.c -o ./hello.o
+    gcc -H -fPIC -I. -c main.c -o ./main.o
+    ar -cq ./libhello.a ./hello.o
+    ranlib ./libhello.a
+    gcc -o ./hello ./main.o -L. -lhello
+    """
+    And a file named "libhello.a" should exist
     And a file named "hello" should exist
     And I successfully run `./hello`
     And the output should contain:
@@ -19,7 +27,15 @@ Feature: PaperHouse::StaticLibraryTask
   Scenario: Build a static library from one *.c and *.h file using llvm-gcc by specifying `CC=` option
     Given the current project directory is "examples/static_library"
     When I successfully run `rake hello CC=llvm-gcc`
-    Then a file named "libhello.a" should exist
+    Then the output should contain:
+    """
+    llvm-gcc -H -fPIC -I. -c hello.c -o ./hello.o
+    llvm-gcc -H -fPIC -I. -c main.c -o ./main.o
+    ar -cq ./libhello.a ./hello.o
+    ranlib ./libhello.a
+    llvm-gcc -o ./hello ./main.o -L. -lhello
+    """
+    And a file named "libhello.a" should exist
     And a file named "hello" should exist
     And I successfully run `./hello`
     And the output should contain:
@@ -30,7 +46,15 @@ Feature: PaperHouse::StaticLibraryTask
   Scenario: Build a static library from one *.c and *.h file using llvm-gcc
     Given the current project directory is "examples/static_library"
     When I successfully run `rake -f Rakefile.llvm hello`
-    Then a file named "libhello.a" should exist
+    Then the output should contain:
+    """
+    llvm-gcc -H -fPIC -I. -c hello.c -o ./hello.o
+    llvm-gcc -H -fPIC -I. -c main.c -o ./main.o
+    ar -cq ./libhello.a ./hello.o
+    ranlib ./libhello.a
+    llvm-gcc -o ./hello ./main.o -L. -lhello
+    """
+    And a file named "libhello.a" should exist
     And a file named "hello" should exist
     And I successfully run `./hello`
     And the output should contain:

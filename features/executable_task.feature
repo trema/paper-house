@@ -9,7 +9,7 @@ Feature: PaperHouse::ExecutableTask
     When I successfully run `rake hello`
     Then the output should contain:
     """
-    gcc -H  -fPIC -I. -c hello.c -o ./hello.o
+    gcc -H -fPIC -I. -c hello.c -o ./hello.o
     gcc -o ./hello ./hello.o
     """
     And a file named "hello" should exist
@@ -24,7 +24,7 @@ Feature: PaperHouse::ExecutableTask
     When I successfully run `rake hello CC=llvm-gcc`
     Then the output should contain:
     """
-    llvm-gcc -H  -fPIC -I. -c hello.c -o ./hello.o
+    llvm-gcc -H -fPIC -I. -c hello.c -o ./hello.o
     llvm-gcc -o ./hello ./hello.o
     """
     And a file named "hello" should exist
@@ -39,7 +39,7 @@ Feature: PaperHouse::ExecutableTask
     When I successfully run `rake -f Rakefile.llvm hello`
     Then the output should contain:
     """
-    llvm-gcc -H  -fPIC -I. -c hello.c -o ./hello.o
+    llvm-gcc -H -fPIC -I. -c hello.c -o ./hello.o
     llvm-gcc -o ./hello ./hello.o
     """
     And a file named "hello" should exist
