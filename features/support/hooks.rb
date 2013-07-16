@@ -1,5 +1,6 @@
 Before do
   ENV[ "CC" ] = nil
+  @aruba_timeout_seconds = 5
 end
 
 
