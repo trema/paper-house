@@ -22,12 +22,14 @@ require "paper-house/static-library-task"
 describe PaperHouse::StaticLibraryTask, ".new( :libtest )" do
   subject { PaperHouse::StaticLibraryTask.new :libtest }
 
-  its( :name ) { should eq "libtest" }
   its( :cc ) { should eq "gcc" }
-  its( :target_directory ) { should eq "." }
-  its( :sources ) { should eq "*.c"  }
   its( :cflags ) { should be_empty }
   its( :includes ) { should be_empty }
+  its( :name ) { should eq "libtest" }
+  its( :sources ) { should eq "*.c"  }
+  its( :target_directory ) { should eq "." }
+
+  it { expect { subject.invoke }.to raise_error( "Cannot find sources (*.c)." ) }
 end
 
 
