@@ -14,19 +14,19 @@ Feature: PaperHouse::ExecutableTask
     Hello, PaperHouse!
     """
 
-  Scenario: Build an executable from one *.c file using llvm-gcc
+  Scenario: Build an executable from one *.c file using llvm-gcc by specifying `CC=` option
     Given the current project directory is "examples/executable"
-    When I successfully run `rake llvm_hello`
-    Then a file named "llvm_hello" should exist
-    And I successfully run `./llvm_hello`
+    When I successfully run `rake hello CC=llvm-gcc`
+    Then a file named "hello" should exist
+    And I successfully run `./hello`
     And the output should contain:
     """
     Hello, PaperHouse!
     """
 
-  Scenario: Build an executable from one *.c file using llvm-gcc by specifying `CC=` option
-    Given the current project directory is "examples/executable"
-    When I successfully run `rake hello CC=llvm-gcc`
+  Scenario: Build an executable from one *.c file using llvm-gcc
+    Given the current project directory is "examples/executable_llvm"
+    When I successfully run `rake hello`
     Then a file named "hello" should exist
     And I successfully run `./hello`
     And the output should contain:

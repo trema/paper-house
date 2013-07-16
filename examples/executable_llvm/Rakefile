@@ -1,0 +1,5 @@
+require "paper-house"
+
+PaperHouse::ExecutableTask.new :hello do | task |
+  task.cc = "llvm-gcc"
+end
