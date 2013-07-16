@@ -25,8 +25,8 @@ Feature: PaperHouse::ExecutableTask
     """
 
   Scenario: Build an executable from one *.c file using llvm-gcc
-    Given the current project directory is "examples/executable_llvm"
-    When I successfully run `rake hello`
+    Given the current project directory is "examples/executable"
+    When I successfully run `rake -f Rakefile.llvm hello`
     Then a file named "hello" should exist
     And I successfully run `./hello`
     And the output should contain:

@@ -28,8 +28,8 @@ Feature: PaperHouse::SharedLibraryTask
     """
 
   Scenario: Build a shared library from one *.c and *.h file using llvm-gcc
-    Given the current project directory is "examples/shared_library_llvm"
-    When I successfully run `rake hello`
+    Given the current project directory is "examples/shared_library"
+    When I successfully run `rake -f Rakefile.llvm hello`
     Then a file named "libhello.so.0.1.0" should exist
     And a file named "hello" should exist
     And I successfully run `./hello`

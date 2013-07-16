@@ -23,8 +23,8 @@ Feature: PaperHouse::CExtensionTask
     """
 
   Scenario: Build a C extension from one *.c and *.h file using llvm-gcc
-    Given the current project directory is "examples/c_extension_llvm"
-    When I successfully run `rake hello`
+    Given the current project directory is "examples/c_extension"
+    When I successfully run `rake -f Rakefile.llvm hello`
     Then I successfully run `ruby -I. -rhello -e "p Hello"`
     And the output should contain:
     """

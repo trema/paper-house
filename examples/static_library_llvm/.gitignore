@@ -1,7 +1,0 @@
-.hello.depends
-.libhello.depends
-hello
-hello.o
-libhello.a
-main.o
-
