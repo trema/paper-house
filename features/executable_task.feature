@@ -1,8 +1,8 @@
 Feature: PaperHouse::ExecutableTask
 
   PaperHouse provides a rake task called `PaperHouse::ExecutableTask`
-  that can build an executable from *.c and *.h files. These source
-  files can be located in multiple subdirectories.
+  to build an executable from *.c and *.h files. These source files
+  can be located in multiple subdirectories.
 
   Scenario: Build an executable from one *.c file
     Given the current project directory is "examples/executable"
@@ -49,6 +49,23 @@ Feature: PaperHouse::ExecutableTask
     Hello, PaperHouse!
     """
 
+  Scenario: Build an executable from multiple *.c and *.h files in subdirectories
+    Given the current project directory is "examples/executable_subdirs"
+    When I successfully run `rake hello`
+    Then the output should contain:
+    """
+    gcc -H -Wall -Wextra -fPIC -Iincludes -Isources -c sources/hello.c -o objects/hello.o
+    gcc -H -Wall -Wextra -fPIC -Iincludes -Isources -c sources/main.c -o objects/main.o
+    mkdir -p objects
+    gcc -o objects/hello objects/hello.o objects/main.o
+    """
+    And a file named "objects/hello" should exist
+    And I successfully run `./objects/hello`
+    And the output should contain:
+    """
+    Hello, PaperHouse!
+    """
+
   Scenario: clean
     Given the current project directory is "examples/executable"
     And I successfully run `rake hello`
@@ -64,13 +81,3 @@ Feature: PaperHouse::ExecutableTask
     Then a file named "hello" should not exist
     And a file named "hello.o" should not exist
     And a file named ".hello.depends" should not exist
-
-  Scenario: Build an executable from multiple *.c and *.h files in subdirectories
-    Given the current project directory is "examples/executable_subdirs"
-    When I successfully run `rake sqrt`
-    Then a file named "objects/print_sqrt" should exist
-    And I successfully run `./objects/print_sqrt 4`
-    And the output should contain:
-    """
-    sqrt(4.0) = 2.0
-    """
