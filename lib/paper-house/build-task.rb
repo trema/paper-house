@@ -60,10 +60,13 @@ module PaperHouse
 
     # @!attribute sources
     #   Glob pattern to match source files.
-    attr_writer :sources
+    attr_accessor :sources
 
-    def sources
-      FileList.new @sources
+    def invoke
+      if sources_list.empty?
+        raise "Cannot find sources (#{ @sources })."
+      end
+      Rake::Task[ name ].invoke
     end
 
 
@@ -88,7 +91,7 @@ module PaperHouse
 
 
     def define_all_c_compile_tasks
-      sources.zip( objects ) do | source, object |
+      sources_list.zip( objects ) do | source, object |
         define_c_compile_task source, object
       end
     end
@@ -126,7 +129,7 @@ module PaperHouse
 
 
     def objects
-      sources.pathmap File.join( @target_directory, "%n.o")
+      sources_list.pathmap File.join( @target_directory, "%n.o")
     end
 
 
@@ -171,8 +174,13 @@ module PaperHouse
     end
 
 
+    def sources_list
+      FileList.new @sources
+    end
+
+
     def auto_includes
-      FileList[ sources.pathmap( "%d" ).uniq ]
+      FileList[ sources_list.pathmap( "%d" ).uniq ]
     end
 
 

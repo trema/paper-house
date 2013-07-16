@@ -25,7 +25,7 @@ describe PaperHouse::StaticLibraryTask, ".new( :libtest )" do
   its( :name ) { should eq "libtest" }
   its( :cc ) { should eq "gcc" }
   its( :target_directory ) { should eq "." }
-  its( :sources ) { should be_empty  }
+  its( :sources ) { should eq "*.c"  }
   its( :cflags ) { should be_empty }
   its( :includes ) { should be_empty }
 end
