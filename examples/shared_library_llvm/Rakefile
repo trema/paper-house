@@ -20,6 +20,7 @@ CLOBBER.include libhello.soname
 
 PaperHouse::ExecutableTask.new :hello do | task |
   task.sources = "main.c"
+  task.cc = "llvm-gcc"
   task.ldflags = "-L."
   task.library_dependencies = "hello"
 end
