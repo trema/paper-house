@@ -31,7 +31,11 @@ module PaperHouse
       its( :sources ) { should eq "*.c"  }
       its( :target_directory ) { should eq "." }
 
-      it { expect { subject.invoke }.to raise_error( "Cannot find sources (*.c)." ) }
+      it {
+        expect {
+          Rake::Task[ subject.name ].invoke
+        }.to raise_error( "Cannot find sources (*.c)." )
+      }
     end
 
 

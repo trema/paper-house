@@ -17,9 +17,17 @@
 
 
 require "rubygems"
+require "rspec"
 require "spork"
 #uncomment the following line to use spork with the debugger
 #require "spork/ext/ruby-debug"
+
+
+RSpec.configure do | config |
+  config.before( :all ) do
+    Rake::Task.clear
+  end
+end
 
 
 Spork.prefork do

@@ -31,7 +31,11 @@ module PaperHouse
     its( :target_directory ) { should eq "." }
     its( :version ) { should eq "0.1.0" }
 
-    it { expect { subject.invoke }.to raise_error( "Cannot find sources (*.c)." ) }
+    it {
+      expect {
+        Rake::Task[ subject.name ].invoke
+      }.to raise_error( "Cannot find sources (*.c)." )
+    }
   end
 
 
@@ -58,11 +62,11 @@ module PaperHouse
 
 
   describe SharedLibraryTask, %{.new( :libtest )} do
-    it "should raise an error if :version option is missing" do
-      expect {
-        SharedLibraryTask.new "libtest"
-      }.to raise_error( ":version option is a mandatory." )
-    end
+    subject { SharedLibraryTask.new "libtest" }
+
+    it {
+      expect { subject }.to raise_error( ":version option is a mandatory." )
+    }
   end
 end
 

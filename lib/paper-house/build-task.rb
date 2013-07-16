@@ -58,16 +58,8 @@ module PaperHouse
     end
 
 
-    # @!attribute sources
-    #   Glob pattern to match source files.
+    # Glob pattern to match source files.
     attr_accessor :sources
-
-    def invoke
-      if sources_list.empty?
-        raise "Cannot find sources (#{ @sources })."
-      end
-      Rake::Task[ name ].invoke
-    end
 
 
     ############################################################################
@@ -107,7 +99,20 @@ module PaperHouse
     def define_maybe_generate_target_task
       file target_path => objects do | task |
         next if uptodate?( task.name, task.prerequisites )
-        generate_target
+        build
+      end
+    end
+
+
+    def build
+      check_sources_list
+      generate_target
+    end
+
+
+    def check_sources_list
+      if sources_list.empty?
+        fail "Cannot find sources (#{ @sources })."
       end
     end
 
@@ -129,7 +134,7 @@ module PaperHouse
 
 
     def objects
-      sources_list.pathmap File.join( @target_directory, "%n.o")
+      sources_list.pathmap File.join( @target_directory, "%n.o" )
     end
 
 
@@ -175,7 +180,7 @@ module PaperHouse
 
 
     def sources_list
-      FileList.new @sources
+      FileList.new( @sources )
     end
 
 

@@ -19,17 +19,24 @@
 require "paper-house/static-library-task"
 
 
-describe PaperHouse::StaticLibraryTask, ".new( :libtest )" do
-  subject { PaperHouse::StaticLibraryTask.new :libtest }
+module PaperHouse
+  describe StaticLibraryTask, ".new( :libtest )" do
+    subject { StaticLibraryTask.new :libtest }
 
-  its( :cc ) { should eq "gcc" }
-  its( :cflags ) { should be_empty }
-  its( :includes ) { should be_empty }
-  its( :name ) { should eq "libtest" }
-  its( :sources ) { should eq "*.c"  }
-  its( :target_directory ) { should eq "." }
+    its( :cc ) { should eq "gcc" }
+    its( :cflags ) { should be_empty }
+    its( :includes ) { should be_empty }
+    its( :name ) { should eq "libtest" }
+    its( :sources ) { should eq "*.c"  }
+    its( :target_directory ) { should eq "." }
 
-  it { expect { subject.invoke }.to raise_error( "Cannot find sources (*.c)." ) }
+    it {
+      expect {
+        subject
+        Rake::Task[ subject.name ].invoke
+      }.to raise_error( "Cannot find sources (*.c)." )
+    }
+  end
 end
 
 
