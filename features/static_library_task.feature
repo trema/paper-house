@@ -16,20 +16,20 @@ Feature: PaperHouse::StaticLibraryTask
     Hello, PaperHouse!
     """
 
-  Scenario: Build a static library from one *.c and *.h file using llvm-gcc
+  Scenario: Build a static library from one *.c and *.h file using llvm-gcc by specifying `CC=` option
     Given the current project directory is "examples/static_library"
-    When I successfully run `rake llvm_hello`
+    When I successfully run `rake hello CC=llvm-gcc`
     Then a file named "libhello.a" should exist
-    And a file named "llvm_hello" should exist
-    And I successfully run `./llvm_hello`
+    And a file named "hello" should exist
+    And I successfully run `./hello`
     And the output should contain:
     """
     Hello, PaperHouse!
     """
 
-  Scenario: Build a static library from one *.c and *.h file using llvm-gcc by specifying `CC=` option
-    Given the current project directory is "examples/static_library"
-    When I successfully run `rake hello CC=llvm-gcc`
+  Scenario: Build a static library from one *.c and *.h file using llvm-gcc
+    Given the current project directory is "examples/static_library_llvm"
+    When I successfully run `rake hello`
     Then a file named "libhello.a" should exist
     And a file named "hello" should exist
     And I successfully run `./hello`
