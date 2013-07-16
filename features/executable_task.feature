@@ -34,6 +34,22 @@ Feature: PaperHouse::ExecutableTask
     Hello, PaperHouse!
     """
 
+  Scenario: clean
+    Given the current project directory is "examples/executable"
+    And I successfully run `rake hello`
+    When I successfully run `rake clean`
+    Then a file named "hello.o" should not exist
+    And a file named ".hello.depends" should exist
+    And a file named "hello" should exist
+
+  Scenario: clobber
+    Given the current project directory is "examples/executable"
+    And I successfully run `rake hello`
+    When I successfully run `rake clobber`
+    Then a file named "hello" should not exist
+    And a file named "hello.o" should not exist
+    And a file named ".hello.depends" should not exist
+
   Scenario: Build an executable from multiple *.c and *.h files in subdirectories
     Given the current project directory is "examples/executable_subdirs"
     When I successfully run `rake sqrt`
