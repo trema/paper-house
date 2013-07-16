@@ -16,7 +16,6 @@
 #
 
 
-require "paper-house/cc"
 require "paper-house/safe-popen"
 
 
@@ -25,14 +24,12 @@ module PaperHouse
   # Automatically detects compilation dependencies.
   #
   class AutoDepends
-    include CC
-
-
     attr_reader :data
 
 
-    def initialize c_file, o_file, cc_options
-      @command = "#{ cc } -H #{ cc_options } -c #{ c_file } -o #{ o_file }"
+    def initialize c_file, o_file, cc, cc_options
+      @cc = cc
+      @command = "#{ @cc } -H #{ cc_options } -c #{ c_file } -o #{ o_file }"
       @data = []
     end
 
@@ -40,7 +37,7 @@ module PaperHouse
     def run
       puts @command
       exit_status = popen_command
-      raise "#{ cc } failed" if exit_status != 0
+      raise "#{ @cc } failed" if exit_status != 0
     end
 
 

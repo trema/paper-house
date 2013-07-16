@@ -17,7 +17,6 @@
 
 
 require "paper-house/auto-depends"
-require "paper-house/cc"
 require "paper-house/dependency"
 require "rake/clean"
 require "rake/tasklib"
@@ -28,9 +27,6 @@ module PaperHouse
   # Common base class for *.c compilation tasks.
   #
   class BuildTask < Rake::TaskLib
-    include CC
-
-
     # Compile options pass to C compiler.
     attr_accessor :cflags
 
@@ -46,6 +42,15 @@ module PaperHouse
       set_defaults
       block.call self if block
       define
+    end
+
+
+    # @!attribute cc
+    #   C compiler name or path.
+    attr_writer :cc
+
+    def cc
+      ENV[ "CC" ] || @cc || "gcc"
     end
 
 
@@ -165,7 +170,7 @@ module PaperHouse
 
     def compile o_file, c_file
       return if no_need_to_compile?( o_file, c_file )
-      auto_depends = AutoDepends.new( c_file, o_file, auto_depends_cc_options )
+      auto_depends = AutoDepends.new( c_file, o_file, cc, auto_depends_cc_options )
       auto_depends.run
       dependency.write o_file, auto_depends.data
     end

@@ -7,7 +7,12 @@ Feature: PaperHouse::ExecutableTask
   Scenario: Build an executable from one *.c file
     Given the current project directory is "examples/executable"
     When I successfully run `rake hello`
-    Then a file named "hello" should exist
+    Then the output should contain:
+    """
+    gcc -H  -fPIC -I. -c hello.c -o ./hello.o
+    gcc -o ./hello ./hello.o
+    """
+    And a file named "hello" should exist
     And I successfully run `./hello`
     And the output should contain:
     """
@@ -17,7 +22,12 @@ Feature: PaperHouse::ExecutableTask
   Scenario: Build an executable from one *.c file using llvm-gcc by specifying `CC=` option
     Given the current project directory is "examples/executable"
     When I successfully run `rake hello CC=llvm-gcc`
-    Then a file named "hello" should exist
+    Then the output should contain:
+    """
+    llvm-gcc -H  -fPIC -I. -c hello.c -o ./hello.o
+    llvm-gcc -o ./hello ./hello.o
+    """
+    And a file named "hello" should exist
     And I successfully run `./hello`
     And the output should contain:
     """
@@ -27,7 +37,12 @@ Feature: PaperHouse::ExecutableTask
   Scenario: Build an executable from one *.c file using llvm-gcc
     Given the current project directory is "examples/executable"
     When I successfully run `rake -f Rakefile.llvm hello`
-    Then a file named "hello" should exist
+    Then the output should contain:
+    """
+    llvm-gcc -H  -fPIC -I. -c hello.c -o ./hello.o
+    llvm-gcc -o ./hello ./hello.o
+    """
+    And a file named "hello" should exist
     And I successfully run `./hello`
     And the output should contain:
     """
