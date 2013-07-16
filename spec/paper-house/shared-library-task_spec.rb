@@ -23,13 +23,15 @@ module PaperHouse
   describe SharedLibraryTask, %{.new( :libtest, "0.1.0" )} do
     subject { SharedLibraryTask.new :libtest, "0.1.0" }
 
-    its( :name ) { should eq "libtest" }
-    its( :version ) { should eq "0.1.0" }
     its( :cc ) { should eq "gcc" }
-    its( :target_directory ) { should eq "." }
-    its( :sources ) { should eq "*.c"  }
     its( :cflags ) { should be_empty }
     its( :includes ) { should be_empty }
+    its( :name ) { should eq "libtest" }
+    its( :sources ) { should eq "*.c"  }
+    its( :target_directory ) { should eq "." }
+    its( :version ) { should eq "0.1.0" }
+
+    it { expect { subject.invoke }.to raise_error( "Cannot find sources (*.c)." ) }
   end
 
 
