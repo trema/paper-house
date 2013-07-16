@@ -134,7 +134,7 @@ module PaperHouse
 
 
     def clobber_targets
-      [ target_path + dependency.path ]
+      [ target_path, dependency.path ]
     end
 
 

@@ -21,6 +21,9 @@ file libsqrt.soname => :libsqrt do | task |
   symlink File.join( "objects", libsqrt.target_file_name ), task.name
 end
 
+CLOBBER.include libsqrt.linker_name
+CLOBBER.include libsqrt.soname
+
 PaperHouse::ExecutableTask.new :sqrt do | task |
   task.sources = "sources/main.c"
   task.includes = "includes"
