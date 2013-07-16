@@ -71,8 +71,8 @@ module PaperHouse
       define_main_task
       define_all_c_compile_tasks
       define_maybe_generate_target_task
-      define_clean_targets
-      define_clobber_targets
+      define_clean_task
+      define_clobber_task
     end
 
 
@@ -117,14 +117,24 @@ module PaperHouse
     end
 
 
-    def define_clean_targets
-      CLEAN.include objects
+    def define_clean_task
+      objects.each do | each |
+        next if not FileTest.exist?( each )
+        CLEAN.include each
+      end
     end
 
 
-    def define_clobber_targets
-      CLOBBER.include target_path
-      CLOBBER.include dependency.path
+    def define_clobber_task
+      clobber_targets.each do | each |
+        next if not FileTest.exist?( each )
+        CLOBBER.include each
+      end
+    end
+
+
+    def clobber_targets
+      [ target_path + dependency.path ]
     end
 
 
