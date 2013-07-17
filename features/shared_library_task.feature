@@ -139,6 +139,7 @@ Feature: PaperHouse::SharedLibraryTask
     """
     gcc -H -Werror -Wall -Wextra -fPIC -Iincludes -Isources -c sources/hello.c -o objects/hello.o
     gcc -H -fPIC -Iincludes -Isources -c sources/main.c -o ./main.o
+    mkdir -p objects
     gcc -shared -Wl,-soname,libhello.so.0 -o objects/libhello.so.0.1.0 objects/hello.o
     ln -s objects/libhello.so.0.1.0 libhello.so
     ln -s objects/libhello.so.0.1.0 libhello.so.0
@@ -160,6 +161,7 @@ Feature: PaperHouse::SharedLibraryTask
     """
     gcc -H -Werror -Wall -Wextra -fPIC -Iincludes -Isources -c sources/hello.c -o objects/hello.o
     gcc -H -fPIC -Iincludes -Isources -c sources/main.c -o ./main.o
+    mkdir -p objects
     gcc -shared -Wl,-install_name,libhello.so.0 -o objects/libhello.so.0.1.0 objects/hello.o
     ln -s objects/libhello.so.0.1.0 libhello.so
     ln -s objects/libhello.so.0.1.0 libhello.so.0
