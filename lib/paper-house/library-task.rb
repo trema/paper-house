@@ -30,13 +30,17 @@ module PaperHouse
     end
 
 
-    # @!attribute library_name
-    #   Name of library.
+    #
+    # Name of library.
+    #
     def library_name
       @library_name ||= @name
     end
 
 
+    #
+    # Name of library.
+    #
     def library_name= new_name
        @library_name = /\Alib/=~ new_name ? new_name : "lib" + new_name
     end

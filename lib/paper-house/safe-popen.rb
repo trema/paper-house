@@ -25,6 +25,10 @@ module PaperHouse
   # See also https://github.com/engineyard/engineyard/issues/115
   #
   class SafePopen
+    #
+    # Starts a new process and pass the subprocess IOs and pid to the
+    # block supplied.
+    #
     def self.popen command, &block
       status = nil
       begin

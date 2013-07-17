@@ -23,7 +23,7 @@ require "paper-house/platform"
 
 module PaperHouse
   #
-  # Compile *.c files into a Ruby extension library.
+  # Compiles *.c files into a Ruby extension library.
   #
   class CExtensionTask < LibraryTask
     include LinkerOptions
@@ -80,6 +80,9 @@ module PaperHouse
   end
 
 
+  #
+  # Alias for CExtensionTask
+  #
   RubyLibraryTask = CExtensionTask
 end
 

@@ -34,6 +34,9 @@ module PaperHouse
     end
 
 
+    #
+    # Runs dependency detection.
+    #
     def run
       puts @command
       exit_status = popen_command

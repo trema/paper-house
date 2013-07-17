@@ -17,9 +17,12 @@
 
 
 module PaperHouse
+  #
+  # Linker option utilities.
+  #
   module LinkerOptions
     # @!attribute ldflags
-    # Linker options pass to C compiler.
+    #   Linker options pass to C compiler.
     attr_writer :ldflags
 
     def ldflags
