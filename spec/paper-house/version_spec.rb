@@ -16,11 +16,12 @@
 #
 
 
-require "paper-house/c-extension-task"
-require "paper-house/executable-task"
-require "paper-house/shared-library-task"
-require "paper-house/static-library-task"
 require "paper-house/version"
+
+
+describe PaperHouse do
+  it { expect( PaperHouse::VERSION ).to match( /\A\d+\.\d+\.\d+\Z/ ) }
+end
 
 
 ### Local variables:

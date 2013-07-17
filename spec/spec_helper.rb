@@ -17,6 +17,7 @@
 
 
 require "rubygems"
+require "rake"
 require "rspec"
 require "spork"
 #uncomment the following line to use spork with the debugger
