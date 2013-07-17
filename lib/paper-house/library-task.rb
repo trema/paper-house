@@ -28,11 +28,10 @@ module PaperHouse
     # Find a LibraryTask by name
     #
     def self.find_by name
-      result = []
       ObjectSpace.each_object( self ) do | each |
-        result << each if each.name == name
+        return each if each.name == name.to_s
       end
-      result
+      nil
     end
 
 

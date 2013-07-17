@@ -21,7 +21,7 @@ require "paper-house/library-task"
 
 module PaperHouse
   #
-  # Compile *.c files into a static library.
+  # Compiles *.c files into a static library.
   #
   class StaticLibraryTask < LibraryTask
     #

@@ -20,6 +20,17 @@ require "paper-house/static-library-task"
 
 
 module PaperHouse
+  describe StaticLibraryTask do
+    it "should find registered tasks by name" do
+      task = StaticLibraryTask.new( :libtest )
+
+      StaticLibraryTask.find_by( :libtest ).should eq task
+      StaticLibraryTask.find_by( "libtest" ).should eq task
+      StaticLibraryTask.find_by( :no_such_task ).should be_nil
+    end
+  end
+
+
   describe StaticLibraryTask, ".new( :libtest )" do
     subject { StaticLibraryTask.new :libtest }
 
@@ -29,10 +40,13 @@ module PaperHouse
     its( :name ) { should eq "libtest" }
     its( :sources ) { should eq "*.c"  }
     its( :target_directory ) { should eq "." }
+    its( :library_name ) { should eq "libtest" }
+    its( :lname ) { should eq "test" }
+    its( :target_file_name ) { should eq "libtest.a" }
+    its( :target_path ) { should eq "./libtest.a" }
 
     it {
       expect {
-        subject
         Rake::Task[ subject.name ].invoke
       }.to raise_error( "Cannot find sources (*.c)." )
     }
