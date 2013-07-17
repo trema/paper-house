@@ -1,27 +1,27 @@
 require "paper-house"
 
-libsqrt = PaperHouse::SharedLibraryTask.new :libsqrt do | task |
-  task.library_name = "printsqrt"
+libhello = PaperHouse::SharedLibraryTask.new :libhello do | task |
+  task.library_name = "hello"
   task.version = "0.1.0"
   task.target_directory = "objects"
-  task.sources = "sources/sqrt.c"
+  task.sources = "sources/hello.c"
   task.includes = "includes"
   task.cflags = [ "-Werror", "-Wall", "-Wextra" ]
 end
 
 
-task :sqrt => [ :libsqrt, libsqrt.linker_name, libsqrt.soname ]
+task :hello => [ :libhello, libhello.linker_name, libhello.soname ]
 
-PaperHouse::ExecutableTask.new :sqrt do | task |
+PaperHouse::ExecutableTask.new :hello do | task |
   task.sources = "sources/main.c"
   task.includes = "includes"
   task.ldflags = "-L."
-  task.library_dependencies = [ "printsqrt", "m" ]
+  task.library_dependencies = [ "hello" ]
 end
 
-[ libsqrt.linker_name, libsqrt.soname ].each do | each |
+[ libhello.linker_name, libhello.soname ].each do | each |
   file each do | task |
-    symlink File.join( "objects", libsqrt.target_file_name ), task.name
+    symlink File.join( "objects", libhello.target_file_name ), task.name
   end
 
   CLOBBER.include each if FileTest.exists?( each )

@@ -1,10 +1,8 @@
 #include <stdlib.h>
-#include "sqrt.h"
+#include "hello.h"
 
 int
-main( int argc, char *argv[] ) {
-  if ( argc > 1 ) {
-    print_sqrt( atof( argv[ 1 ] ) );
-  }
+main() {
+  print_hello();
   return 0;
 }
