@@ -1,8 +1,8 @@
 Feature: PaperHouse::StaticLibraryTask
 
   PaperHouse provides a rake task called
-  `PaperHouse::StaticLibraryTask` that can build a static library from
-  *.c and *.h files. These source files can be located in multiple
+  `PaperHouse::StaticLibraryTask` to build a static library from *.c
+  and *.h files. These source files can be located in multiple
   subdirectories.
 
   Scenario: Build a static library from one *.c and *.h file
@@ -64,11 +64,42 @@ Feature: PaperHouse::StaticLibraryTask
 
   Scenario: Build a static library from multiple *.c and *.h files in subcirectories
     Given the current project directory is "examples/static_library_subdirs"
-    When I successfully run `rake sqrt`
-    Then a file named "objects/libprintsqrt.a" should exist
-    And a file named "sqrt" should exist
-    And I successfully run `./sqrt 4`
+    When I successfully run `rake hello`
+    Then the output should contain:
+    """
+    gcc -H -Werror -Wall -Wextra -fPIC -Iincludes -Isources -c sources/hello.c -o objects/hello.o
+    gcc -H -fPIC -Iincludes -Isources -c sources/main.c -o ./main.o
+    mkdir -p objects
+    ar -cq objects/libhello.a objects/hello.o
+    ranlib objects/libhello.a
+    gcc -o ./hello ./main.o -Lobjects -lhello
+    """
+    And a file named "objects/libhello.a" should exist
+    And a file named "hello" should exist
+    And I successfully run `./hello`
     And the output should contain:
     """
-    sqrt(4.0) = 2.0
+    Hello, PaperHouse!
     """
+
+  Scenario: Clean
+    Given the current project directory is "examples/static_library"
+    And I successfully run `rake hello`
+    When I successfully run `rake clean`
+    Then a file named "hello.o" should not exist
+    And a file named "main.o" should not exist
+    And a file named ".libhello.depends" should exist
+    And a file named ".hello.depends" should exist
+    And a file named "libhello.a" should exist
+    And a file named "hello" should exist
+
+  Scenario: Clobber
+    Given the current project directory is "examples/static_library"
+    And I successfully run `rake hello`
+    When I successfully run `rake clobber`
+    Then a file named "hello.o" should not exist
+    And a file named "main.o" should not exist
+    And a file named ".libhello.depends" should not exist
+    And a file named ".hello.depends" should not exist
+    And a file named "libhello.a" should not exist
+    And a file named "hello" should not exist
