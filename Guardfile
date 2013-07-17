@@ -22,6 +22,8 @@ guard 'rspec', :cli => "--color --drb -r rspec/instafail -f RSpec::Instafail", :
 end
 
 
+require "paper-house/platform"
+
 cli_opts = %w(--format progress --strict --profile)
 if PaperHouse::Platform::MAC
   cli_opts << "mac"
