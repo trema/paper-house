@@ -67,6 +67,14 @@ module PaperHouse
     attr_accessor :sources
 
 
+    #
+    # Relative path to target file.
+    #
+    def target_path
+      File.join @target_directory, target_file_name
+    end
+
+
     ############################################################################
     private
     ############################################################################
@@ -142,11 +150,6 @@ module PaperHouse
 
     def clobber_targets
       [ target_path, dependency.path ]
-    end
-
-
-    def target_path
-      File.join @target_directory, target_file_name
     end
 
 

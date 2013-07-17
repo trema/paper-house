@@ -11,5 +11,4 @@ PaperHouse::ExecutableTask.new :hello do | task |
   task.cc = "llvm-gcc"
   task.ldflags = "-L."
   task.sources = "main.c"
-  task.library_dependencies = "hello"
 end

@@ -16,7 +16,6 @@ PaperHouse::ExecutableTask.new :hello do | task |
   task.sources = "sources/main.c"
   task.includes = "includes"
   task.ldflags = "-L."
-  task.library_dependencies = [ "hello" ]
 end
 
 [ libhello.linker_name, libhello.soname ].each do | each |

@@ -28,6 +28,14 @@ module PaperHouse
     include LinkerOptions
 
 
+    def initialize name, &block
+      super name, &block
+      Rake::Task[ name ].prerequisites.each do | each |
+        find_prerequisites each
+      end
+    end
+
+
     # @!attribute executable_name
     #   Name of target executable file.
     attr_writer :executable_name

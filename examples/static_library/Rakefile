@@ -10,5 +10,4 @@ end
 PaperHouse::ExecutableTask.new :hello do | task |
   task.ldflags = "-L."
   task.sources = "main.c"
-  task.library_dependencies = "hello"
 end

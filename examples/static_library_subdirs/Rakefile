@@ -14,5 +14,4 @@ PaperHouse::ExecutableTask.new :hello do | task |
   task.sources = "sources/main.c"
   task.includes = "includes"
   task.ldflags = "-Lobjects"
-  task.library_dependencies = [ "hello" ]
 end

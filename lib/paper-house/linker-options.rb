@@ -16,6 +16,10 @@
 #
 
 
+require "paper-house/shared-library-task"
+require "paper-house/static-library-task"
+
+
 module PaperHouse
   #
   # Linker option utilities.
@@ -31,10 +35,17 @@ module PaperHouse
     end
 
 
-    # @!attribute library_dependencies
-    #   List of libraries to link.
-    attr_writer :library_dependencies
+    #
+    # List of libraries to link.
+    #
+    def library_dependencies= name
+      @library_dependencies = [ name ].flatten.compact
+    end
 
+
+    #
+    # List of libraries to link.
+    #
     def library_dependencies
       @library_dependencies ||= []
       [ @library_dependencies ].flatten.compact
@@ -44,6 +55,27 @@ module PaperHouse
     ############################################################################
     private
     ############################################################################
+
+
+    def find_prerequisites task
+      [ StaticLibraryTask, SharedLibraryTask ].each do | klass |
+        maybe_enhance task, klass
+      end
+    end
+
+
+    def maybe_enhance name, klass
+      klass.find_by( name ).each do | each |
+        enhance each
+      end
+    end
+
+
+    def enhance library_task
+      @library_dependencies ||= []
+      @library_dependencies |= [ library_task.lname ]
+      Rake::Task[ target_path ].enhance [ library_task.target_path ]
+    end
 
 
     def cc_l_options

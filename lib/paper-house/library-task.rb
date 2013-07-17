@@ -24,6 +24,18 @@ module PaperHouse
   # Common base class for static, shared, and ruby library tasks.
   #
   class LibraryTask < BuildTask
+    #
+    # Find a LibraryTask by name
+    #
+    def self.find_by name
+      result = []
+      ObjectSpace.each_object( self ) do | each |
+        result << each if each.name == name
+      end
+      result
+    end
+
+
     def initialize name, &block
       @library_dependencies = []
       super name, &block
@@ -43,6 +55,14 @@ module PaperHouse
     #
     def library_name= new_name
        @library_name = /\Alib/=~ new_name ? new_name : "lib" + new_name
+    end
+
+
+    #
+    # Name of library pass to -l option.
+    #
+    def lname
+      library_name.gsub( /^lib/, "" )
     end
   end
 end
