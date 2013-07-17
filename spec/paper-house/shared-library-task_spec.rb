@@ -20,6 +20,17 @@ require "paper-house/shared-library-task"
 
 
 module PaperHouse
+  describe SharedLibraryTask do
+    it "should find registered tasks by name" do
+      task = SharedLibraryTask.new( :libtest, "0.1.0" )
+
+      SharedLibraryTask.find_by( :libtest ).should eq task
+      SharedLibraryTask.find_by( "libtest" ).should eq task
+      SharedLibraryTask.find_by( :no_such_task ).should be_nil
+    end
+  end
+
+
   describe SharedLibraryTask, %{.new( :libtest, "0.1.0" )} do
     subject { SharedLibraryTask.new :libtest, "0.1.0" }
 
@@ -30,6 +41,11 @@ module PaperHouse
     its( :sources ) { should eq "*.c"  }
     its( :target_directory ) { should eq "." }
     its( :version ) { should eq "0.1.0" }
+    its( :linker_name ) { should eq "libtest.so" }
+    its( :soname ) { should eq "libtest.so.0" }
+    its( :target_file_name ) { should eq "libtest.so.0.1.0" }
+    its( :library_name ) { should eq "libtest" }
+    its( :lname ) { should eq "test" }
 
     it {
       expect {

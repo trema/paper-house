@@ -21,9 +21,7 @@ require "paper-house/platform"
 
 
 module PaperHouse
-  #
-  # Compile *.c files into a shared library.
-  #
+  # Compiles *.c files into a shared library.
   class SharedLibraryTask < LibraryTask
     include Platform
 

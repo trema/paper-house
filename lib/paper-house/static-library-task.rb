@@ -20,13 +20,9 @@ require "paper-house/library-task"
 
 
 module PaperHouse
-  #
   # Compiles *.c files into a static library.
-  #
   class StaticLibraryTask < LibraryTask
-    #
     # Name of target library file.
-    #
     def target_file_name
       library_name + ".a"
     end

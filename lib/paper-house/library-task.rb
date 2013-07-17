@@ -20,13 +20,9 @@ require "paper-house/build-task"
 
 
 module PaperHouse
-  #
   # Common base class for static, shared, and ruby library tasks.
-  #
   class LibraryTask < BuildTask
-    #
     # Find a LibraryTask by name
-    #
     def self.find_by name
       ObjectSpace.each_object( self ) do | each |
         return each if each.name == name.to_s
@@ -41,27 +37,21 @@ module PaperHouse
     end
 
 
-    #
     # Name of library.
-    #
     def library_name
       @library_name ||= @name
     end
 
 
-    #
     # Name of library.
-    #
     def library_name= new_name
        @library_name = /\Alib/=~ new_name ? new_name : "lib" + new_name
     end
 
 
-    #
     # Name of library pass to -l option.
-    #
     def lname
-      library_name.gsub( /^lib/, "" )
+      library_name.sub( /^lib/, "" )
     end
   end
 end
