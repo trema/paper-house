@@ -22,7 +22,14 @@ guard 'rspec', :cli => "--color --drb -r rspec/instafail -f RSpec::Instafail", :
 end
 
 
-guard 'cucumber', :rvm => [ "1.8.7", "1.9.3", "2.0.0" ], :all_on_start => false do
+cli_opts = %w(--format progress --strict --profile)
+if PaperHouse::Platform::MAC
+  cli_opts << "mac"
+else
+  cli_opts << "linux"
+end
+
+guard 'cucumber', :cli => cli_opts.join( " " ), :rvm => [ "1.8.7", "1.9.3", "2.0.0" ], :all_on_start => false do
   watch(%r{^features/.+\.feature$})
   watch(%r{^features/support/.+$})          { 'features' }
   watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'features' }

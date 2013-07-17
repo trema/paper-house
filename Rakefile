@@ -47,7 +47,14 @@ end
 
 require "cucumber/rake/task"
 Cucumber::Rake::Task.new do | t |
-  t.cucumber_opts = "--tags ~@wip"
+  profile = %w(--profile)
+  require "paper-house/platform"
+  if PaperHouse::Platform::MAC
+    profile << "mac"
+  else
+    profile << "linux"
+  end
+  t.cucumber_opts = profile.join( " " )
 end
 
 
