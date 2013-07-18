@@ -56,7 +56,7 @@ PaperHouse::ExecutableTask.new :hello do | task |
   task.sources = "sources"
   task.cflags = [ "-Werror", "-Wall", "-Wextra" ]
   task.ldflags = "-L/some/path"
-  task.library_dependencies = [ "mylib", "m" ]
+  task.library_dependencies = "m"
 end
 ```
 
