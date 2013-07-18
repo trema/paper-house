@@ -175,6 +175,17 @@ Feature: PaperHouse::SharedLibraryTask
     Hello, PaperHouse!
     """
 
+  Scenario: Automatically rebuild an executable when dependent library is updated
+    Given the current project directory is "examples/shared_library"
+    And I successfully run `rake hello`
+    And I successfully run `sleep 1`
+    And I successfully run `touch libhello.so.0`
+    When I successfully run `rake hello`
+    Then the output should contain:
+    """
+    gcc -o ./hello ./main.o -L. -lhello
+    """
+
   Scenario: Clean
     Given the current project directory is "examples/shared_library"
     When I successfully run `rake hello`
