@@ -2,7 +2,7 @@
 # Copyright (C) 2013 NEC Corporation
 #
 # This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License, version 2, as
+# it under the terms of the GNU General Public License, version 3, as
 # published by the Free Software Foundation.
 #
 # This program is distributed in the hope that it will be useful,
@@ -35,6 +35,9 @@ module PaperHouse
     end
 
 
+    #
+    # Reads the dependency information of +object_file+.
+    #
     def read object_file
       db.transaction( true ) do | store |
         store[ object_file ]
@@ -42,9 +45,12 @@ module PaperHouse
     end
 
 
-    def write object_file, dependency
+    #
+    # Saves the dependency information (+object_file+ => +dependent_files+).
+    #
+    def write object_file, dependent_files
       db.transaction( false ) do | store |
-        store[ object_file ] = dependency
+        store[ object_file ] = dependent_files
       end
     end
 

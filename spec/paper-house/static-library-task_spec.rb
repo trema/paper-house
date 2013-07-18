@@ -2,7 +2,7 @@
 # Copyright (C) 2013 NEC Corporation
 #
 # This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License, version 2, as
+# it under the terms of the GNU General Public License, version 3, as
 # published by the Free Software Foundation.
 #
 # This program is distributed in the hope that it will be useful,
@@ -19,15 +19,38 @@
 require "paper-house/static-library-task"
 
 
-describe PaperHouse::StaticLibraryTask, ".new( :libtest )" do
-  subject { PaperHouse::StaticLibraryTask.new :libtest }
+module PaperHouse
+  describe StaticLibraryTask do
+    it "should find registered tasks by name" do
+      task = StaticLibraryTask.new( :libtest )
 
-  its( :name ) { should eq "libtest" }
-  its( :cc ) { should eq "gcc" }
-  its( :target_directory ) { should eq "." }
-  its( :sources ) { should be_empty  }
-  its( :cflags ) { should be_empty }
-  its( :includes ) { should be_empty }
+      StaticLibraryTask.find_by( :libtest ).should eq task
+      StaticLibraryTask.find_by( "libtest" ).should eq task
+      StaticLibraryTask.find_by( :no_such_task ).should be_nil
+    end
+  end
+
+
+  describe StaticLibraryTask, ".new( :libtest )" do
+    subject { StaticLibraryTask.new :libtest }
+
+    its( :cc ) { should eq "gcc" }
+    its( :cflags ) { should be_empty }
+    its( :includes ) { should be_empty }
+    its( :name ) { should eq "libtest" }
+    its( :sources ) { should eq "*.c"  }
+    its( :target_directory ) { should eq "." }
+    its( :library_name ) { should eq "libtest" }
+    its( :lname ) { should eq "test" }
+    its( :target_file_name ) { should eq "libtest.a" }
+    its( :target_path ) { should eq "./libtest.a" }
+
+    it {
+      expect {
+        Rake::Task[ subject.name ].invoke
+      }.to raise_error( "Cannot find sources (*.c)." )
+    }
+  end
 end
 
 

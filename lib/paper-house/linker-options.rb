@@ -2,7 +2,7 @@
 # Copyright (C) 2013 NEC Corporation
 #
 # This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License, version 2, as
+# it under the terms of the GNU General Public License, version 3, as
 # published by the Free Software Foundation.
 #
 # This program is distributed in the hope that it will be useful,
@@ -16,10 +16,17 @@
 #
 
 
+require "paper-house/shared-library-task"
+require "paper-house/static-library-task"
+
+
 module PaperHouse
+  #
+  # Linker option utilities.
+  #
   module LinkerOptions
     # @!attribute ldflags
-    # Linker options pass to C compiler.
+    #   Linker options pass to C compiler.
     attr_writer :ldflags
 
     def ldflags
@@ -28,10 +35,17 @@ module PaperHouse
     end
 
 
-    # @!attribute library_dependencies
-    #   List of libraries to link.
-    attr_writer :library_dependencies
+    #
+    # List of libraries to link.
+    #
+    def library_dependencies= name
+      @library_dependencies = [ name ].flatten.compact
+    end
 
+
+    #
+    # List of libraries to link.
+    #
     def library_dependencies
       @library_dependencies ||= []
       [ @library_dependencies ].flatten.compact
@@ -41,6 +55,26 @@ module PaperHouse
     ############################################################################
     private
     ############################################################################
+
+
+    def find_prerequisites task
+      [ StaticLibraryTask, SharedLibraryTask ].each do | klass |
+        maybe_enhance task, klass
+      end
+    end
+
+
+    def maybe_enhance name, klass
+      task = klass.find_by( name )
+      enhance task if task
+    end
+
+
+    def enhance library_task
+      @library_dependencies ||= []
+      @library_dependencies |= [ library_task.lname ]
+      Rake::Task[ target_path ].enhance [ library_task.target_path ]
+    end
 
 
     def cc_l_options

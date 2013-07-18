@@ -2,7 +2,7 @@
 # Copyright (C) 2013 NEC Corporation
 #
 # This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License, version 2, as
+# it under the terms of the GNU General Public License, version 3, as
 # published by the Free Software Foundation.
 #
 # This program is distributed in the hope that it will be useful,
@@ -16,19 +16,11 @@
 #
 
 
-module PaperHouse
-  module CC
-    # @!attribute cc
-    #   C compiler name or path.
-    def cc
-      ENV[ "CC" ] || @cc || "gcc"
-    end
+require "paper-house/version"
 
 
-    def cc= compiler
-      @cc = compiler
-    end
-  end
+describe PaperHouse do
+  it { expect( PaperHouse::VERSION ).to match( /\A\d+\.\d+\.\d+\Z/ ) }
 end
 
 

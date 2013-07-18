@@ -3,6 +3,7 @@ require "paper-house"
 $libhello = PaperHouse::SharedLibraryTask.new :libhello do | task |
   task.version = "0.1.0"
   task.sources = "hello.c"
+  task.cc = "llvm-gcc"
 end
 
 
@@ -10,6 +11,7 @@ task :hello => [ :libhello, $libhello.linker_name, $libhello.soname ]
 
 PaperHouse::ExecutableTask.new :hello do | task |
   task.sources = "main.c"
+  task.cc = "llvm-gcc"
   task.ldflags = "-L."
 end
 

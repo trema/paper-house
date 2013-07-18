@@ -2,5 +2,5 @@
 
 void
 Init_hello() {
-  VALUE cHello = rb_define_class( "Hello", rb_cObject );
+  VALUE cHelloPaperHouse = rb_define_class( "HelloPaperHouse", rb_cObject );
 }

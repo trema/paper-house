@@ -2,7 +2,7 @@
 # Copyright (C) 2013 NEC Corporation
 #
 # This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License, version 2, as
+# it under the terms of the GNU General Public License, version 3, as
 # published by the Free Software Foundation.
 #
 # This program is distributed in the hope that it will be useful,
@@ -20,6 +20,7 @@ require "paper-house/c-extension-task"
 require "paper-house/executable-task"
 require "paper-house/shared-library-task"
 require "paper-house/static-library-task"
+require "paper-house/version"
 
 
 ### Local variables:

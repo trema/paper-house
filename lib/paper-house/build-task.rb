@@ -2,7 +2,7 @@
 # Copyright (C) 2013 NEC Corporation
 #
 # This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License, version 2, as
+# it under the terms of the GNU General Public License, version 3, as
 # published by the Free Software Foundation.
 #
 # This program is distributed in the hope that it will be useful,
@@ -17,7 +17,6 @@
 
 
 require "paper-house/auto-depends"
-require "paper-house/cc"
 require "paper-house/dependency"
 require "rake/clean"
 require "rake/tasklib"
@@ -28,9 +27,6 @@ module PaperHouse
   # Common base class for *.c compilation tasks.
   #
   class BuildTask < Rake::TaskLib
-    include CC
-
-
     # Compile options pass to C compiler.
     attr_accessor :cflags
 
@@ -49,6 +45,15 @@ module PaperHouse
     end
 
 
+    # @!attribute cc
+    #   C compiler name or path.
+    attr_writer :cc
+
+    def cc
+      ENV[ "CC" ] || @cc || "gcc"
+    end
+
+
     # @!attribute includes
     #   Glob pattern to match include directories.
     attr_writer :includes
@@ -58,12 +63,15 @@ module PaperHouse
     end
 
 
-    # @!attribute sources
-    #   Glob pattern to match source files.
-    attr_writer :sources
+    # Glob pattern to match source files.
+    attr_accessor :sources
 
-    def sources
-      FileList.new @sources
+
+    #
+    # Relative path to target file.
+    #
+    def target_path
+      File.join @target_directory, target_file_name
     end
 
 
@@ -76,19 +84,21 @@ module PaperHouse
       define_main_task
       define_all_c_compile_tasks
       define_maybe_generate_target_task
-      define_clean_targets
-      define_clobber_targets
+      define_clean_task
+      define_clobber_task
     end
 
 
     def define_main_task
-      task name => [ @target_directory, target_path ]
+      path = target_path
+      main_task = task( name => [ @target_directory, path ] )
+      main_task.comment = "Build #{ path }" if not main_task.comment
       directory @target_directory
     end
 
 
     def define_all_c_compile_tasks
-      sources.zip( objects ) do | source, object |
+      sources_list.zip( objects ) do | source, object |
         define_c_compile_task source, object
       end
     end
@@ -104,29 +114,47 @@ module PaperHouse
     def define_maybe_generate_target_task
       file target_path => objects do | task |
         next if uptodate?( task.name, task.prerequisites )
-        generate_target
+        build
       end
     end
 
 
-    def define_clean_targets
-      CLEAN.include objects
+    def build
+      check_sources_list
+      generate_target
     end
 
 
-    def define_clobber_targets
-      CLOBBER.include target_path
-      CLOBBER.include dependency.path
+    def check_sources_list
+      if sources_list.empty?
+        fail "Cannot find sources (#{ @sources })."
+      end
     end
 
 
-    def target_path
-      File.join @target_directory, target_file_name
+    def define_clean_task
+      objects.each do | each |
+        next if not FileTest.exist?( each )
+        CLEAN.include each
+      end
+    end
+
+
+    def define_clobber_task
+      clobber_targets.each do | each |
+        next if not FileTest.exist?( each )
+        CLOBBER.include each
+      end
+    end
+
+
+    def clobber_targets
+      [ target_path, dependency.path ]
     end
 
 
     def objects
-      sources.pathmap File.join( @target_directory, "%n.o")
+      sources_list.pathmap File.join( @target_directory, "%n.o" )
     end
 
 
@@ -145,7 +173,7 @@ module PaperHouse
 
     def compile o_file, c_file
       return if no_need_to_compile?( o_file, c_file )
-      auto_depends = AutoDepends.new( c_file, o_file, auto_depends_cc_options )
+      auto_depends = AutoDepends.new( c_file, o_file, cc, auto_depends_cc_options )
       auto_depends.run
       dependency.write o_file, auto_depends.data
     end
@@ -157,7 +185,7 @@ module PaperHouse
 
 
     def auto_depends_cc_options
-      "#{ @cflags.join " " } -fPIC #{ cc_i_options }"
+      ( @cflags + [ "-fPIC" ] + cc_i_options ).join " "
     end
 
 
@@ -171,8 +199,13 @@ module PaperHouse
     end
 
 
+    def sources_list
+      FileList.new( @sources )
+    end
+
+
     def auto_includes
-      FileList[ sources.pathmap( "%d" ).uniq ]
+      FileList[ sources_list.pathmap( "%d" ).uniq ]
     end
 
 

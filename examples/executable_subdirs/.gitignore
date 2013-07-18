@@ -1,0 +1,4 @@
+.hello.depends
+hello
+hello.o
+main.o

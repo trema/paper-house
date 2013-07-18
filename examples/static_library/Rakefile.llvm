@@ -3,11 +3,12 @@ require "paper-house"
 task :hello => :libhello
 
 PaperHouse::StaticLibraryTask.new :libhello do | task |
+  task.cc = "llvm-gcc"
   task.sources = "hello.c"
 end
 
-
 PaperHouse::ExecutableTask.new :hello do | task |
+  task.cc = "llvm-gcc"
   task.ldflags = "-L."
   task.sources = "main.c"
 end

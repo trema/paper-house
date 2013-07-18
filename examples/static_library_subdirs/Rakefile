@@ -1,18 +1,17 @@
 require "paper-house"
 
-task :sqrt => :libsqrt
+task :hello => :libhello
 
-PaperHouse::StaticLibraryTask.new :libsqrt do | task |
-  task.library_name = "printsqrt"
+PaperHouse::StaticLibraryTask.new :libhello do | task |
+  task.library_name = "hello"
   task.target_directory = "objects"
-  task.sources = "sources/sqrt.c"
+  task.sources = "sources/hello.c"
   task.includes = "includes"
   task.cflags = [ "-Werror", "-Wall", "-Wextra" ]
 end
 
-PaperHouse::ExecutableTask.new :sqrt do | task |
+PaperHouse::ExecutableTask.new :hello do | task |
   task.sources = "sources/main.c"
   task.includes = "includes"
   task.ldflags = "-Lobjects"
-  task.library_dependencies = [ "printsqrt", "m" ]
 end

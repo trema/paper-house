@@ -1,0 +1,8 @@
+.hello.depends
+.libhello.depends
+hello
+hello.o
+libhello.so
+libhello.so.0
+libhello.so.0.1.0
+main.o

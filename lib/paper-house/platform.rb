@@ -2,7 +2,7 @@
 # Copyright (C) 2013 NEC Corporation
 #
 # This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License, version 2, as
+# it under the terms of the GNU General Public License, version 3, as
 # published by the Free Software Foundation.
 #
 # This program is distributed in the hope that it will be useful,
@@ -27,12 +27,16 @@ module PaperHouse
     include RbConfig
 
 
+    # MACOSX or not.
     MAC = ( /darwin|mac os/=~ CONFIG[ "host_os" ] )
 
 
     if MAC
+      # File extension of C extensions.
       SHARED_EXT = ".bundle"
+      # CC options for compiling shared libraries.
       LDSHARED = "-dynamic -bundle"
+      # CC option for setting soname.
       SONAME_OPTION = "-install_name"
     else
       SHARED_EXT = ".so"
@@ -41,6 +45,7 @@ module PaperHouse
     end
 
 
+    # Include directories for compiling C extensions.
     RUBY_INCLUDES = if RUBY_VERSION >= "1.9.0"
                       [
                         File.join( CONFIG[ "rubyhdrdir" ], CONFIG[ "arch" ] ),
@@ -51,6 +56,7 @@ module PaperHouse
                       [ CONFIG[ "archdir" ] ]
                     end
 
+    # Library directories for compiling C extensions.
     RUBY_LIBDIR = CONFIG[ "libdir" ]
   end
 end

@@ -2,7 +2,7 @@
 # Copyright (C) 2013 NEC Corporation
 #
 # This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License, version 2, as
+# it under the terms of the GNU General Public License, version 3, as
 # published by the Free Software Foundation.
 #
 # This program is distributed in the hope that it will be useful,
@@ -22,10 +22,18 @@ require "paper-house/linker-options"
 
 module PaperHouse
   #
-  # Compile *.c files into an executable file.
+  # Compiles *.c files into an executable file.
   #
   class ExecutableTask < BuildTask
     include LinkerOptions
+
+
+    def initialize name, &block
+      super name, &block
+      Rake::Task[ name ].prerequisites.each do | each |
+        find_prerequisites each
+      end
+    end
 
 
     # @!attribute executable_name

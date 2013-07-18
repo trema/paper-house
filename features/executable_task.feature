@@ -1,24 +1,19 @@
 Feature: PaperHouse::ExecutableTask
 
   PaperHouse provides a rake task called `PaperHouse::ExecutableTask`
-  that can build an executable from *.c and *.h files. These source
-  files can be located in multiple subdirectories.
+  to build an executable from *.c and *.h files. These source files
+  can be located in multiple subdirectories.
 
   Scenario: Build an executable from one *.c file
     Given the current project directory is "examples/executable"
     When I successfully run `rake hello`
-    Then a file named "hello" should exist
+    Then the output should contain:
+    """
+    gcc -H -fPIC -I. -c hello.c -o ./hello.o
+    gcc -o ./hello ./hello.o
+    """
+    And a file named "hello" should exist
     And I successfully run `./hello`
-    And the output should contain:
-    """
-    Hello, PaperHouse!
-    """
-
-  Scenario: Build an executable from one *.c file using llvm-gcc
-    Given the current project directory is "examples/executable"
-    When I successfully run `rake llvm_hello`
-    Then a file named "llvm_hello" should exist
-    And I successfully run `./llvm_hello`
     And the output should contain:
     """
     Hello, PaperHouse!
@@ -27,7 +22,27 @@ Feature: PaperHouse::ExecutableTask
   Scenario: Build an executable from one *.c file using llvm-gcc by specifying `CC=` option
     Given the current project directory is "examples/executable"
     When I successfully run `rake hello CC=llvm-gcc`
-    Then a file named "hello" should exist
+    Then the output should contain:
+    """
+    llvm-gcc -H -fPIC -I. -c hello.c -o ./hello.o
+    llvm-gcc -o ./hello ./hello.o
+    """
+    And a file named "hello" should exist
+    And I successfully run `./hello`
+    And the output should contain:
+    """
+    Hello, PaperHouse!
+    """
+
+  Scenario: Build an executable from one *.c file using llvm-gcc
+    Given the current project directory is "examples/executable"
+    When I successfully run `rake -f Rakefile.llvm hello`
+    Then the output should contain:
+    """
+    llvm-gcc -H -fPIC -I. -c hello.c -o ./hello.o
+    llvm-gcc -o ./hello ./hello.o
+    """
+    And a file named "hello" should exist
     And I successfully run `./hello`
     And the output should contain:
     """
@@ -36,10 +51,33 @@ Feature: PaperHouse::ExecutableTask
 
   Scenario: Build an executable from multiple *.c and *.h files in subdirectories
     Given the current project directory is "examples/executable_subdirs"
-    When I successfully run `rake sqrt`
-    Then a file named "objects/print_sqrt" should exist
-    And I successfully run `./objects/print_sqrt 4`
+    When I successfully run `rake hello`
+    Then the output should contain:
+    """
+    gcc -H -Wall -Wextra -fPIC -Iincludes -Isources -c sources/hello.c -o objects/hello.o
+    gcc -H -Wall -Wextra -fPIC -Iincludes -Isources -c sources/main.c -o objects/main.o
+    mkdir -p objects
+    gcc -o objects/hello objects/hello.o objects/main.o
+    """
+    And a file named "objects/hello" should exist
+    And I successfully run `./objects/hello`
     And the output should contain:
     """
-    sqrt(4.0) = 2.0
+    Hello, PaperHouse!
     """
+
+  Scenario: Clean
+    Given the current project directory is "examples/executable"
+    And I successfully run `rake hello`
+    When I successfully run `rake clean`
+    Then a file named "hello.o" should not exist
+    And a file named ".hello.depends" should exist
+    And a file named "hello" should exist
+
+  Scenario: Clobber
+    Given the current project directory is "examples/executable"
+    And I successfully run `rake hello`
+    When I successfully run `rake clobber`
+    Then a file named "hello.o" should not exist
+    And a file named ".hello.depends" should not exist
+    And a file named "hello" should not exist

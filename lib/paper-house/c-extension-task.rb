@@ -2,7 +2,7 @@
 # Copyright (C) 2013 NEC Corporation
 #
 # This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License, version 2, as
+# it under the terms of the GNU General Public License, version 3, as
 # published by the Free Software Foundation.
 #
 # This program is distributed in the hope that it will be useful,
@@ -23,7 +23,7 @@ require "paper-house/platform"
 
 module PaperHouse
   #
-  # Compile *.c files into a Ruby extension library.
+  # Compiles *.c files into a Ruby extension library.
   #
   class CExtensionTask < LibraryTask
     include LinkerOptions
@@ -80,6 +80,9 @@ module PaperHouse
   end
 
 
+  #
+  # Alias for CExtensionTask
+  #
   RubyLibraryTask = CExtensionTask
 end
 

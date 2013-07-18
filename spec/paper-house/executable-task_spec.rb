@@ -2,7 +2,7 @@
 # Copyright (C) 2013 NEC Corporation
 #
 # This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License, version 2, as
+# it under the terms of the GNU General Public License, version 3, as
 # published by the Free Software Foundation.
 #
 # This program is distributed in the hope that it will be useful,
@@ -19,18 +19,26 @@
 require "paper-house/executable-task"
 
 
-describe PaperHouse::ExecutableTask, ".new( :test )" do
-  subject { PaperHouse::ExecutableTask.new :test }
+module PaperHouse
+  describe ExecutableTask, ".new( :test )" do
+    subject { ExecutableTask.new :test }
 
-  its( :name ) { should eq "test" }
-  its( :executable_name ) { should eq "test" }
-  its( :cc ) { should eq "gcc" }
-  its( :target_directory ) { should eq "." }
-  its( :sources ) { should be_empty  }
-  its( :cflags ) { should be_empty }
-  its( :includes ) { should be_empty }
-  its( :ldflags ) { should be_empty }
-  its( :library_dependencies ) { should be_empty }
+    its( :cc ) { should eq "gcc" }
+    its( :cflags ) { should be_empty }
+    its( :executable_name ) { should eq "test" }
+    its( :includes ) { should be_empty }
+    its( :ldflags ) { should be_empty }
+    its( :library_dependencies ) { should be_empty }
+    its( :name ) { should eq "test" }
+    its( :sources ) { should eq "*.c"  }
+    its( :target_directory ) { should eq "." }
+
+    it {
+      expect {
+        Rake::Task[ subject.name ].invoke
+      }.to raise_error( "Cannot find sources (*.c)." )
+    }
+  end
 end
 
 
