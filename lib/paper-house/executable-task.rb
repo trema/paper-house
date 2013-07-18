@@ -18,6 +18,8 @@
 
 require "paper-house/build-task"
 require "paper-house/linker-options"
+require "paper-house/shared-library-task"
+require "paper-house/static-library-task"
 
 
 module PaperHouse
@@ -31,7 +33,7 @@ module PaperHouse
     def initialize name, &block
       super name, &block
       Rake::Task[ name ].prerequisites.each do | each |
-        find_prerequisites each
+        find_prerequisites each, [ StaticLibraryTask, SharedLibraryTask ]
       end
     end
 
@@ -52,17 +54,17 @@ module PaperHouse
 
 
     def generate_target
-      sh "#{ cc } -o #{ target_path } #{ objects.to_s } #{ cc_options }"
+      sh ( [ cc ] + cc_options ).join( " " )
     end
 
 
     def cc_options
-      [ cc_ldflags, cc_l_options ].join " "
+      [ o_option, objects, ldflags, l_options ].flatten
     end
 
 
-    def cc_ldflags
-      ldflags.join " "
+    def o_option
+      "-o #{ target_path }"
     end
   end
 end

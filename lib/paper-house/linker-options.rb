@@ -16,10 +16,6 @@
 #
 
 
-require "paper-house/shared-library-task"
-require "paper-house/static-library-task"
-
-
 module PaperHouse
   #
   # Linker option utilities.
@@ -57,8 +53,8 @@ module PaperHouse
     ############################################################################
 
 
-    def find_prerequisites task
-      [ StaticLibraryTask, SharedLibraryTask ].each do | klass |
+    def find_prerequisites task, klass_list
+      klass_list.each do | klass |
         maybe_enhance task, klass
       end
     end
@@ -77,7 +73,7 @@ module PaperHouse
     end
 
 
-    def cc_l_options
+    def l_options
       library_dependencies.collect do | each |
         "-l#{ each }"
       end

@@ -17,12 +17,14 @@
 
 
 require "paper-house/library-task"
+require "paper-house/linker-options"
 require "paper-house/platform"
 
 
 module PaperHouse
   # Compiles *.c files into a shared library.
   class SharedLibraryTask < LibraryTask
+    include LinkerOptions
     include Platform
 
 
@@ -62,7 +64,22 @@ module PaperHouse
 
 
     def generate_target
-      sh "#{ cc } -shared -Wl,#{ SONAME_OPTION },#{ soname } -o #{ target_path } #{ objects.to_s }"
+      sh ( [ cc ] + cc_options ).join( " " )
+    end
+
+
+    def cc_options
+      [ "-shared", wl_option, o_option, objects, ldflags, l_options ].flatten
+    end
+
+
+    def wl_option
+      "-Wl,#{ SONAME_OPTION },#{ soname }"
+    end
+
+
+    def o_option
+      "-o #{ target_path }"
     end
   end
 end

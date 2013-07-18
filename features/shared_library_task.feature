@@ -13,7 +13,7 @@ Feature: PaperHouse::SharedLibraryTask
     """
     gcc -H -fPIC -I. -c hello.c -o ./hello.o
     gcc -H -fPIC -I. -c main.c -o ./main.o
-    gcc -shared -Wl,-soname,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o
+    gcc -shared -Wl,-soname,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o -lm
     ln -s libhello.so.0.1.0 libhello.so
     ln -s libhello.so.0.1.0 libhello.so.0
     gcc -o ./hello ./main.o -L. -lhello
@@ -34,7 +34,7 @@ Feature: PaperHouse::SharedLibraryTask
     """
     gcc -H -fPIC -I. -c hello.c -o ./hello.o
     gcc -H -fPIC -I. -c main.c -o ./main.o
-    gcc -shared -Wl,-install_name,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o
+    gcc -shared -Wl,-install_name,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o -lm
     ln -s libhello.so.0.1.0 libhello.so
     ln -s libhello.so.0.1.0 libhello.so.0
     gcc -o ./hello ./main.o -L. -lhello
@@ -55,7 +55,7 @@ Feature: PaperHouse::SharedLibraryTask
     """
     llvm-gcc -H -fPIC -I. -c hello.c -o ./hello.o
     llvm-gcc -H -fPIC -I. -c main.c -o ./main.o
-    llvm-gcc -shared -Wl,-soname,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o
+    llvm-gcc -shared -Wl,-soname,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o -lm
     ln -s libhello.so.0.1.0 libhello.so
     ln -s libhello.so.0.1.0 libhello.so.0
     llvm-gcc -o ./hello ./main.o -L. -lhello
@@ -76,7 +76,7 @@ Feature: PaperHouse::SharedLibraryTask
     """
     llvm-gcc -H -fPIC -I. -c hello.c -o ./hello.o
     llvm-gcc -H -fPIC -I. -c main.c -o ./main.o
-    llvm-gcc -shared -Wl,-install_name,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o
+    llvm-gcc -shared -Wl,-install_name,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o -lm
     ln -s libhello.so.0.1.0 libhello.so
     ln -s libhello.so.0.1.0 libhello.so.0
     llvm-gcc -o ./hello ./main.o -L. -lhello
@@ -97,7 +97,7 @@ Feature: PaperHouse::SharedLibraryTask
     """
     llvm-gcc -H -fPIC -I. -c hello.c -o ./hello.o
     llvm-gcc -H -fPIC -I. -c main.c -o ./main.o
-    llvm-gcc -shared -Wl,-soname,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o
+    llvm-gcc -shared -Wl,-soname,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o -lm
     ln -s libhello.so.0.1.0 libhello.so
     ln -s libhello.so.0.1.0 libhello.so.0
     llvm-gcc -o ./hello ./main.o -L. -lhello
@@ -118,7 +118,7 @@ Feature: PaperHouse::SharedLibraryTask
     """
     llvm-gcc -H -fPIC -I. -c hello.c -o ./hello.o
     llvm-gcc -H -fPIC -I. -c main.c -o ./main.o
-    llvm-gcc -shared -Wl,-install_name,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o
+    llvm-gcc -shared -Wl,-install_name,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o -lm
     ln -s libhello.so.0.1.0 libhello.so
     ln -s libhello.so.0.1.0 libhello.so.0
     llvm-gcc -o ./hello ./main.o -L. -lhello
