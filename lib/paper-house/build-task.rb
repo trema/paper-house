@@ -18,6 +18,7 @@
 
 require "paper-house/auto-depends"
 require "paper-house/dependency"
+require "paper-house/cc-options"
 require "rake/clean"
 require "rake/tasklib"
 
@@ -27,21 +28,19 @@ module PaperHouse
   # Common base class for *.c compilation tasks.
   #
   class BuildTask < Rake::TaskLib
-    # Compile options pass to C compiler.
-    attr_accessor :cflags
+    include CcOptions
+
 
     # Name of task.
     attr_accessor :name
 
-    # Directory where *.o files are created.
-    attr_accessor :target_directory
 
+    # @!attribute target_directory
+    #   Directory where *.o files are created.
+    attr_writer :target_directory
 
-    def initialize name, &block
-      init name.to_s
-      set_defaults
-      block.call self if block
-      define
+    def target_directory
+      @target_directory ||= "."
     end
 
 
@@ -54,24 +53,27 @@ module PaperHouse
     end
 
 
-    # @!attribute includes
-    #   Glob pattern to match include directories.
-    attr_writer :includes
+    # @!attribute sources
+    #   Glob pattern to match source files.
+    attr_writer :sources
 
-    def includes
-      FileList[ [ @includes ] ]
+    def sources
+      @sources ||= "*.c"
     end
 
 
-    # Glob pattern to match source files.
-    attr_accessor :sources
+    def initialize name, &block
+      @name = name.to_s
+      block.call self if block
+      define
+    end
 
 
     #
     # Relative path to target file.
     #
     def target_path
-      File.join @target_directory, target_file_name
+      File.join target_directory, target_file_name
     end
 
 
@@ -82,18 +84,22 @@ module PaperHouse
 
     def define
       define_main_task
+      define_directory_task
       define_all_c_compile_tasks
       define_maybe_generate_target_task
-      define_clean_task
-      define_clobber_task
+      define_clean_tasks
     end
 
 
     def define_main_task
       path = target_path
-      main_task = task( name => [ @target_directory, path ] )
+      main_task = task( name => [ target_directory, path ] )
       main_task.comment = "Build #{ path }" if not main_task.comment
-      directory @target_directory
+    end
+
+
+    def define_directory_task
+      directory target_directory
     end
 
 
@@ -132,6 +138,12 @@ module PaperHouse
     end
 
 
+    def define_clean_tasks
+      define_clean_task
+      define_clobber_task
+    end
+
+
     def define_clean_task
       objects.each do | each |
         next if not FileTest.exist?( each )
@@ -154,20 +166,7 @@ module PaperHouse
 
 
     def objects
-      sources_list.pathmap File.join( @target_directory, "%n.o" )
-    end
-
-
-    def init name
-      @name = name
-    end
-
-
-    def set_defaults
-      @sources = "*.c"
-      @target_directory = "."
-      @cflags = []
-      @includes = []
+      sources_list.pathmap File.join( target_directory, "%n.o" )
     end
 
 
@@ -185,27 +184,12 @@ module PaperHouse
 
 
     def auto_depends_cc_options
-      ( @cflags + [ "-fPIC" ] + cc_i_options ).join " "
-    end
-
-
-    def cc_i_options
-      include_directories.pathmap "-I%p"
-    end
-
-
-    def include_directories
-      ( includes + auto_includes ).uniq
+      ( cflags + [ "-fPIC" ] + cc_i_options ).join " "
     end
 
 
     def sources_list
-      FileList.new( @sources )
-    end
-
-
-    def auto_includes
-      FileList[ sources_list.pathmap( "%d" ).uniq ]
+      FileList.new sources
     end
 
 
