@@ -24,9 +24,7 @@ require "rake/tasklib"
 
 
 module PaperHouse
-  #
   # Common base class for *.c compilation tasks.
-  #
   class BuildTask < Rake::TaskLib
     include CcOptions
 
@@ -53,15 +51,6 @@ module PaperHouse
     end
 
 
-    # @!attribute sources
-    #   Glob pattern to match source files.
-    attr_writer :sources
-
-    def sources
-      @sources ||= "*.c"
-    end
-
-
     def initialize name, &block
       @name = name.to_s
       block.call self if block
@@ -69,9 +58,7 @@ module PaperHouse
     end
 
 
-    #
     # Relative path to target file.
-    #
     def target_path
       File.join target_directory, target_file_name
     end
@@ -184,12 +171,7 @@ module PaperHouse
 
 
     def auto_depends_cc_options
-      ( cflags + [ "-fPIC" ] + cc_i_options ).join " "
-    end
-
-
-    def sources_list
-      FileList.new sources
+      ( cflags + [ "-fPIC" ] + i_options ).join " "
     end
 
 

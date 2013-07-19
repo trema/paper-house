@@ -19,6 +19,15 @@
 module PaperHouse
   # CC option utilities.
   module CcOptions
+    # @!attribute sources
+    #   Glob pattern to match source files.
+    attr_writer :sources
+
+    def sources
+      @sources ||= "*.c"
+    end
+
+
     # @!attribute cflags
     #   Compile options pass to C compiler.
     attr_writer :cflags
@@ -43,7 +52,7 @@ module PaperHouse
     ############################################################################
 
 
-    def cc_i_options
+    def i_options
       include_directories.pathmap "-I%p"
     end
 
@@ -55,6 +64,11 @@ module PaperHouse
 
     def auto_includes
       FileList[ sources_list.pathmap( "%d" ).uniq ]
+    end
+
+
+    def sources_list
+      FileList.new sources
     end
   end
 end
