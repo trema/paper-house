@@ -68,7 +68,7 @@ module PaperHouse
 
 
     def sources_list
-      FileList.new sources
+      FileList[ sources ]
     end
   end
 end
