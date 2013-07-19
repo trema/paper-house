@@ -3,6 +3,7 @@ require "paper-house"
 $libhello = PaperHouse::SharedLibraryTask.new :libhello do | task |
   task.version = "0.1.0"
   task.sources = "hello.c"
+  task.library_dependencies = "m" # not used.
 end
 
 

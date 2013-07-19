@@ -16,15 +16,44 @@
 #
 
 
-# Base module.
+require "paper-house/cc-options"
+
+
 module PaperHouse
-  # gem version.
-  VERSION = "0.3.0"
+  class TestTask
+    include CcOptions
+
+    public
+    :i_options
+  end
+
+
+  describe CcOptions, "(default properties)" do
+    subject { TestTask.new }
+
+    its( :sources ) { should eq "*.c" }
+    its( :cflags ) { should be_empty }
+    its( :includes ) { should be_empty }
+  end
+
+
+  describe CcOptions, "(sources=./sources/foo.c, includes=./includes)" do
+    subject {
+      task = TestTask.new
+      task.sources = "./sources/foo.c"
+      task.includes = "./includes"
+      task
+    }
+
+    its( "i_options.size" ) { should eq 2 }
+    its( :i_options ) { should include "-I./includes" }
+    its( :i_options ) { should include "-I./sources" }
+  end
 end
 
 
 ### Local variables:
 ### mode: Ruby
-### coding: utf-8
+### coding: utf-8-unix
 ### indent-tabs-mode: nil
 ### End:

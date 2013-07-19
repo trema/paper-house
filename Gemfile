@@ -14,7 +14,6 @@ group :development do
   gem "guard-bundler", "~> 1.0.0"
   gem "guard-cucumber", "~> 1.4.0"
   gem "guard-rspec", "~> 3.0.2"
-  gem "guard-spork", "~> 1.5.1"
   gem "rb-fchange", "~> 0.0.6", :require => false
   gem "rb-fsevent", "~> 0.9.3", :require => false
   gem "rb-inotify", "~> 0.9.0", :require => false

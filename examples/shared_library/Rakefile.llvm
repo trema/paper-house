@@ -4,6 +4,7 @@ $libhello = PaperHouse::SharedLibraryTask.new :libhello do | task |
   task.version = "0.1.0"
   task.sources = "hello.c"
   task.cc = "llvm-gcc"
+  task.library_dependencies = "m" # not used.
 end
 
 

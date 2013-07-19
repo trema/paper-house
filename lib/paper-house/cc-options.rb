@@ -16,36 +16,35 @@
 #
 
 
-require "paper-house/build-task"
-require "paper-house/linker-options"
-require "paper-house/shared-library-task"
-require "paper-house/static-library-task"
-
-
 module PaperHouse
-  #
-  # Compiles *.c files into an executable file.
-  #
-  class ExecutableTask < BuildTask
-    include LinkerOptions
+  # CC option utilities.
+  module CcOptions
+    # @!attribute sources
+    #   Glob pattern to match source files.
+    attr_writer :sources
 
-
-    def initialize name, &block
-      super name, &block
-      Rake::Task[ name ].prerequisites.each do | each |
-        find_prerequisites each, [ StaticLibraryTask, SharedLibraryTask ]
-      end
+    def sources
+      @sources ||= "*.c"
     end
 
 
-    # @!attribute executable_name
-    #   Name of target executable file.
-    attr_writer :executable_name
+    # @!attribute cflags
+    #   Compile options pass to C compiler.
+    attr_writer :cflags
 
-    def executable_name
-      @executable_name ||= @name
+    def cflags
+      @cflags ||= []
     end
-    alias :target_file_name :executable_name
+
+
+    # @!attribute includes
+    #   Glob pattern to match include directories.
+    attr_writer :includes
+
+    def includes
+      @includes ||= []
+      FileList[ [ @includes ] ]
+    end
 
 
     ############################################################################
@@ -53,18 +52,23 @@ module PaperHouse
     ############################################################################
 
 
-    def generate_target
-      sh ( [ cc ] + cc_options ).join( " " )
+    def i_options
+      include_directories.pathmap "-I%p"
     end
 
 
-    def cc_options
-      [ o_option, objects, ldflags, l_options ].flatten
+    def include_directories
+      ( includes + auto_includes ).uniq
     end
 
 
-    def o_option
-      "-o #{ target_path }"
+    def auto_includes
+      FileList[ sources_list.pathmap( "%d" ).uniq ]
+    end
+
+
+    def sources_list
+      FileList[ sources ]
     end
   end
 end

@@ -56,20 +56,21 @@ module PaperHouse
 
 
     def generate_target
-      sh "#{ cc } #{ LDSHARED } -o #{ target_path } #{ objects.to_s } #{ cc_linker_options }"
+      sh ( [ cc ] + cc_options ).join( " " )
     end
 
 
-    def cc_linker_options
-      [
-        ldflags,
-        cc_ldflags,
-        cc_l_options,
-      ].flatten.join " "
+    def cc_options
+      [ LDSHARED, o_option, objects, ldflags, libdir_option, l_options ].flatten
     end
 
 
-    def cc_ldflags
+    def o_option
+      "-o #{ target_path }"
+    end
+
+
+    def libdir_option
       "-L#{ RUBY_LIBDIR }"
     end
 
