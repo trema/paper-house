@@ -17,6 +17,11 @@
 
 
 require "rubygems"
+
+require "simplecov"
+SimpleCov.start
+
+
 require "rake"
 require "rspec"
 
@@ -28,8 +33,10 @@ RSpec.configure do | config |
 end
 
 
-require "coveralls"
-Coveralls.wear_merged!
+if ENV[ "TRAVIS" ]
+  require "coveralls"
+  Coveralls.wear_merged!
+end
 
 
 ### Local variables:

@@ -17,6 +17,10 @@
 
 
 require "rubygems"
+
+require "simplecov"
+SimpleCov.start
+
 require "aruba/cucumber"
 require "rake"
 
@@ -24,8 +28,10 @@ require "rake"
 ENV[ "LD_LIBRARY_PATH" ] = "."
 
 
-require "coveralls"
-Coveralls.wear_merged!
+if ENV[ "TRAVIS" ]
+  require "coveralls"
+  Coveralls.wear_merged!
+end
 
 
 ### Local variables:
