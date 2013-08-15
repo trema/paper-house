@@ -40,6 +40,7 @@ module PaperHouse
 
 
     def ar
+      sh "rm -f #{ target_path }"
       sh "ar -cq #{ target_path } #{ objects.to_s }"
     end
 
