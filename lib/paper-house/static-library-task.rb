@@ -34,8 +34,15 @@ module PaperHouse
 
 
     def generate_target
+      maybe_rm_target
       ar
       ranlib
+    end
+
+
+    def maybe_rm_target
+      a_file = target_path
+      sh "rm #{ a_file }" if FileTest.exist?( a_file )
     end
 
 
