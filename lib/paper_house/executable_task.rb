@@ -16,10 +16,10 @@
 #
 
 
-require "paper-house/build-task"
-require "paper-house/linker-options"
-require "paper-house/shared-library-task"
-require "paper-house/static-library-task"
+require "paper_house/build_task"
+require "paper_house/linker_options"
+require "paper_house/shared_library_task"
+require "paper_house/static_library_task"
 
 
 module PaperHouse

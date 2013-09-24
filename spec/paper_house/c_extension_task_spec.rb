@@ -16,7 +16,7 @@
 #
 
 
-require "paper-house/c-extension-task"
+require "paper_house/c_extension_task"
 
 
 module PaperHouse

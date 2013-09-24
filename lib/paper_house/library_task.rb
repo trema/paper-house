@@ -16,11 +16,45 @@
 #
 
 
-require "paper-house/c-extension-task"
-require "paper-house/executable-task"
-require "paper-house/shared-library-task"
-require "paper-house/static-library-task"
-require "paper-house/version"
+require "paper_house/build_task"
+
+
+module PaperHouse
+  # Common base class for static, shared, and ruby library tasks.
+  class LibraryTask < BuildTask
+    # Find a LibraryTask by name
+    def self.find_by name
+      ObjectSpace.each_object( self ) do | each |
+        return each if each.name == name.to_s
+      end
+      nil
+    end
+
+
+    def initialize name, &block
+      @library_dependencies = []
+      super name, &block
+    end
+
+
+    # Name of library.
+    def library_name
+      @library_name ||= @name
+    end
+
+
+    # Name of library.
+    def library_name= new_name
+       @library_name = /\Alib/=~ new_name ? new_name : "lib" + new_name
+    end
+
+
+    # Name of library pass to -l option.
+    def lname
+      library_name.sub( /^lib/, "" )
+    end
+  end
+end
 
 
 ### Local variables:
