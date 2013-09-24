@@ -16,9 +16,9 @@
 #
 
 
-require "paper-house/auto-depends"
-require "paper-house/dependency"
-require "paper-house/cc-options"
+require "paper_house/auto_depends"
+require "paper_house/dependency"
+require "paper_house/cc_options"
 require "rake/clean"
 require "rake/tasklib"
 

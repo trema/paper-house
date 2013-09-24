@@ -1,4 +1,4 @@
-require "paper-house"
+require "paper_house"
 
 libhello = PaperHouse::SharedLibraryTask.new :libhello do | task |
   task.library_name = "hello"

@@ -1,10 +1,10 @@
 lib = File.expand_path( "../lib", __FILE__ )
 $LOAD_PATH.unshift( lib ) unless $LOAD_PATH.include?( lib )
-require "paper-house/version"
+require "paper_house/version"
 
 
 Gem::Specification.new do | gem |
-  gem.name = "paper-house"
+  gem.name = "paper_house"
   gem.version = PaperHouse::VERSION
   gem.summary = "Rake for C projects."
   gem.description = "Rake tasks for compiling C projects."

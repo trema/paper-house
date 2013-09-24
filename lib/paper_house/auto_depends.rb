@@ -16,7 +16,7 @@
 #
 
 
-require "paper-house/safe-popen"
+require "paper_house/safe_popen"
 
 
 module PaperHouse

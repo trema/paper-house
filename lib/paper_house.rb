@@ -16,40 +16,11 @@
 #
 
 
-require "paper-house/cc-options"
-
-
-module PaperHouse
-  class TestTask
-    include CcOptions
-
-    public
-    :i_options
-  end
-
-
-  describe CcOptions, "(default properties)" do
-    subject { TestTask.new }
-
-    its( :sources ) { should eq "*.c" }
-    its( :cflags ) { should be_empty }
-    its( :includes ) { should be_empty }
-  end
-
-
-  describe CcOptions, "(sources=./sources/foo.c, includes=./includes)" do
-    subject {
-      task = TestTask.new
-      task.sources = "./sources/foo.c"
-      task.includes = "./includes"
-      task
-    }
-
-    its( "i_options.size" ) { should eq 2 }
-    its( :i_options ) { should include "-I./includes" }
-    its( :i_options ) { should include "-I./sources" }
-  end
-end
+require "paper_house/c_extension_task"
+require "paper_house/executable_task"
+require "paper_house/shared_library_task"
+require "paper_house/static_library_task"
+require "paper_house/version"
 
 
 ### Local variables:

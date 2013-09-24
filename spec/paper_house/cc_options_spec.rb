@@ -16,44 +16,38 @@
 #
 
 
-require "paper-house/library-task"
+require "paper_house/cc_options"
 
 
 module PaperHouse
-  # Compiles *.c files into a static library.
-  class StaticLibraryTask < LibraryTask
-    # Name of target library file.
-    def target_file_name
-      library_name + ".a"
-    end
+  class TestTask
+    include CcOptions
+
+    public
+    :i_options
+  end
 
 
-    ##########################################################################
-    private
-    ##########################################################################
+  describe CcOptions, "(default properties)" do
+    subject { TestTask.new }
+
+    its( :sources ) { should eq "*.c" }
+    its( :cflags ) { should be_empty }
+    its( :includes ) { should be_empty }
+  end
 
 
-    def generate_target
-      maybe_rm_target
-      ar
-      ranlib
-    end
+  describe CcOptions, "(sources=./sources/foo.c, includes=./includes)" do
+    subject {
+      task = TestTask.new
+      task.sources = "./sources/foo.c"
+      task.includes = "./includes"
+      task
+    }
 
-
-    def maybe_rm_target
-      a_file = target_path
-      sh "rm #{ a_file }" if FileTest.exist?( a_file )
-    end
-
-
-    def ar
-      sh "ar -cq #{ target_path } #{ objects.to_s }"
-    end
-
-
-    def ranlib
-      sh "ranlib #{ target_path }"
-    end
+    its( "i_options.size" ) { should eq 2 }
+    its( :i_options ) { should include "-I./includes" }
+    its( :i_options ) { should include "-I./sources" }
   end
 end
 
