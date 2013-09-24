@@ -80,8 +80,7 @@ module PaperHouse
 
     def define_main_task
       path = target_path
-      main_task = task( name => [ target_directory, path ] )
-      main_task.comment = "Build #{ path }" if not main_task.comment
+      task name => [ target_directory, path ]
     end
 
 
