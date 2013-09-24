@@ -16,29 +16,11 @@
 #
 
 
-require "paper-house/executable-task"
+require "paper_house/version"
 
 
-module PaperHouse
-  describe ExecutableTask, ".new( :test )" do
-    subject { ExecutableTask.new :test }
-
-    its( :cc ) { should eq "gcc" }
-    its( :cflags ) { should be_empty }
-    its( :executable_name ) { should eq "test" }
-    its( :includes ) { should be_empty }
-    its( :ldflags ) { should be_empty }
-    its( :library_dependencies ) { should be_empty }
-    its( :name ) { should eq "test" }
-    its( :sources ) { should eq "*.c"  }
-    its( :target_directory ) { should eq "." }
-
-    it {
-      expect {
-        Rake::Task[ subject.name ].invoke
-      }.to raise_error( "Cannot find sources (*.c)." )
-    }
-  end
+describe PaperHouse do
+  it { expect( PaperHouse::VERSION ).to match( /\A\d+\.\d+\.\d+\Z/ ) }
 end
 
 

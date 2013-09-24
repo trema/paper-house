@@ -48,7 +48,7 @@ end
 require "cucumber/rake/task"
 Cucumber::Rake::Task.new do | t |
   profile = %w(--profile)
-  require "paper-house/platform"
+  require "paper_house/platform"
   if PaperHouse::Platform::MAC
     profile << "mac"
   else

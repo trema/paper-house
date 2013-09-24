@@ -1,4 +1,4 @@
-require "paper-house"
+require "paper_house"
 
 PaperHouse::ExecutableTask.new :hello do | task |
   task.executable_name = "hello"

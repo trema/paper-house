@@ -35,7 +35,7 @@ and `*.h` files in the current directory, just add the following lines
 to your `Rakefile`.
 
 ```ruby
-require "paper-house"
+require "paper_house"
 
 PaperHouse::ExecutableTask.new :hello
 ```
@@ -73,7 +73,7 @@ The simplest way to install Paper House is to use [Bundler](http://gembundler.co
 Add Paper House to your `Gemfile`:
 
 ```ruby
-gem 'paper-house'
+gem 'paper_house'
 ```
 
 and install it by running Bundler:
