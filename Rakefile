@@ -40,9 +40,7 @@ task :quality => [ :reek, :flog, :flay ]
 Coveralls::RakeTask.new
 
 
-RSpec::Core::RakeTask.new do | task |
-  task.rspec_opts = "--format documentation --color"
-end
+RSpec::Core::RakeTask.new
 
 
 require "cucumber/rake/task"
