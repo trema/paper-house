@@ -16,37 +16,42 @@
 #
 
 
-require "paper-house/c-extension-task"
+require "paper_house/build_task"
 
 
 module PaperHouse
-  [ CExtensionTask, RubyLibraryTask ].each do | klass |
-    describe klass, ".new :libtest" do
-      subject { klass.new :libtest }
-
-      its( :cc ) { should eq "gcc" }
-      its( :cflags ) { should be_empty }
-      its( :includes ) { should be_empty }
-      its( :name ) { should eq "libtest" }
-      its( :sources ) { should eq "*.c"  }
-      its( :target_directory ) { should eq "." }
-
-      it {
-        expect {
-          Rake::Task[ subject.name ].invoke
-        }.to raise_error( "Cannot find sources (*.c)." )
-      }
+  # Common base class for static, shared, and ruby library tasks.
+  class LibraryTask < BuildTask
+    # Find a LibraryTask by name
+    def self.find_by name
+      ObjectSpace.each_object( self ) do | each |
+        return each if each.name == name.to_s
+      end
+      nil
     end
 
 
-    describe klass, ".new( :libtest ) do ... end" do
-      subject {
-        klass.new :libtest do | task |
-          task.library_name = "test"
-        end
-      }
+    def initialize name, &block
+      @library_dependencies = []
+      super name, &block
+    end
 
-      its( :library_name ) { should eq "test" }
+
+    # Name of library.
+    def library_name
+      @library_name ||= @name
+    end
+
+
+    # Name of library.
+    def library_name= new_name
+       @library_name = /\Alib/=~ new_name ? new_name : "lib" + new_name
+    end
+
+
+    # Name of library pass to -l option.
+    def lname
+      library_name.sub( /^lib/, "" )
     end
   end
 end

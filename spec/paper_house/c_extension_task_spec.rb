@@ -16,38 +16,38 @@
 #
 
 
-require "paper-house/cc-options"
+require "paper_house/c_extension_task"
 
 
 module PaperHouse
-  class TestTask
-    include CcOptions
+  [ CExtensionTask, RubyLibraryTask ].each do | klass |
+    describe klass, ".new :libtest" do
+      subject { klass.new :libtest }
 
-    public
-    :i_options
-  end
+      its( :cc ) { should eq "gcc" }
+      its( :cflags ) { should be_empty }
+      its( :includes ) { should be_empty }
+      its( :name ) { should eq "libtest" }
+      its( :sources ) { should eq "*.c"  }
+      its( :target_directory ) { should eq "." }
+
+      it {
+        expect {
+          Rake::Task[ subject.name ].invoke
+        }.to raise_error( "Cannot find sources (*.c)." )
+      }
+    end
 
 
-  describe CcOptions, "(default properties)" do
-    subject { TestTask.new }
+    describe klass, ".new( :libtest ) do ... end" do
+      subject {
+        klass.new :libtest do | task |
+          task.library_name = "test"
+        end
+      }
 
-    its( :sources ) { should eq "*.c" }
-    its( :cflags ) { should be_empty }
-    its( :includes ) { should be_empty }
-  end
-
-
-  describe CcOptions, "(sources=./sources/foo.c, includes=./includes)" do
-    subject {
-      task = TestTask.new
-      task.sources = "./sources/foo.c"
-      task.includes = "./includes"
-      task
-    }
-
-    its( "i_options.size" ) { should eq 2 }
-    its( :i_options ) { should include "-I./includes" }
-    its( :i_options ) { should include "-I./sources" }
+      its( :library_name ) { should eq "test" }
+    end
   end
 end
 

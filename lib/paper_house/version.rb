@@ -16,15 +16,15 @@
 #
 
 
-require "paper-house/c-extension-task"
-require "paper-house/executable-task"
-require "paper-house/shared-library-task"
-require "paper-house/static-library-task"
-require "paper-house/version"
+# Base module.
+module PaperHouse
+  # gem version.
+  VERSION = "0.4.0"
+end
 
 
 ### Local variables:
 ### mode: Ruby
-### coding: utf-8-unix
+### coding: utf-8
 ### indent-tabs-mode: nil
 ### End:

@@ -16,42 +16,43 @@
 #
 
 
-require "paper-house/build-task"
+require "paper_house/library_task"
 
 
 module PaperHouse
-  # Common base class for static, shared, and ruby library tasks.
-  class LibraryTask < BuildTask
-    # Find a LibraryTask by name
-    def self.find_by name
-      ObjectSpace.each_object( self ) do | each |
-        return each if each.name == name.to_s
-      end
-      nil
+  # Compiles *.c files into a static library.
+  class StaticLibraryTask < LibraryTask
+    # Name of target library file.
+    def target_file_name
+      library_name + ".a"
     end
 
 
-    def initialize name, &block
-      @library_dependencies = []
-      super name, &block
+    ##########################################################################
+    private
+    ##########################################################################
+
+
+    def generate_target
+      maybe_rm_target
+      ar
+      ranlib
     end
 
 
-    # Name of library.
-    def library_name
-      @library_name ||= @name
+    def maybe_rm_target
+      a_file = target_path
+      sh "rm #{ a_file }" if FileTest.exist?( a_file )
     end
 
 
-    # Name of library.
-    def library_name= new_name
-       @library_name = /\Alib/=~ new_name ? new_name : "lib" + new_name
+    def ar
+      sh "ar -cq #{ target_path } #{ objects.to_s }"
     end
 
 
-    # Name of library pass to -l option.
-    def lname
-      library_name.sub( /^lib/, "" )
+    def ranlib
+      sh "ranlib #{ target_path }"
     end
   end
 end

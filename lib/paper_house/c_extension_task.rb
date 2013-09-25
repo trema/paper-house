@@ -16,45 +16,37 @@
 #
 
 
-require "paper-house/library-task"
-require "paper-house/linker-options"
-require "paper-house/platform"
+require "paper_house/library_task"
+require "paper_house/linker_options"
+require "paper_house/platform"
 
 
 module PaperHouse
-  # Compiles *.c files into a shared library.
-  class SharedLibraryTask < LibraryTask
+  #
+  # Compiles *.c files into a Ruby extension library.
+  #
+  class CExtensionTask < LibraryTask
     include LinkerOptions
     include Platform
 
 
-    # Library version string.
-    attr_accessor :version
+    # Name of target library.
+    attr_writer :library_name
 
 
-    def initialize name, version = nil, &block
-      @version = version
-      super name, &block
-    end
-
-
-    # Real name of target library.
+    # Name of target library file.
     def target_file_name
-      fail ":version option is a mandatory." if not @version
-      [ linker_name, @version ].join "."
-    end
-    alias :real_name :target_file_name
-
-
-    # Name of library used by linkers.
-    def linker_name
-      library_name + ".so"
+      library_name + SHARED_EXT
     end
 
 
-    # Soname of target library.
-    def soname
-      File.basename( target_file_name ).sub( /\.\d+\.\d+\Z/, "" )
+    # List of libraries to link.
+    def library_dependencies
+      if Platform::MAC
+        ( [ @library_dependencies ] << "ruby" ).flatten.compact
+      else
+        super
+      end
     end
 
 
@@ -69,19 +61,30 @@ module PaperHouse
 
 
     def cc_options
-      [ "-shared", wl_option, o_option, objects, ldflags, l_options ].flatten
-    end
-
-
-    def wl_option
-      "-Wl,#{ SONAME_OPTION },#{ soname }"
+      [ LDSHARED, o_option, objects, ldflags, libdir_option, l_options ].flatten
     end
 
 
     def o_option
       "-o #{ target_path }"
     end
+
+
+    def libdir_option
+      "-L#{ RUBY_LIBDIR }"
+    end
+
+
+    def include_directories
+      ( includes + auto_includes + RUBY_INCLUDES ).uniq
+    end
   end
+
+
+  #
+  # Alias for CExtensionTask
+  #
+  RubyLibraryTask = CExtensionTask
 end
 
 
