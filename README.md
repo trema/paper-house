@@ -1,6 +1,6 @@
 Paper House
 ===========
-[![Gem Version](https://badge.fury.io/rb/paper-house.png)](http://badge.fury.io/rb/paper-house)
+[![Gem Version](https://badge.fury.io/rb/paper_house.png)](http://badge.fury.io/rb/paper_house)
 [![Build Status](https://travis-ci.org/trema/paper-house.png?branch=develop)](https://travis-ci.org/trema/paper-house)
 [![Code Climate](https://codeclimate.com/github/trema/paper-house.png)](https://codeclimate.com/github/trema/paper-house)
 [![Coverage Status](https://coveralls.io/repos/trema/paper-house/badge.png?branch=develop)](https://coveralls.io/r/trema/paper-house)
