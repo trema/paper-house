@@ -24,9 +24,9 @@ module PaperHouse
     it "should find registered tasks by name" do
       task = SharedLibraryTask.new( :libtest, "0.1.0" )
 
-      SharedLibraryTask.find_by( :libtest ).should eq task
-      SharedLibraryTask.find_by( "libtest" ).should eq task
-      SharedLibraryTask.find_by( :no_such_task ).should be_nil
+      SharedLibraryTask.find_named( :libtest ).should eq task
+      SharedLibraryTask.find_named( "libtest" ).should eq task
+      SharedLibraryTask.find_named( :no_such_task ).should be_nil
     end
   end
 

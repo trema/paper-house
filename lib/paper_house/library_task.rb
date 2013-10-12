@@ -23,9 +23,12 @@ module PaperHouse
   # Common base class for static, shared, and ruby library tasks.
   class LibraryTask < BuildTask
     # Find a LibraryTask by name
-    def self.find_by name
+    def self.find_named name
       ObjectSpace.each_object( self ) do | each |
-        return each if each.name == name.to_s
+        obj_name = each.name
+        if Rake::Task.task_defined?( obj_name ) and obj_name == name.to_s
+          return each
+        end
       end
       nil
     end
