@@ -132,17 +132,19 @@ module PaperHouse
 
     def define_clean_task
       objects.each do | each |
-        next if not FileTest.exist?( each )
+        next if CLEAN.include?( each )
         CLEAN.include each
       end
+      CLEAN.existing!
     end
 
 
     def define_clobber_task
       clobber_targets.each do | each |
-        next if not FileTest.exist?( each )
+        next if CLOBBER.include?( each )
         CLOBBER.include each
       end
+      CLOBBER.existing!
     end
 
 
