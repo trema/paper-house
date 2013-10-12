@@ -10,6 +10,7 @@ group :development do
   gem "cucumber", "~> 1.3.8"
   gem "flay", "~> 2.4.0"
   gem "flog", "~> 4.1.2"
+  gem "fuubar", "~> 1.2.1"
   gem "guard", "~> 1.8.3"
   gem "guard-bundler", "~> 1.0.0"
   gem "guard-cucumber", "~> 1.4.0"
