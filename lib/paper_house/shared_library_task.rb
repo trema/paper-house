@@ -40,7 +40,7 @@ module PaperHouse
 
     # Real name of target library.
     def target_file_name
-      fail ":version option is a mandatory." if not @version
+      fail "version option is a mandatory." if not @version
       [ linker_name, @version ].join "."
     end
     alias :real_name :target_file_name
