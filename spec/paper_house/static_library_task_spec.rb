@@ -66,9 +66,10 @@ module PaperHouse
       end
 
       context %{with "libtest"} do
+        let( :name ) { "libtest" }
+
         context "when StaticLibraryTask named :libtest is defined" do
           before { StaticLibraryTask.new :libtest }
-          let( :name ) { "libtest" }
 
           it { expect( subject ).to be_a StaticLibraryTask }
         end
@@ -102,6 +103,7 @@ module PaperHouse
     end
   end
 end
+
 
 ### Local variables:
 ### mode: Ruby
