@@ -20,7 +20,9 @@ require "paper_house/version"
 
 
 describe PaperHouse do
-  it { expect( PaperHouse::VERSION ).to match( /\A\d+\.\d+\.\d+\Z/ ) }
+  describe "::VERSION" do
+    it { expect( PaperHouse::VERSION ).to match( /\A\d+\.\d+\.\d+\Z/ ) }
+  end
 end
 
 
