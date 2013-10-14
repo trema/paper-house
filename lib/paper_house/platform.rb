@@ -31,19 +31,14 @@ module PaperHouse
     MAC = ( /darwin|mac os/=~ CONFIG[ "host_os" ] )
 
 
-    if MAC
-      # File extension of C extensions.
-      SHARED_EXT = ".bundle"
-      # CC options for compiling shared libraries.
-      LDSHARED = "-dynamic -bundle"
-      # CC option for setting soname.
-      SONAME_OPTION = "-install_name"
-    else
-      SHARED_EXT = ".so"
-      LDSHARED = "-shared"
-      SONAME_OPTION = "-soname"
-    end
+    # File extension of C extensions.
+    SHARED_EXT = MAC ? ".bundle" : ".so"
 
+    # CC options for compiling shared libraries.
+    LDSHARED = MAC ? "-dynamic -bundle" : "-shared"
+
+    # CC option for setting soname.
+    SONAME_OPTION = MAC ? "-install_name" : "-soname"
 
     # Include directories for compiling C extensions.
     RUBY_INCLUDES = if RUBY_VERSION >= "1.9.0"
