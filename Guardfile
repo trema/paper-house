@@ -4,13 +4,7 @@ notification :terminal_notifier
 notification :tmux, :display_message => true
 
 
-guard :bundler do
-  watch('Gemfile')
-  watch(/^.+\.gemspec/)
-end
-
-
-guard :rspec, :cli => "--color -r rspec/instafail -f RSpec::Instafail", :all_on_start => false do
+guard :rspec, :cmd => "rspec --color -r rspec/instafail -f RSpec::Instafail", :all_on_start => false do
   watch(%r{^spec/paper_house/.+_spec\.rb$})
   watch(%r{^lib/paper_house/(.+)\.rb$})     { |m| "spec/paper_house/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }
