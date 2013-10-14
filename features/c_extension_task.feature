@@ -7,80 +7,62 @@ Feature: PaperHouse::CExtensionTask
   @linux
   Scenario: Build a C extension from one *.c and *.h file
     Given the current project directory is "examples/c_extension"
-    When I successfully run `rake hello`
+    When I run rake "hello"
     Then the output should match /^gcc/
     And the output should not match /^llvm-gcc/
     And a file named "hello.so" should exist
     And I successfully run `ruby -I. -rhello -e "p HelloPaperHouse"`
-    And the output should contain:
-    """
-    HelloPaperHouse
-    """
+    And the output should contain "HelloPaperHouse"
 
   @mac
   Scenario: Build a C extension from one *.c and *.h file
     Given the current project directory is "examples/c_extension"
-    When I successfully run `rake hello`
+    When I run rake "hello"
     Then the output should match /^gcc/
     And the output should not match /^llvm-gcc/
     And a file named "hello.bundle" should exist
     And I successfully run `ruby -I. -rhello -e "p HelloPaperHouse"`
-    And the output should contain:
-    """
-    HelloPaperHouse
-    """
+    And the output should contain "HelloPaperHouse"
 
   @linux
   Scenario: Build a C extension from one *.c and *.h file using llvm-gcc by specifying 'CC=' option
     Given the current project directory is "examples/c_extension"
-    When I successfully run `rake hello CC=llvm-gcc`
+    When I run rake "hello CC=llvm-gcc"
     Then the output should match /^llvm-gcc/
     And the output should not match /^gcc/
     And a file named "hello.so" should exist
     And I successfully run `ruby -I. -rhello -e "p HelloPaperHouse"`
-    And the output should contain:
-    """
-    HelloPaperHouse
-    """
+    And the output should contain "HelloPaperHouse"
 
   @mac
   Scenario: Build a C extension from one *.c and *.h file using llvm-gcc by specifying 'CC=' option
     Given the current project directory is "examples/c_extension"
-    When I successfully run `rake hello CC=llvm-gcc`
+    When I run rake "hello CC=llvm-gcc"
     Then the output should match /^llvm-gcc/
     And the output should not match /^gcc/
     And a file named "hello.bundle" should exist
     And I successfully run `ruby -I. -rhello -e "p HelloPaperHouse"`
-    And the output should contain:
-    """
-    HelloPaperHouse
-    """
+    And the output should contain "HelloPaperHouse"
 
   @linux
   Scenario: Build a C extension from one *.c and *.h file using llvm-gcc
     Given the current project directory is "examples/c_extension"
-    When I successfully run `rake -f Rakefile.llvm hello`
+    When I run rake "-f Rakefile.llvm hello"
     Then the output should match /^llvm-gcc/
     And the output should not match /^gcc/
     And a file named "hello.so" should exist
     And I successfully run `ruby -I. -rhello -e "p HelloPaperHouse"`
-    And the output should contain:
-    """
-    HelloPaperHouse
-    """
+    And the output should contain "HelloPaperHouse"
 
   @mac
   Scenario: Build a C extension from one *.c and *.h file using llvm-gcc
     Given the current project directory is "examples/c_extension"
-    When I successfully run `rake -f Rakefile.llvm hello`
+    When I run rake "-f Rakefile.llvm hello"
     Then the output should match /^llvm-gcc/
     And the output should not match /^gcc/
     And a file named "hello.bundle" should exist
     And I successfully run `ruby -I. -rhello -e "p HelloPaperHouse"`
-    And the output should contain:
-    """
-    HelloPaperHouse
-    """
+    And the output should contain "HelloPaperHouse"
 
   @linux
   Scenario: Clean

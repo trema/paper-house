@@ -1,3 +1,8 @@
+AfterConfiguration do |config|
+  FileUtils.rm_f Dir.glob( "tmp/.*_id" )
+end
+
+
 Before do
   ENV[ "CC" ] = nil
   ENV[ "dragonegg_disable_version_check" ] = "1"
