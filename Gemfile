@@ -11,9 +11,11 @@ group :development do
   gem "flay", "~> 2.4.0"
   gem "flog", "~> 4.1.2"
   gem "fuubar", "~> 1.2.1"
-  gem "guard", "~> 2.0.5"
+  gem "guard", "~> 1.8.3" if RUBY_VERSION < "1.9.0"
+  gem "guard", "~> 2.0.5" if RUBY_VERSION >= "1.9.0"
   gem "guard-cucumber", "~> 1.4.0"
-  gem "guard-rspec", "~> 4.0.1"
+  gem "guard-rspec", "~> 3.1.0" if RUBY_VERSION < "1.9.0"
+  gem "guard-rspec", "~> 4.0.1" if RUBY_VERSION >= "1.9.0"
   gem "rb-fchange", "~> 0.0.6", :require => false
   gem "rb-fsevent", "~> 0.9.3", :require => false
   gem "rb-inotify", "~> 0.9.2", :require => false
