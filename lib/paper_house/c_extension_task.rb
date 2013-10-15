@@ -42,11 +42,7 @@ module PaperHouse
 
     # List of libraries to link.
     def library_dependencies
-      if Platform::MAC
-        ( [ @library_dependencies ] << "ruby" ).flatten.compact
-      else
-        super
-      end
+      MAC ? ( [ @library_dependencies ] << "ruby" ).flatten.compact : super
     end
 
 
