@@ -45,6 +45,7 @@ Feature: PaperHouse::ExecutableTask
     When I run rake "hello"
     Then the stderr should contain:
     """
+    mkdir -p objects
     gcc -H -Wall -Wextra -fPIC -Iincludes -Isources -c sources/hello.c -o objects/hello.o
     gcc -H -Wall -Wextra -fPIC -Iincludes -Isources -c sources/main.c -o objects/main.o
     gcc -o objects/hello objects/hello.o objects/main.o
