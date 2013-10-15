@@ -38,7 +38,7 @@ module PaperHouse
     # Runs dependency detection.
     #
     def run
-      $stderr.puts @command
+      STDERR.puts @command
       exit_status = popen_command
       raise "#{ @cc } failed" if exit_status != 0
     end
@@ -67,22 +67,21 @@ module PaperHouse
     def parse_cc_h_stderr_line line, stderr
       case line
       when /^\./
-        @data << line.sub( /^\.+\s+/, "" ).strip
+        extract_header_path_from line
       when /Multiple include guards/
-        filter_out_include_guards_warnings stderr
+        stderr.each_line do | each |
+          next unless each =~ /:$/
+          STDERR.puts each
+          break
+        end
       else
-        puts line
+        STDERR.puts line
       end
     end
 
 
-    def filter_out_include_guards_warnings stderr
-      stderr.each do | each |
-        if /:$/=~ each
-          puts each
-          return
-        end
-      end
+    def extract_header_path_from line
+      @data << line.sub( /^\.+\s+/, "" ).strip
     end
   end
 end
