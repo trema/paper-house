@@ -38,7 +38,7 @@ module PaperHouse
     # Runs dependency detection.
     #
     def run
-      puts @command
+      $stderr.puts @command
       exit_status = popen_command
       raise "#{ @cc } failed" if exit_status != 0
     end

@@ -179,12 +179,6 @@ module PaperHouse
     def dependency
       @dependency ||= Dependency.new( @name )
     end
-
-
-    def shell command
-      puts command
-      sh command, :verbose => false
-    end
   end
 end
 
