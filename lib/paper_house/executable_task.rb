@@ -54,7 +54,7 @@ module PaperHouse
 
 
     def generate_target
-      sh ( [ cc ] + cc_options ).join( " " )
+      shell ( [ cc ] + cc_options ).join( " " )
     end
 
 
