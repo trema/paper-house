@@ -9,12 +9,15 @@ Feature: PaperHouse::SharedLibraryTask
   Scenario: Build a shared library from one *.c and *.h file
     Given the current project directory is "examples/shared_library"
     When I run rake "hello"
-    Then the output should contain "gcc -H -fPIC -I. -c hello.c -o ./hello.o"
-    And the output should contain "gcc -H -fPIC -I. -c main.c -o ./main.o"
-    And the output should contain "gcc -shared -Wl,-soname,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o -lm"
-    And the output should contain "ln -s libhello.so.0.1.0 libhello.so"
-    And the output should contain "ln -s libhello.so.0.1.0 libhello.so.0"
-    And the output should contain "gcc -o ./hello ./main.o -L. -lhello"
+    Then the stderr should contain:
+    """
+    gcc -H -fPIC -I. -c hello.c -o ./hello.o
+    gcc -shared -Wl,-soname,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o -lm
+    ln -s libhello.so.0.1.0 libhello.so
+    ln -s libhello.so.0.1.0 libhello.so.0
+    gcc -H -fPIC -I. -c main.c -o ./main.o
+    gcc -o ./hello ./main.o -L. -lhello
+    """
     And a file named "libhello.so.0.1.0" should exist
     And a file named "hello" should exist
     And I successfully run `./hello`
@@ -24,12 +27,15 @@ Feature: PaperHouse::SharedLibraryTask
   Scenario: Build a shared library from one *.c and *.h file
     Given the current project directory is "examples/shared_library"
     When I run rake "hello"
-    Then the output should contain "gcc -H -fPIC -I. -c hello.c -o ./hello.o"
-    And the output should contain "gcc -H -fPIC -I. -c main.c -o ./main.o"
-    And the output should contain "gcc -shared -Wl,-install_name,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o -lm"
-    And the output should contain "ln -s libhello.so.0.1.0 libhello.so"
-    And the output should contain "ln -s libhello.so.0.1.0 libhello.so.0"
-    And the output should contain "gcc -o ./hello ./main.o -L. -lhello"
+    Then the stderr should contain:
+    """
+    gcc -H -fPIC -I. -c hello.c -o ./hello.o
+    gcc -shared -Wl,-install_name,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o -lm
+    ln -s libhello.so.0.1.0 libhello.so
+    ln -s libhello.so.0.1.0 libhello.so.0
+    gcc -H -fPIC -I. -c main.c -o ./main.o
+    gcc -o ./hello ./main.o -L. -lhello
+    """
     And a file named "libhello.so.0.1.0" should exist
     And a file named "hello" should exist
     And I successfully run `./hello`
@@ -39,12 +45,15 @@ Feature: PaperHouse::SharedLibraryTask
   Scenario: Build a shared library from one *.c and *.h file using llvm-gcc by specifying `CC=` option
     Given the current project directory is "examples/shared_library"
     When I run rake "hello CC=llvm-gcc"
-    Then the output should contain "llvm-gcc -H -fPIC -I. -c hello.c -o ./hello.o"
-    And the output should contain "llvm-gcc -H -fPIC -I. -c main.c -o ./main.o"
-    And the output should contain "llvm-gcc -shared -Wl,-soname,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o -lm"
-    And the output should contain "ln -s libhello.so.0.1.0 libhello.so"
-    And the output should contain "ln -s libhello.so.0.1.0 libhello.so.0"
-    And the output should contain "llvm-gcc -o ./hello ./main.o -L. -lhello"
+    Then the stderr should contain:
+    """
+    llvm-gcc -H -fPIC -I. -c hello.c -o ./hello.o
+    llvm-gcc -shared -Wl,-soname,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o -lm
+    ln -s libhello.so.0.1.0 libhello.so
+    ln -s libhello.so.0.1.0 libhello.so.0
+    llvm-gcc -H -fPIC -I. -c main.c -o ./main.o
+    llvm-gcc -o ./hello ./main.o -L. -lhello
+    """
     And a file named "libhello.so.0.1.0" should exist
     And a file named "hello" should exist
     And I successfully run `./hello`
@@ -54,12 +63,15 @@ Feature: PaperHouse::SharedLibraryTask
   Scenario: Build a shared library from one *.c and *.h file using llvm-gcc by specifying `CC=` option
     Given the current project directory is "examples/shared_library"
     When I run rake "hello CC=llvm-gcc"
-    Then the output should contain "llvm-gcc -H -fPIC -I. -c hello.c -o ./hello.o"
-    And the output should contain "llvm-gcc -H -fPIC -I. -c main.c -o ./main.o"
-    And the output should contain "llvm-gcc -shared -Wl,-install_name,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o -lm"
-    And the output should contain "ln -s libhello.so.0.1.0 libhello.so"
-    And the output should contain "ln -s libhello.so.0.1.0 libhello.so.0"
-    And the output should contain "llvm-gcc -o ./hello ./main.o -L. -lhello"
+    Then the stderr should contain:
+    """
+    llvm-gcc -H -fPIC -I. -c hello.c -o ./hello.o
+    llvm-gcc -shared -Wl,-install_name,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o -lm
+    ln -s libhello.so.0.1.0 libhello.so
+    ln -s libhello.so.0.1.0 libhello.so.0
+    llvm-gcc -H -fPIC -I. -c main.c -o ./main.o
+    llvm-gcc -o ./hello ./main.o -L. -lhello
+    """
     And a file named "libhello.so.0.1.0" should exist
     And a file named "hello" should exist
     And I successfully run `./hello`
@@ -69,12 +81,15 @@ Feature: PaperHouse::SharedLibraryTask
   Scenario: Build a shared library from one *.c and *.h file using llvm-gcc
     Given the current project directory is "examples/shared_library"
     When I run rake "-f Rakefile.llvm hello"
-    Then the output should contain "llvm-gcc -H -fPIC -I. -c hello.c -o ./hello.o"
-    And the output should contain "llvm-gcc -H -fPIC -I. -c main.c -o ./main.o"
-    And the output should contain "llvm-gcc -shared -Wl,-soname,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o -lm"
-    And the output should contain "ln -s libhello.so.0.1.0 libhello.so"
-    And the output should contain "ln -s libhello.so.0.1.0 libhello.so.0"
-    And the output should contain "llvm-gcc -o ./hello ./main.o -L. -lhello"
+    Then the stderr should contain:
+    """
+    llvm-gcc -H -fPIC -I. -c hello.c -o ./hello.o
+    llvm-gcc -shared -Wl,-soname,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o -lm
+    ln -s libhello.so.0.1.0 libhello.so
+    ln -s libhello.so.0.1.0 libhello.so.0
+    llvm-gcc -H -fPIC -I. -c main.c -o ./main.o
+    llvm-gcc -o ./hello ./main.o -L. -lhello
+    """
     And a file named "libhello.so.0.1.0" should exist
     And a file named "hello" should exist
     And I successfully run `./hello`
@@ -84,12 +99,15 @@ Feature: PaperHouse::SharedLibraryTask
   Scenario: Build a shared library from one *.c and *.h file using llvm-gcc
     Given the current project directory is "examples/shared_library"
     When I run rake "-f Rakefile.llvm hello"
-    Then the output should contain "llvm-gcc -H -fPIC -I. -c hello.c -o ./hello.o"
-    And the output should contain "llvm-gcc -H -fPIC -I. -c main.c -o ./main.o"
-    And the output should contain "llvm-gcc -shared -Wl,-install_name,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o -lm"
-    And the output should contain "ln -s libhello.so.0.1.0 libhello.so"
-    And the output should contain "ln -s libhello.so.0.1.0 libhello.so.0"
-    And the output should contain "llvm-gcc -o ./hello ./main.o -L. -lhello"
+    Then the stderr should contain:
+    """
+    llvm-gcc -H -fPIC -I. -c hello.c -o ./hello.o
+    llvm-gcc -shared -Wl,-install_name,libhello.so.0 -o ./libhello.so.0.1.0 ./hello.o -lm
+    ln -s libhello.so.0.1.0 libhello.so
+    ln -s libhello.so.0.1.0 libhello.so.0
+    llvm-gcc -H -fPIC -I. -c main.c -o ./main.o
+    llvm-gcc -o ./hello ./main.o -L. -lhello
+    """
     And a file named "libhello.so.0.1.0" should exist
     And a file named "hello" should exist
     And I successfully run `./hello`
@@ -99,13 +117,16 @@ Feature: PaperHouse::SharedLibraryTask
   Scenario: Build a shared library from multiple *.c and *.h files in subcirectories
     Given the current project directory is "examples/shared_library_subdirs"
     When I run rake "hello"
-    Then the output should contain "gcc -H -Werror -Wall -Wextra -fPIC -Iincludes -Isources -c sources/hello.c -o objects/hello.o"
-    And the output should contain "gcc -H -fPIC -Iincludes -Isources -c sources/main.c -o ./main.o"
-    And the output should contain "mkdir -p objects"
-    And the output should contain "gcc -shared -Wl,-soname,libhello.so.0 -o objects/libhello.so.0.1.0 objects/hello.o"
-    And the output should contain "ln -s objects/libhello.so.0.1.0 libhello.so"
-    And the output should contain "ln -s objects/libhello.so.0.1.0 libhello.so.0"
-    And the output should contain "gcc -o ./hello ./main.o -L. -lhello"
+    Then the output should contain:
+    """
+    mkdir -p objects
+    gcc -H -Werror -Wall -Wextra -fPIC -Iincludes -Isources -c sources/hello.c -o objects/hello.o
+    gcc -shared -Wl,-soname,libhello.so.0 -o objects/libhello.so.0.1.0 objects/hello.o
+    ln -s objects/libhello.so.0.1.0 libhello.so
+    ln -s objects/libhello.so.0.1.0 libhello.so.0
+    gcc -H -fPIC -Iincludes -Isources -c sources/main.c -o ./main.o
+    gcc -o ./hello ./main.o -L. -lhello
+    """
     And a file named "objects/libhello.so.0.1.0" should exist
     And a file named "hello" should exist
     And I successfully run `./hello`
@@ -115,13 +136,16 @@ Feature: PaperHouse::SharedLibraryTask
   Scenario: Build a shared library from multiple *.c and *.h files in subcirectories
     Given the current project directory is "examples/shared_library_subdirs"
     When I run rake "hello"
-    Then the output should contain "gcc -H -Werror -Wall -Wextra -fPIC -Iincludes -Isources -c sources/hello.c -o objects/hello.o"
-    And the output should contain "gcc -H -fPIC -Iincludes -Isources -c sources/main.c -o ./main.o"
-    And the output should contain "mkdir -p objects"
-    And the output should contain "gcc -shared -Wl,-install_name,libhello.so.0 -o objects/libhello.so.0.1.0 objects/hello.o"
-    And the output should contain "ln -s objects/libhello.so.0.1.0 libhello.so"
-    And the output should contain "ln -s objects/libhello.so.0.1.0 libhello.so.0"
-    And the output should contain "gcc -o ./hello ./main.o -L. -lhello"
+    Then the output should contain:
+    """
+    mkdir -p objects
+    gcc -H -Werror -Wall -Wextra -fPIC -Iincludes -Isources -c sources/hello.c -o objects/hello.o
+    gcc -shared -Wl,-install_name,libhello.so.0 -o objects/libhello.so.0.1.0 objects/hello.o
+    ln -s objects/libhello.so.0.1.0 libhello.so
+    ln -s objects/libhello.so.0.1.0 libhello.so.0
+    gcc -H -fPIC -Iincludes -Isources -c sources/main.c -o ./main.o
+    gcc -o ./hello ./main.o -L. -lhello
+    """
     And a file named "objects/libhello.so.0.1.0" should exist
     And a file named "hello" should exist
     And I successfully run `./hello`
