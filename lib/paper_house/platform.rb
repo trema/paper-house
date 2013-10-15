@@ -40,18 +40,16 @@ module PaperHouse
     # CC option for setting soname.
     SONAME_OPTION = MAC ? "-install_name" : "-soname"
 
-    # Ruby include directories for compiling C extensions (1.8).
-    RUBY_INCLUDES_1_8 = [ CONFIG[ "archdir" ] ]
-
-    # Ruby include directories for compiling C extensions (1.9 or higher).
-    RUBY_INCLUDES_1_9 = [
-                         File.join( CONFIG[ "rubyhdrdir" ], CONFIG[ "arch" ] ),
-                         File.join( CONFIG[ "rubyhdrdir" ], "ruby/backward" ),
-                         CONFIG[ "rubyhdrdir" ]
-                        ]
-
-    # Ruby include directories for compiling C extensions.
-    RUBY_INCLUDES = RUBY_VERSION >= "1.9.0" ? RUBY_INCLUDES_1_9 : RUBY_INCLUDES_1_8
+    # Include directories for compiling C extensions.
+    RUBY_INCLUDES = if RUBY_VERSION >= "1.9.0"
+                      [
+                       File.join( CONFIG[ "rubyhdrdir" ], CONFIG[ "arch" ] ),
+                       File.join( CONFIG[ "rubyhdrdir" ], "ruby/backward" ),
+                       CONFIG[ "rubyhdrdir" ]
+                      ]
+                    else
+                      [ CONFIG[ "archdir" ] ]
+                    end
 
     # Library directories for compiling C extensions.
     RUBY_LIBDIR = CONFIG[ "libdir" ]
