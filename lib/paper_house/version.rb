@@ -15,13 +15,11 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-
 # Base module.
 module PaperHouse
   # gem version.
-  VERSION = "0.4.1"
+  VERSION = '0.4.1'
 end
-
 
 ### Local variables:
 ### mode: Ruby

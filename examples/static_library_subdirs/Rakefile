@@ -7,7 +7,7 @@ PaperHouse::StaticLibraryTask.new :libhello do | task |
   task.target_directory = "objects"
   task.sources = "sources/hello.c"
   task.includes = "includes"
-  task.cflags = [ "-Werror", "-Wall", "-Wextra" ]
+  task.cflags = %w(-Werror -Wall -Wextra)
 end
 
 PaperHouse::ExecutableTask.new :hello do | task |

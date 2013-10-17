@@ -15,7 +15,6 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-
 module PaperHouse
   # CC option utilities.
   module CcOptions
@@ -24,9 +23,8 @@ module PaperHouse
     attr_writer :sources
 
     def sources
-      @sources ||= "*.c"
+      @sources ||= '*.c'
     end
-
 
     # @!attribute cflags
     #   Compile options pass to C compiler.
@@ -36,43 +34,34 @@ module PaperHouse
       @cflags ||= []
     end
 
-
     # @!attribute includes
     #   Glob pattern to match include directories.
     attr_writer :includes
 
     def includes
       @includes ||= []
-      FileList[ [ @includes ] ]
+      FileList[[@includes]]
     end
 
-
-    ############################################################################
     private
-    ############################################################################
-
 
     def i_options
-      include_directories.pathmap "-I%p"
+      include_directories.pathmap '-I%p'
     end
-
 
     def include_directories
-      ( includes + auto_includes ).uniq
+      (includes + auto_includes).uniq
     end
-
 
     def auto_includes
-      FileList[ sources_list.pathmap( "%d" ).uniq ]
+      FileList[sources_list.pathmap('%d').uniq]
     end
 
-
     def sources_list
-      FileList[ sources ]
+      FileList[sources]
     end
   end
 end
-
 
 ### Local variables:
 ### mode: Ruby

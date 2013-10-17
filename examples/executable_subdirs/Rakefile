@@ -5,5 +5,5 @@ PaperHouse::ExecutableTask.new :hello do | task |
   task.target_directory = "objects"
   task.sources = "sources/*.c"
   task.includes = "includes"
-  task.cflags = [ "-Wall", "-Wextra" ]
+  task.cflags = %w(-Wall -Wextra)
 end

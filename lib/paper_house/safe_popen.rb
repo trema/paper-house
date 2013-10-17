@@ -15,9 +15,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-
-require "popen4"
-
+require 'popen4'
 
 module PaperHouse
   #
@@ -29,11 +27,11 @@ module PaperHouse
     # Starts a new process and pass the subprocess IOs and pid to the
     # block supplied.
     #
-    def self.popen command, &block
+    def self.popen(command, &block)
       status = nil
       begin
         GC.disable
-        status = POpen4.popen4( command, &block )
+        status = POpen4.popen4(command, &block)
       ensure
         GC.enable
       end
@@ -41,7 +39,6 @@ module PaperHouse
     end
   end
 end
-
 
 ### Local variables:
 ### mode: Ruby

@@ -6,8 +6,7 @@ $libhello = PaperHouse::SharedLibraryTask.new :libhello do | task |
   task.library_dependencies = "m" # not used.
 end
 
-
-task :hello => [ :libhello, $libhello.linker_name, $libhello.soname ]
+task :hello => [:libhello, $libhello.linker_name, $libhello.soname]
 
 PaperHouse::ExecutableTask.new :hello do | task |
   task.sources = "main.c"

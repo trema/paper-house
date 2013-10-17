@@ -15,9 +15,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-
-require "rbconfig"
-
+require 'rbconfig'
 
 module PaperHouse
   #
@@ -26,36 +24,33 @@ module PaperHouse
   module Platform
     include RbConfig
 
-
     # MACOSX or not.
-    MAC = ( /darwin|mac os/=~ CONFIG[ "host_os" ] )
-
+    MAC = (/darwin|mac os/ =~ CONFIG['host_os'])
 
     # File extension of C extensions.
-    SHARED_EXT = MAC ? ".bundle" : ".so"
+    SHARED_EXT = MAC ? '.bundle' : '.so'
 
     # CC options for compiling shared libraries.
-    LDSHARED = MAC ? "-dynamic -bundle" : "-shared"
+    LDSHARED = MAC ? '-dynamic -bundle' : '-shared'
 
     # CC option for setting soname.
-    SONAME_OPTION = MAC ? "-install_name" : "-soname"
+    SONAME_OPTION = MAC ? '-install_name' : '-soname'
 
     # Include directories for compiling C extensions.
-    RUBY_INCLUDES = if RUBY_VERSION >= "1.9.0"
+    RUBY_INCLUDES = if RUBY_VERSION >= '1.9.0'
                       [
-                       File.join( CONFIG[ "rubyhdrdir" ], CONFIG[ "arch" ] ),
-                       File.join( CONFIG[ "rubyhdrdir" ], "ruby/backward" ),
-                       CONFIG[ "rubyhdrdir" ]
+                       File.join(CONFIG['rubyhdrdir'], CONFIG['arch']),
+                       File.join(CONFIG['rubyhdrdir'], 'ruby/backward'),
+                       CONFIG['rubyhdrdir']
                       ]
                     else
-                      [ CONFIG[ "archdir" ] ]
+                      [CONFIG['archdir']]
                     end
 
     # Library directories for compiling C extensions.
-    RUBY_LIBDIR = CONFIG[ "libdir" ]
+    RUBY_LIBDIR = CONFIG['libdir']
   end
 end
-
 
 ### Local variables:
 ### mode: Ruby

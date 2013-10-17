@@ -15,23 +15,17 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-
-require "paper_house/library_task"
-
+require 'paper_house/library_task'
 
 module PaperHouse
   # Compiles *.c files into a static library.
   class StaticLibraryTask < LibraryTask
     # Name of target library file.
     def target_file_name
-      library_name + ".a"
+      library_name + '.a'
     end
 
-
-    ##########################################################################
     private
-    ##########################################################################
-
 
     def generate_target
       maybe_rm_target
@@ -39,24 +33,20 @@ module PaperHouse
       ranlib
     end
 
-
     def maybe_rm_target
       a_file = target_path
-      sh "rm #{ a_file }" if FileTest.exist?( a_file )
+      sh "rm #{ a_file }" if FileTest.exist?(a_file)
     end
-
 
     def ar
       sh "ar -cq #{ target_path } #{ objects.to_s }"
     end
-
 
     def ranlib
       sh "ranlib #{ target_path }"
     end
   end
 end
-
 
 ### Local variables:
 ### mode: Ruby

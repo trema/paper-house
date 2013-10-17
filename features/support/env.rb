@@ -15,7 +15,6 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-
 require "rubygems"
 
 require "simplecov"
@@ -24,15 +23,12 @@ SimpleCov.start
 require "aruba/cucumber"
 require "rake"
 
+ENV["LD_LIBRARY_PATH"] = "."
 
-ENV[ "LD_LIBRARY_PATH" ] = "."
-
-
-if ENV[ "TRAVIS" ]
+if ENV["TRAVIS"]
   require "coveralls"
   Coveralls.wear_merged!
 end
-
 
 ### Local variables:
 ### mode: Ruby

@@ -15,24 +15,26 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-
 require "paper_house/static_library_task"
-
 
 describe "Rake::Task" do
   before { Rake::Task.clear }
 
   describe ".[]" do
-    subject { Rake::Task[ task ] }
+    subject { Rake::Task[task] }
 
     context "with :libtest" do
-      let( :task ) { :libtest }
+      let(:task) { :libtest }
 
       context "when StaticLibraryTask named :libtest is defined" do
         before { PaperHouse::StaticLibraryTask.new :libtest }
 
         describe "#invoke" do
-          it { expect { subject.invoke }.to raise_error( "Cannot find sources (*.c)." ) }
+          it do
+            expect do
+              subject.invoke
+            end.to raise_error("Cannot find sources (*.c).")
+          end
         end
       end
 
@@ -43,7 +45,6 @@ describe "Rake::Task" do
   end
 end
 
-
 module PaperHouse
   describe StaticLibraryTask do
     before { Rake::Task.clear }
@@ -52,58 +53,56 @@ module PaperHouse
       subject { StaticLibraryTask.find_named name }
 
       context "with :libtest" do
-        let( :name ) { :libtest }
+        let(:name) { :libtest }
 
         context "when StaticLibraryTask named :libtest is defined" do
           before { StaticLibraryTask.new :libtest }
 
-          it { expect( subject ).to be_a StaticLibraryTask }
+          it { expect(subject).to be_a StaticLibraryTask }
         end
 
         context "when StaticLibraryTask named :libtest is not defined" do
-          it { expect( subject ).to be_nil }
+          it { expect(subject).to be_nil }
         end
       end
 
       context %{with "libtest"} do
-        let( :name ) { "libtest" }
+        let(:name) { "libtest" }
 
         context "when StaticLibraryTask named :libtest is defined" do
           before { StaticLibraryTask.new :libtest }
 
-          it { expect( subject ).to be_a StaticLibraryTask }
+          it { expect(subject).to be_a StaticLibraryTask }
         end
       end
 
       context "with :NO_SUCH_TASK" do
-        let( :name ) { :NO_SUCH_TASK }
+        let(:name) { :NO_SUCH_TASK }
 
-        it { expect( subject ).to be_nil }
+        it { expect(subject).to be_nil }
       end
     end
-
 
     describe ".new" do
       subject { StaticLibraryTask.new task }
 
       context "with :libtest" do
-        let( :task ) { :libtest }
+        let(:task) { :libtest }
 
-        its( :cc ) { should eq "gcc" }
-        its( :cflags ) { should be_empty }
-        its( :includes ) { should be_empty }
-        its( :name ) { should eq "libtest" }
-        its( :sources ) { should eq "*.c"  }
-        its( :target_directory ) { should eq "." }
-        its( :library_name ) { should eq "libtest" }
-        its( :lname ) { should eq "test" }
-        its( :target_file_name ) { should eq "libtest.a" }
-        its( :target_path ) { should eq "./libtest.a" }
+        its(:cc) { should eq "gcc" }
+        its(:cflags) { should be_empty }
+        its(:includes) { should be_empty }
+        its(:name) { should eq "libtest" }
+        its(:sources) { should eq "*.c"  }
+        its(:target_directory) { should eq "." }
+        its(:library_name) { should eq "libtest" }
+        its(:lname) { should eq "test" }
+        its(:target_file_name) { should eq "libtest.a" }
+        its(:target_path) { should eq "./libtest.a" }
       end
     end
   end
 end
-
 
 ### Local variables:
 ### mode: Ruby

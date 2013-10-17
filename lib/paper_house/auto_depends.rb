@@ -15,9 +15,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-
-require "paper_house/safe_popen"
-
+require 'paper_house/safe_popen'
 
 module PaperHouse
   #
@@ -26,13 +24,11 @@ module PaperHouse
   class AutoDepends
     attr_reader :data
 
-
-    def initialize c_file, o_file, cc, cc_options
+    def initialize(c_file, o_file, cc, cc_options)
       @cc = cc
       @command = "#{ @cc } -H #{ cc_options } -c #{ c_file } -o #{ o_file }"
       @data = []
     end
-
 
     #
     # Runs dependency detection.
@@ -40,36 +36,30 @@ module PaperHouse
     def run
       STDERR.puts @command
       exit_status = popen_command
-      raise "#{ @cc } failed" if exit_status != 0
+      fail "#{ @cc } failed" if exit_status != 0
     end
 
-
-    ############################################################################
     private
-    ############################################################################
-
 
     def popen_command
-      SafePopen.popen( @command ) do | stdout, stderr, stdin, |
+      SafePopen.popen(@command) do |stdout, stderr, stdin, |
         stdin.close
         parse_cc_h_stderr stderr
       end.exitstatus
     end
 
-
-    def parse_cc_h_stderr stderr
-      stderr.each do | each |
-        parse_cc_h_stderr_line( each, stderr )
+    def parse_cc_h_stderr(stderr)
+      stderr.each do |each|
+        parse_cc_h_stderr_line(each, stderr)
       end
     end
 
-
-    def parse_cc_h_stderr_line line, stderr
+    def parse_cc_h_stderr_line(line, stderr)
       case line
       when /^\./
         extract_header_path_from line
       when /Multiple include guards/
-        stderr.each_line do | each |
+        stderr.each_line do |each|
           next unless each =~ /:$/
           STDERR.puts each
           break
@@ -79,13 +69,11 @@ module PaperHouse
       end
     end
 
-
-    def extract_header_path_from line
-      @data << line.sub( /^\.+\s+/, "" ).strip
+    def extract_header_path_from(line)
+      @data << line.sub(/^\.+\s+/, '').strip
     end
   end
 end
-
 
 ### Local variables:
 ### mode: Ruby

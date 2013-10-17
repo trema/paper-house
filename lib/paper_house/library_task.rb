@@ -15,51 +15,44 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-
-require "paper_house/build_task"
-
+require 'paper_house/build_task'
 
 module PaperHouse
   # Common base class for static, shared, and ruby library tasks.
   class LibraryTask < BuildTask
     # Find a LibraryTask by name
-    def self.find_named name
-      ObjectSpace.each_object( self ) do | each |
+    def self.find_named(name)
+      ObjectSpace.each_object(self) do |each|
         obj_name = each.name
-        if Rake::Task.task_defined?( obj_name ) and obj_name == name.to_s
+        if Rake::Task.task_defined?(obj_name) && obj_name == name.to_s
           return each
         end
       end
       nil
     end
 
-
-    def initialize name, &block
+    def initialize(name, &block)
       @library_dependencies = []
       super name, &block
     end
-
 
     # Name of library.
     def library_name
       @library_name ||= @name
     end
 
-
     # Name of library.
-    def library_name= name
+    def library_name=(name)
       new_name = name.to_s
-      @library_name = /\Alib/=~ new_name ? new_name : "lib" + new_name
+      @library_name = /\Alib/ =~ new_name ? new_name : 'lib' + new_name
     end
-
 
     # Name of library pass to -l option.
     def lname
-      library_name.sub( /^lib/, "" )
+      library_name.sub(/^lib/, '')
     end
   end
 end
-
 
 ### Local variables:
 ### mode: Ruby

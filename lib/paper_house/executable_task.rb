@@ -15,12 +15,10 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-
-require "paper_house/build_task"
-require "paper_house/linker_options"
-require "paper_house/shared_library_task"
-require "paper_house/static_library_task"
-
+require 'paper_house/build_task'
+require 'paper_house/linker_options'
+require 'paper_house/shared_library_task'
+require 'paper_house/static_library_task'
 
 module PaperHouse
   #
@@ -29,14 +27,12 @@ module PaperHouse
   class ExecutableTask < BuildTask
     include LinkerOptions
 
-
-    def initialize name, &block
+    def initialize(name, &block)
       super name, &block
-      Rake::Task[ name ].prerequisites.each do | each |
-        find_prerequisites each, [ StaticLibraryTask, SharedLibraryTask ]
+      Rake::Task[name].prerequisites.each do |each|
+        find_prerequisites each, [StaticLibraryTask, SharedLibraryTask]
       end
     end
-
 
     # @!attribute executable_name
     #   Name of target executable file.
@@ -45,30 +41,23 @@ module PaperHouse
     def executable_name
       @executable_name ||= @name
     end
-    alias :target_file_name :executable_name
+    alias_method :target_file_name, :executable_name
 
-
-    ############################################################################
     private
-    ############################################################################
-
 
     def generate_target
-      sh ( [ cc ] + cc_options ).join( " " )
+      sh(([cc] + cc_options).join(' '))
     end
-
 
     def cc_options
-      [ o_option, objects, ldflags, l_options ].flatten
+      [o_option, objects, ldflags, l_options].flatten
     end
-
 
     def o_option
       "-o #{ target_path }"
     end
   end
 end
-
 
 ### Local variables:
 ### mode: Ruby
