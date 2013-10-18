@@ -73,7 +73,7 @@ module PaperHouse
 
     # Relative path to target file.
     def target_path
-      File.join target_directory, target_file_name
+      File.join target_directory, target_file_name.to_s
     end
 
     private

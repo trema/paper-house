@@ -16,7 +16,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-require 'paper_house'
+require 'paper_house/ruby_extension_task'
 
 describe Rake::Task do
   before { Rake::Task.clear }
@@ -39,7 +39,7 @@ describe Rake::Task do
         end
       end
 
-      context 'when StaticLibraryTask named :test is not defined' do
+      context 'when RubyExtensionTask named :test is not defined' do
         it { expect { subject }.to raise_error }
       end
     end
@@ -89,7 +89,7 @@ module PaperHouse
   end
 
   describe '.new' do
-    context 'with name :test' do
+    context 'with :test' do
       subject { RubyExtensionTask.new :test }
 
       its(:cc) { should eq 'gcc' }
@@ -100,7 +100,7 @@ module PaperHouse
       its(:target_directory) { should eq '.' }
     end
 
-    context 'with name :test and block' do
+    context 'with :test and block' do
       subject do
         RubyExtensionTask.new(:test) do | task |
           task.library_name = library_name
