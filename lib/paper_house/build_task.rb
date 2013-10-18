@@ -100,7 +100,7 @@ module PaperHouse
     end
 
     def check_sources_list
-      fail "Cannot find sources (#{ @sources })." if sources_list.empty?
+      fail "Cannot find sources (#{@sources})." if sources_list.empty?
     end
 
     def define_clean_tasks

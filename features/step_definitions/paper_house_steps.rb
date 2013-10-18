@@ -7,7 +7,7 @@ Given(/^the current project directory is "(.*?)"$/) do | dir |
       FileUtils.rm_r 'objects' if FileTest.exists?('objects')
     end
   end
-  step %{I cd to "#{ example_name }"}
+  step %{I cd to "#{example_name}"}
 end
 
 When(/^I run rake "(.*?)"$/) do |args|

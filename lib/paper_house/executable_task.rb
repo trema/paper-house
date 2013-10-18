@@ -54,7 +54,7 @@ module PaperHouse
     end
 
     def o_option
-      "-o #{ target_path }"
+      "-o #{target_path}"
     end
   end
 end

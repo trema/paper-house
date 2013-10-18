@@ -6,7 +6,7 @@ def scenario_name
 end
 
 def id_file
-  File.join Dir.pwd, '..', '..', ".#{ scenario_name }_id"
+  File.join Dir.pwd, '..', '..', ".#{scenario_name}_id"
 end
 
 def new_scenario_id
@@ -18,6 +18,6 @@ end
 
 SimpleCov.start do
   root File.dirname(__FILE__)
-  command_name "#{ scenario_name } scenario ##{ new_scenario_id }"
+  command_name "#{scenario_name} scenario ##{new_scenario_id}"
   use_merging true
 end

@@ -35,15 +35,15 @@ module PaperHouse
 
     def maybe_rm_target
       a_file = target_path
-      sh "rm #{ a_file }" if FileTest.exist?(a_file)
+      sh "rm #{a_file}" if FileTest.exist?(a_file)
     end
 
     def ar
-      sh "ar -cq #{ target_path } #{ objects.to_s }"
+      sh "ar -cq #{target_path} #{objects.to_s}"
     end
 
     def ranlib
-      sh "ranlib #{ target_path }"
+      sh "ranlib #{target_path}"
     end
   end
 end

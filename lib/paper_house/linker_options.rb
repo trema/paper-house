@@ -65,7 +65,7 @@ module PaperHouse
 
     def l_options
       library_dependencies.map do |each|
-        "-l#{ each }"
+        "-l#{each}"
       end
     end
   end

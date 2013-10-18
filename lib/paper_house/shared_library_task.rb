@@ -61,11 +61,11 @@ module PaperHouse
     end
 
     def wl_option
-      "-Wl,#{ SONAME_OPTION },#{ soname }"
+      "-Wl,#{SONAME_OPTION},#{soname}"
     end
 
     def o_option
-      "-o #{ target_path }"
+      "-o #{target_path}"
     end
   end
 end
