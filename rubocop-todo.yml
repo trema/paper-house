@@ -4,6 +4,3 @@
 
 HashSyntax:
   EnforcedStyle: hash_rockets
-
-GlobalVars:
-  AllowedVariables: [$libhello]

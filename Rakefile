@@ -27,7 +27,7 @@ require 'rspec/core/rake_task'
 require 'yaml'
 require 'yard'
 
-$ruby_source = FileList['lib/**/*.rb']
+ruby_source = FileList['lib/**/*.rb']
 
 task :default => :travis
 task :travis => [:spec, :cucumber, :quality, 'coveralls:push']
@@ -54,21 +54,19 @@ Reek::Rake::Task.new do |t|
   t.verbose = false
   t.ruby_opts = ['-rubygems']
   t.reek_opts = '--quiet'
-  t.source_files = $ruby_source
+  t.source_files = ruby_source
 end
 
 desc 'Analyze for code complexity'
 task :flog do
   flog = Flog.new(:continue => true)
-  flog.flog(*$ruby_source)
+  flog.flog(*ruby_source)
   threshold = 10
 
   bad_methods = flog.totals.select do |name, score|
     !(/##{flog.no_method}$/ =~ name) && score > threshold
   end
-  bad_methods.sort do |a, b|
-    a[1] <=> b[1]
-  end.reverse.each do |name, score|
+  bad_methods.sort { |a, b| a[1] <=> b[1] }.reverse.each do |name, score|
     puts sprintf('%8.1f: %s', [score, name])
   end
   unless bad_methods.empty?
@@ -77,11 +75,11 @@ task :flog do
 end
 
 FlayTask.new do |t|
-  t.dirs = $ruby_source.map do |each|
+  t.dirs = ruby_source.map do |each|
     each[/[^\/]+/]
   end.uniq
   t.threshold = 0
-  t.verbose = $trace
+  t.verbose = true
 end
 
 task :relish do
@@ -90,7 +88,7 @@ end
 
 YARD::Rake::YardocTask.new do |t|
   t.options = ['--no-private']
-  t.options << '--debug' << '--verbose' if $trace
+  t.options << '--debug' << '--verbose' if Rake.verbose
 end
 
 def travis_yml

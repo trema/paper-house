@@ -24,6 +24,25 @@ require 'rake/tasklib'
 module PaperHouse
   # Common base class for *.c compilation tasks.
   class BuildTask < Rake::TaskLib
+    # Helper class for defining CLEAN and CLOBBER.
+    class CleanTask
+      def initialize(targets, file_list)
+        @targets = targets
+        @file_list = Object.const_get(file_list.upcase)
+        define_task
+      end
+
+      private
+
+      def define_task
+        @targets.each do |each|
+          next if @file_list.include?(each)
+          @file_list.include each
+        end
+        @file_list.existing!
+      end
+    end
+
     include CcOptions
 
     # Name of task.
@@ -104,24 +123,8 @@ module PaperHouse
     end
 
     def define_clean_tasks
-      define_clean_task
-      define_clobber_task
-    end
-
-    def define_clean_task
-      objects.each do |each|
-        next if CLEAN.include?(each)
-        CLEAN.include each
-      end
-      CLEAN.existing!
-    end
-
-    def define_clobber_task
-      clobber_targets.each do |each|
-        next if CLOBBER.include?(each)
-        CLOBBER.include each
-      end
-      CLOBBER.existing!
+      CleanTask.new objects, :clean
+      CleanTask.new clobber_targets, :clobber
     end
 
     def clobber_targets
