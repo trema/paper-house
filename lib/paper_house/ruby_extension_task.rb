@@ -36,7 +36,7 @@ module PaperHouse
 
     # Name of target library file.
     def target_file_name
-      library_name + SHARED_EXT
+      library_name.to_s + SHARED_EXT
     end
 
     # List of libraries to link.
