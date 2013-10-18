@@ -26,17 +26,18 @@ module PaperHouse
 
     def initialize(c_file, o_file, cc, cc_options)
       @cc = cc
-      @command = "#{ @cc } -H #{ cc_options } -c #{ c_file } -o #{ o_file }"
+      @command = "#{@cc} -H #{cc_options} -c #{c_file} -o #{o_file}"
       @data = []
+      @out = STDERR
     end
 
     #
     # Runs dependency detection.
     #
     def run
-      STDERR.puts @command
+      @out.puts @command
       exit_status = popen_command
-      fail "#{ @cc } failed" if exit_status != 0
+      fail "#{@cc} failed" if exit_status != 0
     end
 
     private
@@ -59,18 +60,24 @@ module PaperHouse
       when /^\./
         extract_header_path_from line
       when /Multiple include guards/
-        stderr.each_line do |each|
-          next unless each =~ /:$/
-          STDERR.puts each
-          break
-        end
+        filter_out_include_guards_warnings stderr
       else
-        STDERR.puts line
+        @out.puts line
       end
     end
 
     def extract_header_path_from(line)
       @data << line.sub(/^\.+\s+/, '').strip
+    end
+
+    private
+
+    def filter_out_include_guards_warnings(stderr)
+      stderr.each_line do |each|
+        next unless each =~ /:$/
+        @out.puts each
+        return
+      end
     end
   end
 end

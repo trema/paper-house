@@ -15,10 +15,10 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-require "paper_house/version"
+require 'paper_house/version'
 
 describe PaperHouse do
-  describe "::VERSION" do
+  describe '::VERSION' do
     it { expect(PaperHouse::VERSION).to match(/\A\d+\.\d+\.\d+\Z/) }
   end
 end

@@ -1,9 +1,9 @@
-require "paper_house"
+require 'paper_house'
 
 PaperHouse::ExecutableTask.new :hello do | task |
-  task.executable_name = "hello"
-  task.target_directory = "objects"
-  task.sources = "sources/*.c"
-  task.includes = "includes"
+  task.executable_name = 'hello'
+  task.target_directory = 'objects'
+  task.sources = 'sources/*.c'
+  task.includes = 'includes'
   task.cflags = %w(-Wall -Wextra)
 end

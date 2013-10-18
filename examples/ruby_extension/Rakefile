@@ -1,0 +1,3 @@
+require 'paper_house'
+
+PaperHouse::RubyExtensionTask.new :hello

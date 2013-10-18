@@ -7,18 +7,3 @@ HashSyntax:
 
 GlobalVars:
   AllowedVariables: [$libhello]
-
-ConstantName:
-  Enabled: false
-
-Documentation:
-  Enabled: false
-
-MethodLength:
-  Enabled: false
-
-StringLiterals:
-  Enabled: false
-
-SymbolName:
-  Enabled: false

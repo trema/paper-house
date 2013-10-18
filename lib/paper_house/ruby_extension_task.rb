@@ -19,11 +19,14 @@ require 'paper_house/library_task'
 require 'paper_house/linker_options'
 require 'paper_house/platform'
 
+#
+# Rake for C projects.
+#
 module PaperHouse
   #
   # Compiles *.c files into a Ruby extension library.
   #
-  class CExtensionTask < LibraryTask
+  class RubyExtensionTask < LibraryTask
     include LinkerOptions
     include Platform
 
@@ -51,22 +54,17 @@ module PaperHouse
     end
 
     def o_option
-      "-o #{ target_path }"
+      "-o #{target_path}"
     end
 
     def libdir_option
-      "-L#{ RUBY_LIBDIR }"
+      "-L#{RUBY_LIBDIR}"
     end
 
     def include_directories
       (includes + auto_includes + RUBY_INCLUDES).uniq
     end
   end
-
-  #
-  # Alias for CExtensionTask
-  #
-  RubyLibraryTask = CExtensionTask
 end
 
 ### Local variables:

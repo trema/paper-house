@@ -15,13 +15,13 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-require "rubygems"
+require 'rubygems'
 
-require "simplecov"
+require 'simplecov'
 SimpleCov.start
 
-require "rake"
-require "rspec"
+require 'rake'
+require 'rspec'
 
 RSpec.configure do | config |
   config.before(:all) do
@@ -29,8 +29,8 @@ RSpec.configure do | config |
   end
 end
 
-if ENV["TRAVIS"]
-  require "coveralls"
+if ENV['TRAVIS']
+  require 'coveralls'
   Coveralls.wear_merged!
 end
 

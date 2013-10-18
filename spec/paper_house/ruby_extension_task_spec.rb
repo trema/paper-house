@@ -15,36 +15,37 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-require "paper_house/c_extension_task"
+require 'paper_house'
 
+#
+# RubyExtensionTask spec.
+#
 module PaperHouse
-  [CExtensionTask, RubyLibraryTask].each do | klass |
-    describe klass, ".new :libtest" do
-      subject { klass.new :libtest }
+  describe RubyExtensionTask, '.new :libtest' do
+    subject { RubyExtensionTask.new :libtest }
 
-      its(:cc) { should eq "gcc" }
-      its(:cflags) { should be_empty }
-      its(:includes) { should be_empty }
-      its(:name) { should eq "libtest" }
-      its(:sources) { should eq "*.c"  }
-      its(:target_directory) { should eq "." }
+    its(:cc) { should eq 'gcc' }
+    its(:cflags) { should be_empty }
+    its(:includes) { should be_empty }
+    its(:name) { should eq 'libtest' }
+    its(:sources) { should eq '*.c'  }
+    its(:target_directory) { should eq '.' }
 
-      it do
-        expect do
-          Rake::Task[subject.name].invoke
-        end.to raise_error("Cannot find sources (*.c).")
+    it do
+      expect do
+        Rake::Task[subject.name].invoke
+      end.to raise_error('Cannot find sources (*.c).')
+    end
+  end
+
+  describe RubyExtensionTask, '.new( :libtest ) do ... end' do
+    subject do
+      RubyExtensionTask.new :libtest do | task |
+        task.library_name = 'test'
       end
     end
 
-    describe klass, ".new( :libtest ) do ... end" do
-      subject do
-        klass.new :libtest do | task |
-          task.library_name = "test"
-        end
-      end
-
-      its(:library_name) { should eq "test" }
-    end
+    its(:library_name) { should eq 'test' }
   end
 end
 

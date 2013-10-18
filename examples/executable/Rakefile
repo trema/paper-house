@@ -1,3 +1,3 @@
-require "paper_house"
+require 'paper_house'
 
 PaperHouse::ExecutableTask.new :hello
