@@ -28,7 +28,7 @@ module PaperHouse
     class CleanTask
       def initialize(targets, file_list)
         @targets = targets
-        @file_list = Object.const_get(file_list.upcase)
+        @file_list = Object.const_get(file_list.to_s.upcase)
         define_task
       end
 

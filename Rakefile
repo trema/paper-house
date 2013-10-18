@@ -24,6 +24,7 @@ require 'rake/tasklib'
 require 'reek/rake/task'
 require 'rspec/core'
 require 'rspec/core/rake_task'
+require 'rubocop/rake_task'
 require 'yaml'
 require 'yard'
 
@@ -31,7 +32,7 @@ ruby_source = FileList['lib/**/*.rb']
 
 task :default => :travis
 task :travis => [:spec, :cucumber, :quality, 'coveralls:push']
-task :quality => [:reek, :flog, :flay]
+task :quality => [:reek, :flog, :flay, :rubocop]
 
 Coveralls::RakeTask.new
 
@@ -81,6 +82,8 @@ FlayTask.new do |t|
   t.threshold = 0
   t.verbose = true
 end
+
+Rubocop::RakeTask.new
 
 task :relish do
   sh 'relish push trema/paper-house'
