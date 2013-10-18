@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2013 NEC Corporation
 #
@@ -36,6 +37,5 @@ end
 
 ### Local variables:
 ### mode: Ruby
-### coding: utf-8-unix
 ### indent-tabs-mode: nil
 ### End:
