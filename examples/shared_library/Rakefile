@@ -1,17 +1,23 @@
-require "paper_house"
+# -*- coding: utf-8 -*-
 
-$libhello = PaperHouse::SharedLibraryTask.new :libhello do | task |
-  task.version = "0.1.0"
-  task.sources = "hello.c"
-  task.library_dependencies = "m" # not used.
+require 'paper_house'
+
+libhello = PaperHouse::SharedLibraryTask.new :libhello do |task|
+  task.version = '0.1.0'
+  task.sources = 'hello.c'
+  task.library_dependencies = 'm' # not used.
 end
 
-
-task :hello => [ :libhello, $libhello.linker_name, $libhello.soname ]
-
-PaperHouse::ExecutableTask.new :hello do | task |
-  task.sources = "main.c"
-  task.ldflags = "-L."
+[libhello.linker_name, libhello.soname].each do |each|
+  file each do |task|
+    symlink libhello.target_file_name, task.name
+  end
+  CLOBBER.include each if FileTest.exists?(each)
 end
 
-load "symlinks.rake"
+task :hello => [:libhello, libhello.linker_name, libhello.soname]
+
+PaperHouse::ExecutableTask.new :hello do |task|
+  task.sources = 'main.c'
+  task.ldflags = '-L.'
+end

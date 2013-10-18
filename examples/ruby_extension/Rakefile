@@ -2,4 +2,4 @@
 
 require 'paper_house'
 
-PaperHouse::ExecutableTask.new :hello
+PaperHouse::RubyExtensionTask.new :hello

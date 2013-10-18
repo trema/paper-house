@@ -1,17 +1,19 @@
-require "paper_house"
+# -*- coding: utf-8 -*-
+
+require 'paper_house'
 
 task :hello => :libhello
 
 PaperHouse::StaticLibraryTask.new :libhello do | task |
-  task.library_name = "hello"
-  task.target_directory = "objects"
-  task.sources = "sources/hello.c"
-  task.includes = "includes"
-  task.cflags = [ "-Werror", "-Wall", "-Wextra" ]
+  task.library_name = 'hello'
+  task.target_directory = 'objects'
+  task.sources = 'sources/hello.c'
+  task.includes = 'includes'
+  task.cflags = %w(-Werror -Wall -Wextra)
 end
 
 PaperHouse::ExecutableTask.new :hello do | task |
-  task.sources = "sources/main.c"
-  task.includes = "includes"
-  task.ldflags = "-Lobjects"
+  task.sources = 'sources/main.c'
+  task.includes = 'includes'
+  task.ldflags = '-Lobjects'
 end

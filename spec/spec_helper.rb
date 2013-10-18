@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2013 NEC Corporation
 #
@@ -15,32 +16,26 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
+require 'rubygems'
 
-require "rubygems"
-
-require "simplecov"
+require 'simplecov'
 SimpleCov.start
 
-
-require "rake"
-require "rspec"
-
+require 'rake'
+require 'rspec'
 
 RSpec.configure do | config |
-  config.before( :all ) do
+  config.before(:all) do
     Rake::Task.clear
   end
 end
 
-
-if ENV[ "TRAVIS" ]
-  require "coveralls"
+if ENV['TRAVIS']
+  require 'coveralls'
   Coveralls.wear_merged!
 end
 
-
 ### Local variables:
 ### mode: Ruby
-### coding: utf-8-unix
 ### indent-tabs-mode: nil
 ### End:

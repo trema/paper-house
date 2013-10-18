@@ -1,0 +1,5 @@
+require "paper_house"
+
+PaperHouse::RubyExtensionTask.new :hello do |task|
+  task.cc = "llvm-gcc"
+end

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2013 NEC Corporation
 #
@@ -15,7 +16,6 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-
 module PaperHouse
   #
   # Linker option utilities.
@@ -27,60 +27,50 @@ module PaperHouse
 
     def ldflags
       @ldflags ||= []
-      [ @ldflags ].flatten.compact
+      [@ldflags].flatten.compact
     end
-
 
     #
     # List of libraries to link.
     #
-    def library_dependencies= name
-      @library_dependencies = [ name ].flatten.compact
+    def library_dependencies=(name)
+      @library_dependencies = [name].flatten.compact
     end
-
 
     #
     # List of libraries to link.
     #
     def library_dependencies
       @library_dependencies ||= []
-      [ @library_dependencies ].flatten.compact
+      [@library_dependencies].flatten.compact
     end
 
-
-    ############################################################################
     private
-    ############################################################################
 
-
-    def find_prerequisites task, klass_list
-      klass_list.each do | klass |
+    def find_prerequisites(task, klass_list)
+      klass_list.each do |klass|
         maybe_enhance task, klass
       end
     end
 
-
-    def maybe_enhance name, klass
-      task = klass.find_by( name )
+    def maybe_enhance(name, klass)
+      task = klass.find_named(name)
       enhance task if task
     end
 
-
-    def enhance library_task
+    def enhance(library_task)
       @library_dependencies ||= []
-      @library_dependencies |= [ library_task.lname ]
-      Rake::Task[ target_path ].enhance [ library_task.target_path ]
+      @library_dependencies |= [library_task.lname]
+      Rake::Task[target_path].enhance [library_task.target_path]
     end
 
-
     def l_options
-      library_dependencies.collect do | each |
-        "-l#{ each }"
+      library_dependencies.map do |each|
+        "-l#{each}"
       end
     end
   end
 end
-
 
 ### Local variables:
 ### mode: Ruby

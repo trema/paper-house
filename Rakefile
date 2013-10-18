@@ -15,122 +15,109 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
+require 'bundler/gem_tasks'
+require 'coveralls/rake/task'
+require 'flay'
+require 'flay_task'
+require 'flog'
+require 'rake/tasklib'
+require 'reek/rake/task'
+require 'rspec/core'
+require 'rspec/core/rake_task'
+require 'yaml'
+require 'yard'
 
-require "bundler/gem_tasks"
-require "coveralls/rake/task"
-require "flay"
-require "flay_task"
-require "flog"
-require "rake/tasklib"
-require "reek/rake/task"
-require "rspec/core"
-require "rspec/core/rake_task"
-require "yaml"
-require "yard"
-
-
-$ruby_source = FileList[ "lib/**/*.rb" ]
-
+ruby_source = FileList['lib/**/*.rb']
 
 task :default => :travis
-task :travis => [ :spec, :cucumber, :quality, "coveralls:push" ]
-task :quality => [ :reek, :flog, :flay ]
-
+task :travis => [:spec, :cucumber, :quality, 'coveralls:push']
+task :quality => [:reek, :flog, :flay]
 
 Coveralls::RakeTask.new
 
+RSpec::Core::RakeTask.new
 
-RSpec::Core::RakeTask.new do | task |
-  task.rspec_opts = "--format documentation --color"
-end
-
-
-require "cucumber/rake/task"
-Cucumber::Rake::Task.new do | t |
+require 'cucumber/rake/task'
+Cucumber::Rake::Task.new do |t|
   profile = %w(--profile)
-  require "paper_house/platform"
+  require 'paper_house/platform'
   if PaperHouse::Platform::MAC
-    profile << "mac"
+    profile << 'mac'
   else
-    profile << "linux"
+    profile << 'linux'
   end
-  t.cucumber_opts = profile.join( " " )
+  t.cucumber_opts = profile.join(' ')
 end
 
-
-Reek::Rake::Task.new do | t |
+Reek::Rake::Task.new do |t|
   t.fail_on_error = true
   t.verbose = false
-  t.ruby_opts = [ "-rubygems" ]
-  t.reek_opts = "--quiet"
-  t.source_files = $ruby_source
+  t.ruby_opts = ['-rubygems']
+  t.reek_opts = '--quiet'
+  t.source_files = ruby_source
 end
 
-
-desc "Analyze for code complexity"
+desc 'Analyze for code complexity'
 task :flog do
-  flog = Flog.new( :continue => true )
-  flog.flog( *$ruby_source )
+  flog = Flog.new(:continue => true)
+  flog.flog(*ruby_source)
   threshold = 10
 
-  bad_methods = flog.totals.select do | name, score |
-    ( not ( /##{flog.no_method}$/=~ name ) ) and score > threshold
+  bad_methods = flog.totals.select do |name, score|
+    !(/##{flog.no_method}$/ =~ name) && score > threshold
   end
-  bad_methods.sort do | a, b |
-    a[ 1 ] <=> b[ 1 ]
-  end.reverse.each do | name, score |
-    puts "%8.1f: %s" % [ score, name ]
+  bad_methods.sort { |a, b| a[1] <=> b[1] }.reverse.each do |name, score|
+    puts sprintf('%8.1f: %s', [score, name])
   end
   unless bad_methods.empty?
-    raise "#{ bad_methods.size } methods have a flog complexity > #{ threshold }"
+    fail "#{bad_methods.size} methods have a flog complexity > #{threshold}"
   end
 end
 
-
-FlayTask.new do | t |
-  t.dirs = $ruby_source.collect do | each |
-    each[ /[^\/]+/ ]
+FlayTask.new do |t|
+  t.dirs = ruby_source.map do |each|
+    each[/[^\/]+/]
   end.uniq
   t.threshold = 0
-  t.verbose = $trace
+  t.verbose = true
 end
 
+if RUBY_VERSION >= '1.9.0'
+  task :quality => :rubocop
+  require 'rubocop/rake_task'
+  Rubocop::RakeTask.new
+end
 
 task :relish do
-  sh "relish push trema/paper-house"
+  sh 'relish push trema/paper-house'
 end
 
-
-YARD::Rake::YardocTask.new do | t |
-  t.options = [ "--no-private" ]
-  t.options << "--debug" << "--verbose" if $trace
+YARD::Rake::YardocTask.new do |t|
+  t.options = ['--no-private']
+  t.options << '--debug' << '--verbose' if Rake.verbose
 end
-
 
 def travis_yml
-  File.join File.dirname( __FILE__ ), ".travis.yml"
+  File.join File.dirname(__FILE__), '.travis.yml'
 end
-
 
 def rubies
-  ( [ "1.8.7" ] + YAML.load_file( travis_yml )[ "rvm" ] ).uniq.sort
+  (['1.8.7'] + YAML.load_file(travis_yml)['rvm']).uniq.sort
 end
 
-
-desc "Run tests against multiple rubies"
+desc 'Run tests against multiple rubies'
 task :portability
 
-rubies.each do | each |
-  portability_task_name = "portability:#{ each }"
+rubies.each do |each|
+  portability_task_name = "portability:#{each}"
   task :portability => portability_task_name
 
-  desc "Run tests against Ruby#{ each }"
+  desc "Run tests against Ruby#{each}"
   task portability_task_name do
-    sh "rvm #{ each } exec bundle"
-    sh "rvm #{ each } exec bundle exec rake"
+    sh "rvm #{each} exec bundle"
+    sh "rvm #{each} exec bundle exec rake"
   end
 end
-
 
 ### Local variables:
 ### mode: Ruby

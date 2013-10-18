@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2013 NEC Corporation
 #
@@ -15,14 +16,13 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-
-require "paper_house/version"
-
+require 'paper_house/version'
 
 describe PaperHouse do
-  it { expect( PaperHouse::VERSION ).to match( /\A\d+\.\d+\.\d+\Z/ ) }
+  describe '::VERSION' do
+    it { expect(PaperHouse::VERSION).to match(/\A\d+\.\d+\.\d+\Z/) }
+  end
 end
-
 
 ### Local variables:
 ### mode: Ruby

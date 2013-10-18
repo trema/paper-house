@@ -1,5 +1,0 @@
-require "paper_house"
-
-PaperHouse::CExtensionTask.new :hello do | task |
-  task.cc = "llvm-gcc"
-end

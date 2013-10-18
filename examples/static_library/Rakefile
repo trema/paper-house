@@ -1,13 +1,14 @@
-require "paper_house"
+# -*- coding: utf-8 -*-
+
+require 'paper_house'
 
 task :hello => :libhello
 
 PaperHouse::StaticLibraryTask.new :libhello do | task |
-  task.sources = "hello.c"
+  task.sources = 'hello.c'
 end
 
-
 PaperHouse::ExecutableTask.new :hello do | task |
-  task.ldflags = "-L."
-  task.sources = "main.c"
+  task.ldflags = '-L.'
+  task.sources = 'main.c'
 end

@@ -1,6 +1,6 @@
 Paper House
 ===========
-[![Gem Version](https://badge.fury.io/rb/paper-house.png)](http://badge.fury.io/rb/paper-house)
+[![Gem Version](https://badge.fury.io/rb/paper_house.png)](http://badge.fury.io/rb/paper_house)
 [![Build Status](https://travis-ci.org/trema/paper-house.png?branch=develop)](https://travis-ci.org/trema/paper-house)
 [![Code Climate](https://codeclimate.com/github/trema/paper-house.png)](https://codeclimate.com/github/trema/paper-house)
 [![Coverage Status](https://coveralls.io/repos/trema/paper-house/badge.png?branch=develop)](https://coveralls.io/r/trema/paper-house)
@@ -13,7 +13,7 @@ Paper House is a ruby gem to easily build C projects using [Rake](https://github
  * [Executable](http://rubydoc.info/github/trema/paper-house/PaperHouse/ExecutableTask)
  * [Static library](http://rubydoc.info/github/trema/paper-house/PaperHouse/StaticLibraryTask)
  * [Shared library](http://rubydoc.info/github/trema/paper-house/PaperHouse/SharedLibraryTask)
- * [C extension for Ruby](http://rubydoc.info/github/trema/paper-house/PaperHouse/CExtensionTask)
+ * [Ruby extension written in C](http://rubydoc.info/github/trema/paper-house/PaperHouse/RubyExtensionTask)
 
 
 Features Overview
@@ -48,15 +48,15 @@ If you wish to customize the build process more, please set the
 following options defined in `PaperHouse::ExecutableTask`:
 
 ```ruby
-PaperHouse::ExecutableTask.new :hello do | task |
-  task.executable_name = "hello_world"
-  task.target_directory = "objects"
-  task.cc = "llvm-gcc"
-  task.includes = "includes"
-  task.sources = "sources"
-  task.cflags = [ "-Werror", "-Wall", "-Wextra" ]
-  task.ldflags = "-L/some/path"
-  task.library_dependencies = "m"
+PaperHouse::ExecutableTask.new :hello do |task|
+  task.executable_name = 'hello_world'
+  task.target_directory = 'objects'
+  task.cc = 'llvm-gcc'
+  task.includes = 'includes'
+  task.sources = 'sources'
+  task.cflags = %w(-Werror -Wall -Wextra)
+  task.ldflags = '-L/some/path'
+  task.library_dependencies = 'm'
 end
 ```
 

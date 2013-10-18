@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2013 NEC Corporation
 #
@@ -15,13 +16,11 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-
 # Base module.
 module PaperHouse
   # gem version.
-  VERSION = "0.4.0"
+  VERSION = '0.5.0'
 end
-
 
 ### Local variables:
 ### mode: Ruby

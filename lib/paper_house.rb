@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2013 NEC Corporation
 #
@@ -15,13 +16,11 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-
-require "paper_house/c_extension_task"
-require "paper_house/executable_task"
-require "paper_house/shared_library_task"
-require "paper_house/static_library_task"
-require "paper_house/version"
-
+require 'paper_house/executable_task'
+require 'paper_house/ruby_extension_task'
+require 'paper_house/shared_library_task'
+require 'paper_house/static_library_task'
+require 'paper_house/version'
 
 ### Local variables:
 ### mode: Ruby
