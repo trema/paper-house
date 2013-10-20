@@ -22,7 +22,8 @@ Features Overview
  * Provides a simple yet a powerful syntax to build above mentioned
    targets using predefined Rake tasks.
  * Pure Ruby. No additional dependency on other external tools
-   (`makedepend` etc.) to resolve file dependencies.
+   ([makedepend](http://linux.die.net/man/1/makedepend) etc.) to
+   resolve file dependencies.
  * Multi-Platform. Runs on both Linux and MacOSX, and supports all
    major version of Ruby (1.8.7, 1.9.3, 2.0.0).
 
@@ -35,17 +36,18 @@ and `*.h` files in the current directory, just add the following lines
 to your `Rakefile`.
 
 ```ruby
-require "paper_house"
+require 'paper_house'
 
 PaperHouse::ExecutableTask.new :hello
 ```
 
 This defines a new task `hello`, and `rake hello` will automatically
 analyze all file dependencies of the source files, compile them into
-an executable named `hello``.
+an executable named `hello`.
 
 If you wish to customize the build process more, please set the
-following options defined in `PaperHouse::ExecutableTask`:
+following options defined in
+[PaperHouse::ExecutableTask](http://rubydoc.info/github/trema/paper-house/PaperHouse/ExecutableTask):
 
 ```ruby
 PaperHouse::ExecutableTask.new :hello do |task|
