@@ -46,51 +46,46 @@ describe Rake::Task do
   end
 end
 
-#
-# PaperHouse::RubyExtensionTask spec.
-#
-module PaperHouse
-  describe RubyExtensionTask, '.new :test' do
-    before { Rake::Task.clear }
+describe PaperHouse::RubyExtensionTask do
+  before { Rake::Task.clear }
 
-    describe '.find_named' do
-      subject { RubyExtensionTask.find_named name }
+  describe '.find_named' do
+    subject { PaperHouse::RubyExtensionTask.find_named name }
 
-      context 'with :test' do
-        let(:name) { :test }
+    context 'with :test' do
+      let(:name) { :test }
 
-        context 'when RubyExtensionTask named :test is defined' do
-          before { RubyExtensionTask.new :test }
+      context 'when RubyExtensionTask named :test is defined' do
+        before { PaperHouse::RubyExtensionTask.new :test }
 
-          it { expect(subject).to be_a RubyExtensionTask }
-        end
-
-        context 'when RubyExtensionTask named :test is not defined' do
-          it { expect(subject).to be_nil }
-        end
+        it { expect(subject).to be_a PaperHouse::RubyExtensionTask }
       end
 
-      context %{with 'test'} do
-        let(:name) { 'test' }
-
-        context %{when RubyExtensionTask named 'test' is defined} do
-          before { RubyExtensionTask.new :test }
-
-          it { expect(subject).to be_a RubyExtensionTask }
-        end
-      end
-
-      context 'with :no_such_task' do
-        let(:name) { :no_such_task }
-
+      context 'when RubyExtensionTask named :test is not defined' do
         it { expect(subject).to be_nil }
       end
+    end
+
+    context %{with 'test'} do
+      let(:name) { 'test' }
+
+      context %{when RubyExtensionTask named 'test' is defined} do
+        before { PaperHouse::RubyExtensionTask.new :test }
+
+        it { expect(subject).to be_a PaperHouse::RubyExtensionTask }
+      end
+    end
+
+    context 'with :no_such_task' do
+      let(:name) { :no_such_task }
+
+      it { expect(subject).to be_nil }
     end
   end
 
   describe '.new' do
     context 'with :test' do
-      subject { RubyExtensionTask.new :test }
+      subject { PaperHouse::RubyExtensionTask.new :test }
 
       its(:cc) { should eq 'gcc' }
       its(:cflags) { should be_empty }
@@ -102,7 +97,7 @@ module PaperHouse
 
     context 'with :test and block' do
       subject do
-        RubyExtensionTask.new(:test) do | task |
+        PaperHouse::RubyExtensionTask.new(:test) do | task |
           task.library_name = library_name
         end
       end

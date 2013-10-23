@@ -46,51 +46,46 @@ describe Rake::Task do
   end
 end
 
-#
-# PaperHouse::SharedLibraryTask spec.
-#
-module PaperHouse
-  describe SharedLibraryTask do
-    before { Rake::Task.clear }
+describe PaperHouse::SharedLibraryTask do
+  before { Rake::Task.clear }
 
-    describe '.find_named' do
-      subject { SharedLibraryTask.find_named name }
+  describe '.find_named' do
+    subject { PaperHouse::SharedLibraryTask.find_named name }
 
-      context 'with :libtest' do
-        let(:name) { :libtest }
+    context 'with :libtest' do
+      let(:name) { :libtest }
 
-        context 'when SharedLibraryTask named :libtest is defined' do
-          before { SharedLibraryTask.new :libtest, '0.1.0' }
+      context 'when SharedLibraryTask named :libtest is defined' do
+        before { PaperHouse::SharedLibraryTask.new :libtest, '0.1.0' }
 
-          it { expect(subject).to be_a SharedLibraryTask }
-        end
-
-        context 'when SharedLibraryTask named :libtest is not defined' do
-          it { expect(subject).to be_nil }
-        end
+        it { expect(subject).to be_a PaperHouse::SharedLibraryTask }
       end
 
-      context %{with 'libtest'} do
-        let(:name) { 'libtest' }
-
-        context %{when SharedLibraryTask named 'libtest' is defined} do
-          before { SharedLibraryTask.new :libtest, '0.1.0' }
-
-          it { expect(subject).to be_a SharedLibraryTask }
-        end
-      end
-
-      context 'with :no_such_task' do
-        let(:name) { :no_such_task }
-
+      context 'when SharedLibraryTask named :libtest is not defined' do
         it { expect(subject).to be_nil }
       end
+    end
+
+    context %{with 'libtest'} do
+      let(:name) { 'libtest' }
+
+      context %{when SharedLibraryTask named 'libtest' is defined} do
+        before { PaperHouse::SharedLibraryTask.new :libtest, '0.1.0' }
+
+        it { expect(subject).to be_a PaperHouse::SharedLibraryTask }
+      end
+    end
+
+    context 'with :no_such_task' do
+      let(:name) { :no_such_task }
+
+      it { expect(subject).to be_nil }
     end
   end
 
   describe '.new' do
     context %{with name :libtest and version '0.1.0'} do
-      subject { SharedLibraryTask.new :libtest, '0.1.0' }
+      subject { PaperHouse::SharedLibraryTask.new :libtest, '0.1.0' }
 
       its(:cc) { should eq 'gcc' }
       its(:cflags) { should be_empty }
@@ -107,7 +102,7 @@ module PaperHouse
     end
 
     context 'with name :libtest and no version string' do
-      subject { SharedLibraryTask.new :libtest }
+      subject { PaperHouse::SharedLibraryTask.new :libtest }
 
       it do
         expect { subject }.to raise_error('version option is a mandatory.')
@@ -116,7 +111,7 @@ module PaperHouse
 
     context 'with name :libtest and block' do
       subject do
-        SharedLibraryTask.new(:libtest) do | task |
+        PaperHouse::SharedLibraryTask.new(:libtest) do | task |
           task.library_name = library_name
           task.version = version
         end
