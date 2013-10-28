@@ -50,6 +50,10 @@ module PaperHouse
 
     # Library directories for compiling C extensions.
     RUBY_LIBDIR = CONFIG['libdir']
+
+    def self.name
+      MAC ? 'mac' : 'linux'
+    end
   end
 end
 
