@@ -20,3 +20,8 @@ guard :cucumber, :cli => cli_opts.join( " " ), :all_on_start => false do
   watch(%r{^features/support/.+$})          { 'features' }
   watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'features' }
 end
+
+guard :bundler do
+  watch('Gemfile')
+  watch(/^.+\.gemspec/)
+end
