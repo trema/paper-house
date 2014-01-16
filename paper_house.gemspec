@@ -22,7 +22,7 @@ Gem::Specification.new do |gem|
   gem.test_files = `git ls-files -- {spec,features}/*`.split("\n")
 
   gem.add_dependency 'POpen4', '~> 0.1.4'
-  gem.add_dependency 'rake', '~> 10.1.0'
+  gem.add_dependency 'rake', '~> 10.1.1'
 end
 
 ### Local variables:
