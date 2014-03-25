@@ -23,6 +23,24 @@ require 'rake/clean'
 require 'rake/tasklib'
 
 module PaperHouse
+
+  # Exception raised if a build task fails
+  class BuildFailed < ::StandardError
+    attr_reader :command
+    attr_reader :options
+    attr_reader :status
+
+    def initialize(command, options, status)
+      @command = command
+      @options = options
+      @status = status
+    end
+
+    def message
+      "Command `#{([command] + options).join(' ')}' failed with status #{status.exitstatus}"
+    end
+  end
+
   # Common base class for *.c compilation tasks.
   class BuildTask < Rake::TaskLib
     # Helper class for defining CLEAN and CLOBBER.
@@ -153,6 +171,12 @@ module PaperHouse
 
     def dependency
       @dependency ||= Dependency.new(@name)
+    end
+
+    def generate_target
+      sh(([cc] + cc_options).join(' ')) do |ok, status|
+        ok or raise BuildFailed.new(cc, cc_options, status)
+      end
     end
   end
 end
