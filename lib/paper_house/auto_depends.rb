@@ -16,6 +16,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
+require 'paper_house/build_failed'
 require 'paper_house/safe_popen'
 
 module PaperHouse
@@ -38,7 +39,7 @@ module PaperHouse
     def run
       @out.puts @command
       exit_status = popen_command
-      fail "#{@cc} failed" if exit_status != 0
+      fail BuildFailed.new(@command, exit_status) if exit_status != 0
     end
 
     private
@@ -47,7 +48,7 @@ module PaperHouse
       SafePopen.popen(@command) do |stdout, stderr, stdin, |
         stdin.close
         parse_cc_h_stderr stderr
-      end.exitstatus
+      end
     end
 
     def parse_cc_h_stderr(stderr)
