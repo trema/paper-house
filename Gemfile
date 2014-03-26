@@ -28,6 +28,5 @@ group :test do
   gem 'fuubar', '~> 1.3.2'
   gem 'reek', '~> 1.3.7'
   gem 'rspec', '~> 2.14.1'
-  gem 'rspec-instafail', '~> 0.2.4'
   gem 'rubocop', '~> 0.19.1', platforms: [:ruby_19, :ruby_20, :ruby_21]
 end
