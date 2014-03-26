@@ -24,9 +24,3 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'POpen4', '~> 0.1.4'
   gem.add_dependency 'rake', '~> 10.2.1'
 end
-
-### Local variables:
-### mode: Ruby
-### coding: utf-8-unix
-### indent-tabs-mode: nil
-### End:

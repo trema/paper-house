@@ -31,9 +31,3 @@ group :test do
   gem 'rspec-instafail', '~> 0.2.4'
   gem 'rubocop', '~> 0.19.1', platforms: [:ruby_19, :ruby_20, :ruby_21]
 end
-
-### Local variables:
-### mode: Ruby
-### coding: utf-8-unix
-### indent-tabs-mode: nil
-### End:
