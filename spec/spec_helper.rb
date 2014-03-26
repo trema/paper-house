@@ -2,6 +2,7 @@
 
 require 'rake'
 require 'rspec'
+require 'rspec/given'
 
 RSpec.configure do | config |
   config.before(:all) do
