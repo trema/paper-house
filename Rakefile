@@ -78,11 +78,9 @@ FlayTask.new do |t|
   t.verbose = true
 end
 
-if RUBY_VERSION >= '1.9.0'
-  task :quality => :rubocop
-  require 'rubocop/rake_task'
-  Rubocop::RakeTask.new
-end
+task :quality => :rubocop
+require 'rubocop/rake_task'
+Rubocop::RakeTask.new
 
 task :relish do
   sh 'relish push trema/paper-house'

@@ -38,15 +38,12 @@ module PaperHouse
     SONAME_OPTION = MAC ? '-install_name' : '-soname'
 
     # Include directories for compiling C extensions.
-    RUBY_INCLUDES = if RUBY_VERSION >= '1.9.0'
-                      [
-                        File.join(CONFIG['rubyhdrdir'], CONFIG['arch']),
-                        File.join(CONFIG['rubyhdrdir'], 'ruby/backward'),
-                        CONFIG['rubyhdrdir']
-                      ]
-                    else
-                      [CONFIG['archdir']]
-                    end
+    RUBY_INCLUDES =
+      [
+        File.join(CONFIG['rubyhdrdir'], CONFIG['arch']),
+        File.join(CONFIG['rubyhdrdir'], 'ruby/backward'),
+        CONFIG['rubyhdrdir']
+      ]
 
     # Library directories for compiling C extensions.
     RUBY_LIBDIR = CONFIG['libdir']
