@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gemspec
 
+gem 'yard', '~> 0.8.7.3'
+
 group :development do
   gem 'aruba', '~> 0.5.4'
   gem 'cucumber', '~> 1.3.10'
@@ -21,7 +23,6 @@ group :development do
   gem 'redcarpet', '~> 3.0.0' if RUBY_VERSION >= '1.9.0'
   gem 'relish', '~> 0.7'
   gem 'terminal-notifier-guard', '~> 1.5.3'
-  gem 'yard', '~> 0.8.7.3'
 end
 
 group :test do
