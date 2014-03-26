@@ -5,7 +5,8 @@ require 'paper_house/build_task'
 module PaperHouse
   # Common base class for static, shared, and ruby library tasks.
   class LibraryTask < BuildTask
-    # Find a LibraryTask by name
+    # Find a LibraryTask by +name+.
+    # @return [LibraryTask]
     def self.find_named(name)
       ObjectSpace.each_object(self) do |each|
         obj_name = each.name
