@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# encoding: utf-8
 
 AfterConfiguration do |config|
   FileUtils.rm_f Dir.glob('tmp/.*_id')

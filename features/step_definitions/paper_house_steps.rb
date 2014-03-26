@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# encoding: utf-8
 
 Given(/^the current project directory is "(.*?)"$/) do | dir |
   example_name = File.basename(dir)

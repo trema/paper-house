@@ -4,9 +4,7 @@ require 'pstore'
 require 'rake'
 
 module PaperHouse
-  #
   # Keeps compilation dependencies
-  #
   class Dependency
     attr_reader :path
 
@@ -16,18 +14,15 @@ module PaperHouse
       @cache = {}
     end
 
-    #
     # Reads the dependency information of +object_file+.
-    #
     def read(object_file)
       db.transaction(true) do |store|
         store[object_file]
       end || []
     end
 
-    #
-    # Saves the dependency information (+object_file+ => +dependent_files+).
-    #
+    # Saves the dependency information (+object_file+ =>
+    # +dependent_files+).
     def write(object_file, dependent_files)
       db.transaction(false) do |store|
         store[object_file] = dependent_files

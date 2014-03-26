@@ -1,14 +1,10 @@
-# -*- coding: utf-8 -*-
-#
 # encoding: utf-8
 
 require 'paper_house/build_failed'
 require 'paper_house/safe_popen'
 
 module PaperHouse
-  #
   # Automatically detects compilation dependencies.
-  #
   class AutoDepends
     attr_reader :data
 
@@ -19,9 +15,7 @@ module PaperHouse
       @out = STDERR
     end
 
-    #
     # Runs dependency detection.
-    #
     def run
       @out.puts @command
       exit_status = popen_command

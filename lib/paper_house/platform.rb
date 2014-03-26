@@ -3,9 +3,7 @@
 require 'rbconfig'
 
 module PaperHouse
-  #
   # Platform-dependent stuff.
-  #
   module Platform
     include RbConfig
 
