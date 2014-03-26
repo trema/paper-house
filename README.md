@@ -1,10 +1,16 @@
 Paper House
 ===========
-[![Gem Version](https://badge.fury.io/rb/paper_house.png)](http://badge.fury.io/rb/paper_house)
-[![Build Status](https://travis-ci.org/trema/paper-house.png?branch=develop)](https://travis-ci.org/trema/paper-house)
-[![Code Climate](https://codeclimate.com/github/trema/paper-house.png)](https://codeclimate.com/github/trema/paper-house)
-[![Coverage Status](https://coveralls.io/repos/trema/paper-house/badge.png?branch=develop)](https://coveralls.io/r/trema/paper-house)
-[![Dependency Status](https://gemnasium.com/trema/paper-house.png)](https://gemnasium.com/trema/paper-house)
+[![Gem Version](http://img.shields.io/gem/v/paper_house.svg)][gem]
+[![Build Status](http://img.shields.io/travis/trema/paper-house/develop.svg)][travis]
+[![Code Climate](http://img.shields.io/codeclimate/github/trema/paper-house.svg)][codeclimate]
+[![Coverage Status](http://img.shields.io/coveralls/trema/paper-house/develop.svg)][coveralls]
+[![Dependency Status](http://img.shields.io/gemnasium/trema/paper-house.svg)][gemnasium]
+
+[gem]: https://rubygems.org/gems/paper_house
+[travis]: http://travis-ci.org/trema/paper-house
+[codeclimate]: https://codeclimate.com/github/trema/paper-house
+[coveralls]: https://coveralls.io/r/trema/paper-house?branch=develop
+[gemnasium]: https://gemnasium.com/trema/paper-house
 
 <a href="http://www.flickr.com/photos/studiobeerhorst/8221979536/" title="paper houses - 3d woodcut prints by Rick&Brenda Beerhorst, on Flickr"><img src="http://farm9.staticflickr.com/8202/8221979536_60404c309d_n.jpg" width="320" height="240" alt="paper houses - 3d woodcut prints" align="right"></a>
 
@@ -22,9 +28,10 @@ Features Overview
  * Provides a simple yet a powerful syntax to build above mentioned
    targets using predefined Rake tasks.
  * Pure Ruby. No additional dependency on other external tools
-   (`makedepend` etc.) to resolve file dependencies.
+   ([makedepend](http://linux.die.net/man/1/makedepend) etc.) to
+   resolve file dependencies.
  * Multi-Platform. Runs on both Linux and MacOSX, and supports all
-   major version of Ruby (1.8.7, 1.9.3, 2.0.0).
+   major version of Ruby (1.9.3, 2.0.0).
 
 
 Example
@@ -35,17 +42,18 @@ and `*.h` files in the current directory, just add the following lines
 to your `Rakefile`.
 
 ```ruby
-require "paper_house"
+require 'paper_house'
 
 PaperHouse::ExecutableTask.new :hello
 ```
 
 This defines a new task `hello`, and `rake hello` will automatically
 analyze all file dependencies of the source files, compile them into
-an executable named `hello``.
+an executable named `hello`.
 
 If you wish to customize the build process more, please set the
-following options defined in `PaperHouse::ExecutableTask`:
+following options defined in
+[PaperHouse::ExecutableTask](http://rubydoc.info/github/trema/paper-house/PaperHouse/ExecutableTask):
 
 ```ruby
 PaperHouse::ExecutableTask.new :hello do |task|

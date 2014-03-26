@@ -69,3 +69,9 @@ Feature: PaperHouse::ExecutableTask
     Then a file named "hello.o" should not exist
     And a file named ".hello.depends" should not exist
     And a file named "hello" should not exist
+
+  Scenario: Failure
+    Given the current project directory is "examples/fail"
+    When I run `rake hello`
+    Then the exit status should not be 0
+    And the stderr should contain "failed with status"

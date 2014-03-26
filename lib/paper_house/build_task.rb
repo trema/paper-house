@@ -1,24 +1,9 @@
-# -*- coding: utf-8 -*-
-#
-# Copyright (C) 2013 NEC Corporation
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License, version 3, as
-# published by the Free Software Foundation.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-#
+# encoding: utf-8
 
 require 'paper_house/auto_depends'
-require 'paper_house/dependency'
+require 'paper_house/build_failed'
 require 'paper_house/cc_options'
+require 'paper_house/dependency'
 require 'rake/clean'
 require 'rake/tasklib'
 
@@ -154,11 +139,12 @@ module PaperHouse
     def dependency
       @dependency ||= Dependency.new(@name)
     end
+
+    def generate_target
+      command = ([cc] + cc_options).join(' ')
+      sh(command) do |ok, status|
+        ok || fail(BuildFailed.new(command, status))
+      end
+    end
   end
 end
-
-### Local variables:
-### mode: Ruby
-### coding: utf-8-unix
-### indent-tabs-mode: nil
-### End:

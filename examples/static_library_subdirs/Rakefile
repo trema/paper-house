@@ -2,7 +2,7 @@
 
 require 'paper_house'
 
-task :hello => :libhello
+task hello: :libhello
 
 PaperHouse::StaticLibraryTask.new :libhello do | task |
   task.library_name = 'hello'
