@@ -5,12 +5,14 @@ Paper House
 [![Code Climate](http://img.shields.io/codeclimate/github/trema/paper-house.svg)][codeclimate]
 [![Coverage Status](http://img.shields.io/coveralls/trema/paper-house/develop.svg)][coveralls]
 [![Dependency Status](http://img.shields.io/gemnasium/trema/paper-house.svg)][gemnasium]
+[![Inline docs](http://inch-pages.github.io/github/trema/paper-house.svg)][inchpages]
 
 [gem]: https://rubygems.org/gems/paper_house
 [travis]: http://travis-ci.org/trema/paper-house
 [codeclimate]: https://codeclimate.com/github/trema/paper-house
 [coveralls]: https://coveralls.io/r/trema/paper-house?branch=develop
 [gemnasium]: https://gemnasium.com/trema/paper-house
+[inchpages]: http://inch-pages.github.io/github/trema/paper-house
 
 <a href="http://www.flickr.com/photos/studiobeerhorst/8221979536/" title="paper houses - 3d woodcut prints by Rick&Brenda Beerhorst, on Flickr"><img src="http://farm9.staticflickr.com/8202/8221979536_60404c309d_n.jpg" width="320" height="240" alt="paper houses - 3d woodcut prints" align="right"></a>
 
