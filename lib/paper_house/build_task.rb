@@ -17,8 +17,9 @@
 #
 
 require 'paper_house/auto_depends'
-require 'paper_house/dependency'
+require 'paper_house/build_failed'
 require 'paper_house/cc_options'
+require 'paper_house/dependency'
 require 'rake/clean'
 require 'rake/tasklib'
 
@@ -153,6 +154,13 @@ module PaperHouse
 
     def dependency
       @dependency ||= Dependency.new(@name)
+    end
+
+    def generate_target
+      command = ([cc] + cc_options).join(' ')
+      sh(command) do |ok, status|
+        ok || fail(BuildFailed.new(command, status))
+      end
     end
   end
 end

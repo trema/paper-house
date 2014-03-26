@@ -46,10 +46,6 @@ module PaperHouse
 
     private
 
-    def generate_target
-      sh(([cc] + cc_options).join(' '))
-    end
-
     def cc_options
       [LDSHARED, o_option, objects, ldflags, libdir_option, l_options].flatten
     end
