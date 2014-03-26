@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 require 'paper_house/build_failed'
-require 'paper_house/safe_popen'
+require 'popen4'
 
 module PaperHouse
   # Automatically detects compilation dependencies.
@@ -25,7 +25,7 @@ module PaperHouse
     private
 
     def popen_command
-      SafePopen.popen(@command) do |stdout, stderr, stdin, |
+      POpen4.popen4(@command) do |stdout, stderr, stdin, |
         stdin.close
         parse_cc_h_stderr stderr
       end
