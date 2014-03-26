@@ -15,14 +15,16 @@ module PaperHouse
     end
 
     # Reads the dependency information of +object_file+.
+    # @return [Array<String>]
     def read(object_file)
       db.transaction(true) do |store|
         store[object_file]
       end || []
     end
 
-    # Saves the dependency information (+object_file+ =>
-    # +dependent_files+).
+    # Saves the dependency information
+    # (+object_file+ => +dependent_files+).
+    # @return [void]
     def write(object_file, dependent_files)
       db.transaction(false) do |store|
         store[object_file] = dependent_files
