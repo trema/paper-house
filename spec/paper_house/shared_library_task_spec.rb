@@ -66,10 +66,10 @@ describe PaperHouse::SharedLibraryTask do
       end
     end
 
-    context %{with 'libtest'} do
+    context %(with 'libtest') do
       let(:name) { 'libtest' }
 
-      context %{when SharedLibraryTask named 'libtest' is defined} do
+      context %(when SharedLibraryTask named 'libtest' is defined) do
         before { PaperHouse::SharedLibraryTask.new :libtest, '0.1.0' }
 
         it { expect(subject).to be_a PaperHouse::SharedLibraryTask }
@@ -84,7 +84,7 @@ describe PaperHouse::SharedLibraryTask do
   end
 
   describe '.new' do
-    context %{with name :libtest and version '0.1.0'} do
+    context %(with name :libtest and version '0.1.0') do
       subject { PaperHouse::SharedLibraryTask.new :libtest, '0.1.0' }
 
       its(:cc) { should eq 'gcc' }
@@ -117,10 +117,10 @@ describe PaperHouse::SharedLibraryTask do
         end
       end
 
-      context %{with #version = '0.1.0'} do
+      context %(with #version = '0.1.0') do
         let(:version) { '0.1.0' }
 
-        context %{with #library_name = 'libtest'} do
+        context %(with #library_name = 'libtest') do
           let(:library_name) { 'libtest' }
 
           its(:library_name) { should eq 'libtest' }
@@ -132,7 +132,7 @@ describe PaperHouse::SharedLibraryTask do
           its(:library_name) { should eq 'libtest' }
         end
 
-        context %{with #library_name = 'test'} do
+        context %(with #library_name = 'test') do
           let(:library_name) { 'test' }
 
           its(:library_name) { should eq 'libtest' }

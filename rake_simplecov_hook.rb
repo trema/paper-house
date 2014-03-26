@@ -12,7 +12,7 @@ end
 
 def new_scenario_id
   new_id = 0
-  new_id = IO.read(id_file).chomp.to_i + 1 if File.exists?(id_file)
+  new_id = IO.read(id_file).chomp.to_i + 1 if File.exist?(id_file)
   File.open(id_file, 'w') { | file | file.puts new_id }
   new_id
 end

@@ -40,9 +40,9 @@ module PaperHouse
     # Include directories for compiling C extensions.
     RUBY_INCLUDES = if RUBY_VERSION >= '1.9.0'
                       [
-                       File.join(CONFIG['rubyhdrdir'], CONFIG['arch']),
-                       File.join(CONFIG['rubyhdrdir'], 'ruby/backward'),
-                       CONFIG['rubyhdrdir']
+                        File.join(CONFIG['rubyhdrdir'], CONFIG['arch']),
+                        File.join(CONFIG['rubyhdrdir'], 'ruby/backward'),
+                        CONFIG['rubyhdrdir']
                       ]
                     else
                       [CONFIG['archdir']]

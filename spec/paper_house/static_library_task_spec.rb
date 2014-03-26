@@ -66,7 +66,7 @@ describe PaperHouse::StaticLibraryTask do
       end
     end
 
-    context %{with 'libtest'} do
+    context %(with 'libtest') do
       let(:name) { 'libtest' }
 
       context 'when StaticLibraryTask named :libtest is defined' do

@@ -27,7 +27,7 @@ group :development do
   gem 'relish', '~> 0.7'
   gem 'rspec', '~> 2.14.1'
   gem 'rspec-instafail', '~> 0.2.4'
-  gem 'rubocop', '~> 0.14.1' if RUBY_VERSION >= '1.9.0'
+  gem 'rubocop', '~> 0.19.1', :platforms => [:ruby_19, :ruby_20]
   gem 'terminal-notifier-guard', '~> 1.5.3'
   gem 'yard', '~> 0.8.7.3'
 end

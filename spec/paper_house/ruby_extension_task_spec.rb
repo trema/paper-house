@@ -66,10 +66,10 @@ describe PaperHouse::RubyExtensionTask do
       end
     end
 
-    context %{with 'test'} do
+    context %(with 'test') do
       let(:name) { 'test' }
 
-      context %{when RubyExtensionTask named 'test' is defined} do
+      context %(when RubyExtensionTask named 'test' is defined) do
         before { PaperHouse::RubyExtensionTask.new :test }
 
         it { expect(subject).to be_a PaperHouse::RubyExtensionTask }
@@ -102,7 +102,7 @@ describe PaperHouse::RubyExtensionTask do
         end
       end
 
-      context %{with #library_name = 'new_name'} do
+      context %(with #library_name = 'new_name') do
         let(:library_name) { 'new_name' }
 
         its(:library_name) { should eq 'new_name' }

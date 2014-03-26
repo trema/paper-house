@@ -40,7 +40,7 @@ module PaperHouse
     end
 
     def ar
-      sh "ar -cq #{target_path} #{objects.to_s}"
+      sh "ar -cq #{target_path} #{objects}"
     end
 
     def ranlib

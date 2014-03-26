@@ -68,7 +68,7 @@ describe PaperHouse::ExecutableTask, '.new' do
       end
     end
 
-    context %{with #executable_name = 'new_name'} do
+    context %(with #executable_name = 'new_name') do
       let(:executable_name) { 'new_name' }
 
       its(:executable_name) { should eq 'new_name' }
