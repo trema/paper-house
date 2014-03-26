@@ -25,7 +25,7 @@ Features Overview
    ([makedepend](http://linux.die.net/man/1/makedepend) etc.) to
    resolve file dependencies.
  * Multi-Platform. Runs on both Linux and MacOSX, and supports all
-   major version of Ruby (1.8.7, 1.9.3, 2.0.0).
+   major version of Ruby (1.9.3, 2.0.0).
 
 
 Example
