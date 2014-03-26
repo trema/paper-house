@@ -5,8 +5,6 @@ gemspec
 gem 'yard', '~> 0.8.7.3'
 
 group :development do
-  gem 'aruba', '~> 0.5.4'
-  gem 'cucumber', '~> 1.3.10'
   gem 'guard', '~> 1.8.3' if RUBY_VERSION < '1.9.0'
   gem 'guard', '~> 2.2.2' if RUBY_VERSION >= '1.9.0'
   gem 'guard-bundler', '~> 1.0.0' if RUBY_VERSION < '1.9.0'
@@ -26,7 +24,9 @@ group :development do
 end
 
 group :test do
+  gem 'aruba', '~> 0.5.4'
   gem 'coveralls', '~> 0.7.0', :require => false
+  gem 'cucumber', '~> 1.3.13'
   gem 'flay', '~> 2.4.0'
   gem 'flog', '~> 4.2.0'
   gem 'fuubar', '~> 1.3.2'
