@@ -11,7 +11,7 @@ libhello = PaperHouse::SharedLibraryTask.new :libhello do | task |
   task.cflags = %w(-Werror -Wall -Wextra)
 end
 
-task :hello => [:libhello, libhello.linker_name, libhello.soname]
+task hello: [:libhello, libhello.linker_name, libhello.soname]
 
 PaperHouse::ExecutableTask.new :hello do | task |
   task.sources = 'sources/main.c'

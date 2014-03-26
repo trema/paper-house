@@ -15,7 +15,7 @@ end
   CLOBBER.include each if FileTest.exists?(each)
 end
 
-task :hello => [:libhello, libhello.linker_name, libhello.soname]
+task hello: [:libhello, libhello.linker_name, libhello.soname]
 
 PaperHouse::ExecutableTask.new :hello do |task|
   task.sources = 'main.c'
