@@ -24,7 +24,7 @@ module PaperHouse
     attr_writer :executable_name
 
     def executable_name
-      @executable_name ||= @name
+      (@executable_name ||= @name).to_s
     end
     alias_method :target_file_name, :executable_name
 

@@ -78,22 +78,37 @@ describe PaperHouse::StaticLibraryTask do
   end
 end
 
-describe PaperHouse::StaticLibraryTask do
-  describe '.new' do
-    Given(:task) { PaperHouse::StaticLibraryTask.new(name) }
+describe PaperHouse::StaticLibraryTask, '.new' do
+  Given(:task) { PaperHouse::StaticLibraryTask.new(name, &block) }
 
-    context 'with :libtest' do
-      When(:name) { :libtest }
-      Then { task.name == 'libtest' }
-      Then { task.library_name == 'libtest' }
-      Then { task.cc == 'gcc' }
-      Then { task.cflags.empty? }
-      Then { task.includes.empty? }
-      Then { task.sources == '*.c'  }
-      Then { task.target_directory == '.' }
-      Then { task.lname == 'test' }
-      Then { task.target_file_name == 'libtest.a' }
-      Then { task.target_path == './libtest.a' }
+  context 'with :libtest' do
+    When(:name) { :libtest }
+    When(:block) {}
+    Then { task.name == 'libtest' }
+    Then { task.library_name == 'libtest' }
+    Then { task.cc == 'gcc' }
+    Then { task.cflags.empty? }
+    Then { task.includes.empty? }
+    Then { task.sources == '*.c'  }
+    Then { task.target_directory == '.' }
+    Then { task.lname == 'test' }
+    Then { task.target_file_name == 'libtest.a' }
+    Then { task.target_path == './libtest.a' }
+  end
+
+  context "with :test and a block setting :library_name = 'libfoo'" do
+    When(:name) { :test }
+    When(:block) do
+      proc { |task| task.library_name = 'libfoo' }
     end
+    Then { task.library_name == 'libfoo' }
+  end
+
+  context 'with :test and a block setting :library_name = :libfoo' do
+    When(:name) { :test }
+    When(:block) do
+      proc { |task| task.library_name = :libfoo }
+    end
+    Then { task.library_name == 'libfoo' }
   end
 end
