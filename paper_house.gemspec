@@ -19,6 +19,7 @@ Gem::Specification.new do |gem|
   gem.files = %w(CONTRIBUTING.md LICENSE Rakefile paper_house.gemspec)
   gem.files += Dir.glob('lib/**/*.rb')
   gem.files += Dir.glob('bin/**/*')
+  gem.files += Dir.glob('examples/**/*')
   gem.files += Dir.glob('spec/**/*')
   gem.files += Dir.glob('features/**/*')
 
