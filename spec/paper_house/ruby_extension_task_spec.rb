@@ -34,7 +34,11 @@ describe PaperHouse::RubyExtensionTask, '.new' do
     Then { task.sources == '*.c' }
     Then { task.target_directory == '.' }
     Then { task.cc == 'gcc' }
-    Then { task.library_dependencies == ['ruby'] }
+    if PaperHouse::Platform.name == 'mac'
+      Then { task.library_dependencies == ['ruby'] }
+    else
+      Then { task.library_dependencies.empty? }
+    end
     Then { task.cflags.empty? }
     Then { task.includes.empty? }
     Then { task.ldflags.empty? }
