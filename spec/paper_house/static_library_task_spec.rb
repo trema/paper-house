@@ -3,22 +3,6 @@
 require 'paper_house/static_library_task'
 
 describe Rake::Task do
-  context 'when no tasks are defined' do
-    Given { Rake::Task.clear }
-
-    describe '.[]' do
-      context 'with :libtest' do
-        Given(:name) { :libtest }
-
-        When(:result) { Rake::Task[name] }
-        Then do
-          result ==
-            Failure(RuntimeError, "Don't know how to build task 'libtest'")
-        end
-      end
-    end
-  end
-
   context 'when StaticLibraryTask (name = :libtest) is defined' do
     Given { Rake::Task.clear }
     Given { PaperHouse::StaticLibraryTask.new :libtest }
@@ -79,11 +63,8 @@ describe PaperHouse::StaticLibraryTask do
 end
 
 describe PaperHouse::StaticLibraryTask, '.new' do
-  Given(:task) { PaperHouse::StaticLibraryTask.new(name, &block) }
-
   context 'with :libtest' do
-    When(:name) { :libtest }
-    When(:block) {}
+    When(:task) { PaperHouse::StaticLibraryTask.new(:libtest) }
     Then { task.name == 'libtest' }
     Then { task.library_name == 'libtest' }
     Then { task.cc == 'gcc' }
@@ -97,17 +78,19 @@ describe PaperHouse::StaticLibraryTask, '.new' do
   end
 
   context "with :test and a block setting :library_name = 'libfoo'" do
-    When(:name) { :test }
-    When(:block) do
-      proc { |task| task.library_name = 'libfoo' }
+    When(:task) do
+      PaperHouse::StaticLibraryTask.new(:test) do |task|
+        task.library_name = 'libfoo'
+      end
     end
     Then { task.library_name == 'libfoo' }
   end
 
   context 'with :test and a block setting :library_name = :libfoo' do
-    When(:name) { :test }
-    When(:block) do
-      proc { |task| task.library_name = :libfoo }
+    When(:task) do
+      PaperHouse::StaticLibraryTask.new(:test) do |task|
+        task.library_name = :libfoo
+      end
     end
     Then { task.library_name == 'libfoo' }
   end

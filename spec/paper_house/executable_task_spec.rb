@@ -3,22 +3,6 @@
 require 'paper_house/executable_task'
 
 describe Rake::Task do
-  context 'when no tasks are defined' do
-    Given { Rake::Task.clear }
-
-    describe '.[]' do
-      context 'with :test' do
-        Given(:name) { :test }
-
-        When(:result) { Rake::Task[name] }
-        Then do
-          result ==
-            Failure(RuntimeError, "Don't know how to build task 'test'")
-        end
-      end
-    end
-  end
-
   context 'when ExecutableTask (name = :test) is defined' do
     Given { Rake::Task.clear }
     Given { PaperHouse::ExecutableTask.new :test }
@@ -43,11 +27,8 @@ describe Rake::Task do
 end
 
 describe PaperHouse::ExecutableTask, '.new' do
-  Given(:task) { PaperHouse::ExecutableTask.new(name, &block) }
-
   context 'with :test' do
-    When(:name)  { :test }
-    When(:block) {}
+    When(:task) { PaperHouse::ExecutableTask.new(:test) }
     Then { task.name == 'test' }
     Then { task.executable_name == 'test' }
     Then { task.sources == '*.c' }
@@ -60,17 +41,19 @@ describe PaperHouse::ExecutableTask, '.new' do
   end
 
   context "with :test and a block setting :executable_name = 'executable'" do
-    When(:name) { :test }
-    When(:block) do
-      proc { |task| task.executable_name = 'executable' }
+    When(:task) do
+      PaperHouse::ExecutableTask.new(:test) do |task|
+        task.executable_name = 'executable'
+      end
     end
     Then { task.executable_name == 'executable' }
   end
 
   context 'with :test and a block setting :executable_name = :executable' do
-    When(:name) { :test }
-    When(:block) do
-      proc { |task| task.executable_name = :executable }
+    When(:task) do
+      PaperHouse::ExecutableTask.new(:test) do |task|
+        task.executable_name = :executable
+      end
     end
     Then { task.executable_name == 'executable' }
   end
