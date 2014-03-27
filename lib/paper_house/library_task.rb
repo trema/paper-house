@@ -7,7 +7,7 @@ module PaperHouse
   class LibraryTask < BuildTask
     # Find a LibraryTask by +name+.
     # @return [LibraryTask]
-    def self.find_named(name)
+    def self.find_by_name(name)
       ObjectSpace.each_object(self) do |each|
         obj_name = each.name
         if Rake::Task.task_defined?(obj_name) && obj_name == name.to_s

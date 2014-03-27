@@ -33,8 +33,8 @@ end
 describe PaperHouse::RubyExtensionTask do
   before { Rake::Task.clear }
 
-  describe '.find_named' do
-    subject { PaperHouse::RubyExtensionTask.find_named name }
+  describe '.find_by_name' do
+    subject { PaperHouse::RubyExtensionTask.find_by_name name }
 
     context 'with :test' do
       let(:name) { :test }

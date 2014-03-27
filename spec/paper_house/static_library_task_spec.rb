@@ -29,16 +29,16 @@ end
 describe PaperHouse::StaticLibraryTask do
   Given { Rake::Task.clear }
 
-  describe '.find_named' do
-    When(:result) { PaperHouse::StaticLibraryTask.find_named('libtest') }
+  describe '.find_by_name' do
+    When(:result) { PaperHouse::StaticLibraryTask.find_by_name('libtest') }
     Then { result.nil? }
   end
 
   context 'PaperHouse::StaticLibraryTask.new(:libtest)' do
     Given { PaperHouse::StaticLibraryTask.new :libtest }
 
-    describe '.find_named' do
-      When(:result) { PaperHouse::StaticLibraryTask.find_named('libtest') }
+    describe '.find_by_name' do
+      When(:result) { PaperHouse::StaticLibraryTask.find_by_name('libtest') }
       Then { result.is_a? PaperHouse::StaticLibraryTask }
     end
   end
@@ -46,8 +46,8 @@ describe PaperHouse::StaticLibraryTask do
   context "PaperHouse::StaticLibraryTask.new('libtest')" do
     Given { PaperHouse::StaticLibraryTask.new 'libtest' }
 
-    describe '.find_named' do
-      When(:result) { PaperHouse::StaticLibraryTask.find_named('libtest') }
+    describe '.find_by_name' do
+      When(:result) { PaperHouse::StaticLibraryTask.find_by_name('libtest') }
       Then { result.is_a? PaperHouse::StaticLibraryTask }
     end
   end

@@ -38,7 +38,7 @@ module PaperHouse
     end
 
     def maybe_enhance(name, klass)
-      task = klass.find_named(name)
+      task = klass.find_by_name(name)
       enhance task if task
     end
 

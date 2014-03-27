@@ -33,8 +33,8 @@ end
 describe PaperHouse::SharedLibraryTask do
   before { Rake::Task.clear }
 
-  describe '.find_named' do
-    subject { PaperHouse::SharedLibraryTask.find_named name }
+  describe '.find_by_name' do
+    subject { PaperHouse::SharedLibraryTask.find_by_name name }
 
     context 'with :libtest' do
       let(:name) { :libtest }
