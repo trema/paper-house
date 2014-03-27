@@ -4,8 +4,11 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem 'yard', '~> 0.8.7.4'
-gem 'relish', '~> 0.7'
+group :docs do
+  gem 'inch', '~> 0.3.3'
+  gem 'relish', '~> 0.7'
+  gem 'yard', '~> 0.8.7.4'
+end
 
 group :development do
   gem 'guard', '~> 2.6.0'
