@@ -2,10 +2,12 @@
 
 ## develop (unreleased)
 
-### New features
-
 ### Changes
 
-* Replaced method `find_named` with `find_by_name`.
+* Replaced method `LibraryTask.find_named` with `LibraryTask.find_by_name`.
 
-### Bugs fixed
+### Misc
+
+* Added rake `inch` task.
+* Added YARD comments.
+* Added 2.1.0 support.
