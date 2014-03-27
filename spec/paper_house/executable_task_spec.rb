@@ -2,24 +2,33 @@
 
 require 'paper_house/executable_task'
 
-describe Rake::Task do
-  before { Rake::Task.clear }
+describe Rake::Task, '.[]' do
+  Given { Rake::Task.clear }
 
-  context 'when ExecutableTask (name = :test) is defined' do
-    Given { PaperHouse::ExecutableTask.new :test }
-    When(:result) { Rake::Task[:test].invoke }
-    Then { result == Failure(RuntimeError, 'Cannot find sources (*.c).') }
-  end
-
-  context 'when ExecutableTask (name = :test) is NOT defined' do
+  context 'with :test' do
     When(:result) { Rake::Task[:test] }
     Then do
       result == Failure(RuntimeError, "Don't know how to build task 'test'")
     end
   end
+
+  context 'when ExecutableTask.new(:test)' do
+    Given { PaperHouse::ExecutableTask.new :test }
+
+    context 'with :test' do
+      Given(:task) { Rake::Task[:test] }
+
+      describe '#invoke' do
+        When(:result) { task.invoke }
+        Then { result == Failure(RuntimeError, 'Cannot find sources (*.c).') }
+      end
+    end
+  end
 end
 
 describe PaperHouse::ExecutableTask, '.new' do
+  Given { Rake::Task.clear }
+
   context 'with :test' do
     When(:task) { PaperHouse::ExecutableTask.new :test }
     Then { task.name == 'test' }

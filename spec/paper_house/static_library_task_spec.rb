@@ -2,87 +2,71 @@
 
 require 'paper_house/static_library_task'
 
-describe Rake::Task do
-  before { Rake::Task.clear }
+describe Rake::Task, '.[]' do
+  Given { Rake::Task.clear }
 
-  describe '.[]' do
-    subject { Rake::Task[task] }
+  context 'with :libtest' do
+    When(:result) { Rake::Task[:libtest] }
+    Then do
+      result == Failure(RuntimeError, "Don't know how to build task 'libtest'")
+    end
+  end
+
+  context 'when StaticLibraryTask.new(:libtest)' do
+    Given { PaperHouse::StaticLibraryTask.new :libtest }
 
     context 'with :libtest' do
-      let(:task) { :libtest }
+      Given(:task) { Rake::Task[:libtest] }
 
-      context 'when StaticLibraryTask named :libtest is defined' do
-        before { PaperHouse::StaticLibraryTask.new :libtest }
-
-        describe '#invoke' do
-          it do
-            expect do
-              subject.invoke
-            end.to raise_error('Cannot find sources (*.c).')
-          end
-        end
-      end
-
-      context 'when StaticLibraryTask named :libtest is not defined' do
-        it { expect { subject }.to raise_error }
+      describe '#invoke' do
+        When(:result) { task.invoke }
+        Then { result == Failure(RuntimeError, 'Cannot find sources (*.c).') }
       end
     end
   end
 end
 
 describe PaperHouse::StaticLibraryTask do
-  before { Rake::Task.clear }
+  Given { Rake::Task.clear }
 
   describe '.find_named' do
-    subject { PaperHouse::StaticLibraryTask.find_named name }
+    When(:result) { PaperHouse::StaticLibraryTask.find_named('libtest') }
+    Then { result.nil? }
+  end
 
-    context 'with :libtest' do
-      let(:name) { :libtest }
+  context 'PaperHouse::StaticLibraryTask.new(:libtest)' do
+    Given { PaperHouse::StaticLibraryTask.new :libtest }
 
-      context 'when StaticLibraryTask named :libtest is defined' do
-        before { PaperHouse::StaticLibraryTask.new :libtest }
-
-        it { expect(subject).to be_a PaperHouse::StaticLibraryTask }
-      end
-
-      context 'when StaticLibraryTask named :libtest is not defined' do
-        it { expect(subject).to be_nil }
-      end
+    describe '.find_named' do
+      When(:result) { PaperHouse::StaticLibraryTask.find_named('libtest') }
+      Then { result.is_a? PaperHouse::StaticLibraryTask }
     end
+  end
 
-    context %(with 'libtest') do
-      let(:name) { 'libtest' }
+  context "PaperHouse::StaticLibraryTask.new('libtest')" do
+    Given { PaperHouse::StaticLibraryTask.new 'libtest' }
 
-      context 'when StaticLibraryTask named :libtest is defined' do
-        before { PaperHouse::StaticLibraryTask.new :libtest }
-
-        it { expect(subject).to be_a PaperHouse::StaticLibraryTask }
-      end
-    end
-
-    context 'with :no_such_task' do
-      let(:name) { :no_such_task }
-
-      it { expect(subject).to be_nil }
+    describe '.find_named' do
+      When(:result) { PaperHouse::StaticLibraryTask.find_named('libtest') }
+      Then { result.is_a? PaperHouse::StaticLibraryTask }
     end
   end
 
   describe '.new' do
-    subject { PaperHouse::StaticLibraryTask.new task }
+    Given(:task) { PaperHouse::StaticLibraryTask.new(name) }
 
     context 'with :libtest' do
-      let(:task) { :libtest }
-
-      its(:cc) { should eq 'gcc' }
-      its(:cflags) { should be_empty }
-      its(:includes) { should be_empty }
-      its(:name) { should eq 'libtest' }
-      its(:sources) { should eq '*.c'  }
-      its(:target_directory) { should eq '.' }
-      its(:library_name) { should eq 'libtest' }
-      its(:lname) { should eq 'test' }
-      its(:target_file_name) { should eq 'libtest.a' }
-      its(:target_path) { should eq './libtest.a' }
+      When(:name) { :libtest }
+      Then { task.name == 'libtest' }
+      Then { task.library_name == 'libtest' }
+      Then { task.cc == 'gcc' }
+      Then { task.cflags.empty? }
+      Then { task.includes.empty? }
+      Then { task.sources == '*.c'  }
+      Then { task.target_directory == '.' }
+      Then { task.lname == 'test' }
+      Then { task.target_file_name == 'libtest.a' }
+      Then { task.target_path == './libtest.a' }
     end
   end
 end
