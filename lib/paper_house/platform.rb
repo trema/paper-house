@@ -30,6 +30,7 @@ module PaperHouse
     # Library directories for compiling C extensions.
     RUBY_LIBDIR = CONFIG['libdir'].freeze
 
+    # Platform name.
     def self.name
       (MAC ? 'mac' : 'linux').freeze
     end

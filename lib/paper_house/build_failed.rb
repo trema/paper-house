@@ -6,11 +6,13 @@ module PaperHouse
     attr_reader :command
     attr_reader :status
 
+    # @private
     def initialize(command, status)
       @command = command
       @status = status
     end
 
+    # Error message
     def message
       "Command `#{command}' failed with status #{status.exitstatus}"
     end

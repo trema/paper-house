@@ -17,6 +17,7 @@ module PaperHouse
       nil
     end
 
+    # @private
     def initialize(name, &block)
       @library_dependencies = []
       super name, &block

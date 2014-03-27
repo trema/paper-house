@@ -8,6 +8,7 @@ module PaperHouse
   class AutoDepends
     attr_reader :data
 
+    # @private
     def initialize(c_file, o_file, cc, cc_options)
       @cc = cc
       @command = "#{@cc} -H #{cc_options} -c #{c_file} -o #{o_file}"

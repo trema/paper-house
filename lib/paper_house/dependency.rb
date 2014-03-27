@@ -8,6 +8,11 @@ module PaperHouse
   class Dependency
     attr_reader :path
 
+    # Creates an object that tracks depencency information about a
+    # rake task specified with the +name+ argument.
+    #
+    # @example
+    #   Dependency.new('hello')
     def initialize(name)
       @name = name
       @path = File.join(Rake.original_dir, ".#{name}.depends")
