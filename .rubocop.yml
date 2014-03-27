@@ -4,5 +4,5 @@ AllCops:
     - Guardfile
     - Rakefile
     - examples
-    - pio.gemspec
+    - paper_house.gemspec
     - tasks/*.rake
