@@ -24,7 +24,7 @@ module PaperHouse
 
     # Name of library.
     def library_name
-      @library_name ||= @name
+      (@library_name ||= @name).to_s
     end
 
     # Name of library.
