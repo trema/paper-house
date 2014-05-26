@@ -3,100 +3,62 @@
 require 'paper_house/ruby_extension_task'
 
 describe Rake::Task do
-  before { Rake::Task.clear }
+  context 'when RubyExtensionTask (name = :test) is defined' do
+    Given { Rake::Task.clear }
+    Given { PaperHouse::RubyExtensionTask.new :test }
 
-  describe '.[]' do
-    subject { Rake::Task[task] }
+    describe '.[]' do
+      context 'with :test' do
+        Given(:name) { :test }
 
-    context 'with :test' do
-      let(:task) { :test }
-
-      context 'when RubyExtensionTask named :test is defined' do
-        before { PaperHouse::RubyExtensionTask.new :test }
+        When(:task) { Rake::Task[name] }
+        Then { task.is_a? Rake::Task }
 
         describe '#invoke' do
-          it do
-            expect do
-              subject.invoke
-            end.to raise_error('Cannot find sources (*.c).')
+          When(:result) { task.invoke }
+          Then do
+            result ==
+              Failure(RuntimeError, 'Cannot find sources (*.c).')
           end
         end
-      end
-
-      context 'when RubyExtensionTask named :test is not defined' do
-        it { expect { subject }.to raise_error }
       end
     end
   end
 end
 
-describe PaperHouse::RubyExtensionTask do
-  before { Rake::Task.clear }
-
-  describe '.find_named' do
-    subject { PaperHouse::RubyExtensionTask.find_named name }
-
-    context 'with :test' do
-      let(:name) { :test }
-
-      context 'when RubyExtensionTask named :test is defined' do
-        before { PaperHouse::RubyExtensionTask.new :test }
-
-        it { expect(subject).to be_a PaperHouse::RubyExtensionTask }
-      end
-
-      context 'when RubyExtensionTask named :test is not defined' do
-        it { expect(subject).to be_nil }
-      end
+describe PaperHouse::RubyExtensionTask, '.new' do
+  context 'with :test' do
+    When(:task) { PaperHouse::RubyExtensionTask.new(:test) }
+    Then { task.name == 'test' }
+    Then { task.library_name == 'test' }
+    Then { task.sources == '*.c' }
+    Then { task.target_directory == '.' }
+    Then { task.cc == 'gcc' }
+    if PaperHouse::Platform.name == 'mac'
+      Then { task.library_dependencies == ['ruby'] }
+    else
+      Then { task.library_dependencies.empty? }
     end
-
-    context %(with 'test') do
-      let(:name) { 'test' }
-
-      context %(when RubyExtensionTask named 'test' is defined) do
-        before { PaperHouse::RubyExtensionTask.new :test }
-
-        it { expect(subject).to be_a PaperHouse::RubyExtensionTask }
-      end
-    end
-
-    context 'with :no_such_task' do
-      let(:name) { :no_such_task }
-
-      it { expect(subject).to be_nil }
-    end
+    Then { task.cflags.empty? }
+    Then { task.includes.empty? }
+    Then { task.ldflags.empty? }
   end
 
-  describe '.new' do
-    context 'with :test' do
-      subject { PaperHouse::RubyExtensionTask.new :test }
-
-      its(:cc) { should eq 'gcc' }
-      its(:cflags) { should be_empty }
-      its(:includes) { should be_empty }
-      its(:name) { should eq 'test' }
-      its(:sources) { should eq '*.c'  }
-      its(:target_directory) { should eq '.' }
-    end
-
-    context 'with :test and block' do
-      subject do
-        PaperHouse::RubyExtensionTask.new(:test) do | task |
-          task.library_name = library_name
-        end
-      end
-
-      context %(with #library_name = 'new_name') do
-        let(:library_name) { 'new_name' }
-
-        its(:library_name) { should eq 'new_name' }
-      end
-
-      context 'with #library_name = :new_name' do
-        let(:library_name) { :new_name }
-
-        its(:library_name) { should eq :new_name }
+  context "with :test and a block setting :library_name = 'libtest'" do
+    When(:task) do
+      PaperHouse::RubyExtensionTask.new(:test) do |task|
+        task.library_name = 'libtest'
       end
     end
+    Then { task.library_name == 'libtest' }
+  end
+
+  context 'with :test and a block setting :library_name = :libtest' do
+    When(:task) do
+      PaperHouse::RubyExtensionTask.new(:test) do |task|
+        task.library_name = :libtest
+      end
+    end
+    Then { task.library_name == 'libtest' }
   end
 end

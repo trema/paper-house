@@ -2,8 +2,6 @@
 
 require 'paper_house/version'
 
-describe PaperHouse do
-  describe '::VERSION' do
-    it { expect(PaperHouse::VERSION).to match(/\A\d+\.\d+\.\d+\Z/) }
-  end
+describe PaperHouse, '::VERSION' do
+  Then { /\A\d+\.\d+\.\d+\Z/=~ PaperHouse::VERSION }
 end

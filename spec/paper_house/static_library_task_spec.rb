@@ -3,86 +3,95 @@
 require 'paper_house/static_library_task'
 
 describe Rake::Task do
-  before { Rake::Task.clear }
+  context 'when StaticLibraryTask (name = :libtest) is defined' do
+    Given { Rake::Task.clear }
+    Given { PaperHouse::StaticLibraryTask.new :libtest }
 
-  describe '.[]' do
-    subject { Rake::Task[task] }
+    describe '.[]' do
+      context 'with :libtest' do
+        Given(:name) { :libtest }
 
-    context 'with :libtest' do
-      let(:task) { :libtest }
-
-      context 'when StaticLibraryTask named :libtest is defined' do
-        before { PaperHouse::StaticLibraryTask.new :libtest }
+        When(:task) { Rake::Task[name] }
+        Then { task.is_a? Rake::Task }
 
         describe '#invoke' do
-          it do
-            expect do
-              subject.invoke
-            end.to raise_error('Cannot find sources (*.c).')
+          When(:result) { task.invoke }
+          Then do
+            result == Failure(RuntimeError, 'Cannot find sources (*.c).')
           end
         end
-      end
-
-      context 'when StaticLibraryTask named :libtest is not defined' do
-        it { expect { subject }.to raise_error }
       end
     end
   end
 end
 
 describe PaperHouse::StaticLibraryTask do
-  before { Rake::Task.clear }
+  context 'when no tasks are defined' do
+    Given { Rake::Task.clear }
 
-  describe '.find_named' do
-    subject { PaperHouse::StaticLibraryTask.find_named name }
-
-    context 'with :libtest' do
-      let(:name) { :libtest }
-
-      context 'when StaticLibraryTask named :libtest is defined' do
-        before { PaperHouse::StaticLibraryTask.new :libtest }
-
-        it { expect(subject).to be_a PaperHouse::StaticLibraryTask }
+    describe '.find_by_name' do
+      context "with 'libtest'" do
+        When(:result) { PaperHouse::StaticLibraryTask.find_by_name('libtest') }
+        Then { result.nil? }
       end
-
-      context 'when StaticLibraryTask named :libtest is not defined' do
-        it { expect(subject).to be_nil }
-      end
-    end
-
-    context %(with 'libtest') do
-      let(:name) { 'libtest' }
-
-      context 'when StaticLibraryTask named :libtest is defined' do
-        before { PaperHouse::StaticLibraryTask.new :libtest }
-
-        it { expect(subject).to be_a PaperHouse::StaticLibraryTask }
-      end
-    end
-
-    context 'with :no_such_task' do
-      let(:name) { :no_such_task }
-
-      it { expect(subject).to be_nil }
     end
   end
 
-  describe '.new' do
-    subject { PaperHouse::StaticLibraryTask.new task }
+  context 'when StaticLibraryTask (name = :libtest) is defined' do
+    Given { Rake::Task.clear }
+    Given { PaperHouse::StaticLibraryTask.new :libtest }
 
-    context 'with :libtest' do
-      let(:task) { :libtest }
-
-      its(:cc) { should eq 'gcc' }
-      its(:cflags) { should be_empty }
-      its(:includes) { should be_empty }
-      its(:name) { should eq 'libtest' }
-      its(:sources) { should eq '*.c'  }
-      its(:target_directory) { should eq '.' }
-      its(:library_name) { should eq 'libtest' }
-      its(:lname) { should eq 'test' }
-      its(:target_file_name) { should eq 'libtest.a' }
-      its(:target_path) { should eq './libtest.a' }
+    describe '.find_by_name' do
+      context "with 'libtest'" do
+        When(:result) { PaperHouse::StaticLibraryTask.find_by_name('libtest') }
+        Then { result.is_a? PaperHouse::StaticLibraryTask }
+      end
     end
+  end
+
+  context "when StaticLibraryTask (name = 'libtest') is defined" do
+    Given { Rake::Task.clear }
+    Given { PaperHouse::StaticLibraryTask.new 'libtest' }
+
+    describe '.find_by_name' do
+      context "with 'libtest'" do
+        When(:result) { PaperHouse::StaticLibraryTask.find_by_name('libtest') }
+        Then { result.is_a? PaperHouse::StaticLibraryTask }
+      end
+    end
+  end
+end
+
+describe PaperHouse::StaticLibraryTask, '.new' do
+  context 'with :libtest' do
+    When(:task) { PaperHouse::StaticLibraryTask.new(:libtest) }
+    Then { task.name == 'libtest' }
+    Then { task.library_name == 'libtest' }
+    Then { task.cc == 'gcc' }
+    Then { task.cflags.empty? }
+    Then { task.includes.empty? }
+    Then { task.sources == '*.c'  }
+    Then { task.target_directory == '.' }
+    Then { task.lname == 'test' }
+    Then { task.target_file_name == 'libtest.a' }
+    Then { task.target_path == './libtest.a' }
+  end
+
+  context "with :test and a block setting :library_name = 'libfoo'" do
+    When(:task) do
+      PaperHouse::StaticLibraryTask.new(:test) do |task|
+        task.library_name = 'libfoo'
+      end
+    end
+    Then { task.library_name == 'libfoo' }
+  end
+
+  context 'with :test and a block setting :library_name = :libfoo' do
+    When(:task) do
+      PaperHouse::StaticLibraryTask.new(:test) do |task|
+        task.library_name = :libfoo
+      end
+    end
+    Then { task.library_name == 'libfoo' }
   end
 end

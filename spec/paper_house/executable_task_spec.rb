@@ -3,65 +3,58 @@
 require 'paper_house/executable_task'
 
 describe Rake::Task do
-  before { Rake::Task.clear }
+  context 'when ExecutableTask (name = :test) is defined' do
+    Given { Rake::Task.clear }
+    Given { PaperHouse::ExecutableTask.new :test }
 
-  describe '.[]' do
-    subject { Rake::Task[task] }
+    describe '.[]' do
+      context 'with :test' do
+        Given(:name) { :test }
 
-    context 'with :test' do
-      let(:task) { :test }
-
-      context 'when ExecutableTask named :test is defined' do
-        before { PaperHouse::ExecutableTask.new :test }
+        When(:task) { Rake::Task[name] }
+        Then { task.is_a? Rake::Task }
 
         describe '#invoke' do
-          it do
-            expect do
-              subject.invoke
-            end.to raise_error('Cannot find sources (*.c).')
+          When(:result) { task.invoke }
+          Then do
+            result ==
+              Failure(RuntimeError, 'Cannot find sources (*.c).')
           end
         end
-      end
-
-      context 'when ExecutableTask named :test is not defined' do
-        it { expect { subject }.to raise_error }
       end
     end
   end
 end
 
 describe PaperHouse::ExecutableTask, '.new' do
-  context 'with name :test' do
-    subject { PaperHouse::ExecutableTask.new :test }
-
-    its(:cc) { should eq 'gcc' }
-    its(:cflags) { should be_empty }
-    its(:executable_name) { should eq 'test' }
-    its(:includes) { should be_empty }
-    its(:ldflags) { should be_empty }
-    its(:library_dependencies) { should be_empty }
-    its(:name) { should eq 'test' }
-    its(:sources) { should eq '*.c'  }
-    its(:target_directory) { should eq '.' }
+  context 'with :test' do
+    When(:task) { PaperHouse::ExecutableTask.new(:test) }
+    Then { task.name == 'test' }
+    Then { task.executable_name == 'test' }
+    Then { task.sources == '*.c' }
+    Then { task.target_directory == '.' }
+    Then { task.cc == 'gcc' }
+    Then { task.cflags.empty? }
+    Then { task.includes.empty? }
+    Then { task.ldflags.empty? }
+    Then { task.library_dependencies.empty? }
   end
 
-  context 'with :test and block' do
-    subject do
-      PaperHouse::ExecutableTask.new(:test) do | task |
-        task.executable_name = executable_name
+  context "with :test and a block setting :executable_name = 'executable'" do
+    When(:task) do
+      PaperHouse::ExecutableTask.new(:test) do |task|
+        task.executable_name = 'executable'
       end
     end
+    Then { task.executable_name == 'executable' }
+  end
 
-    context %(with #executable_name = 'new_name') do
-      let(:executable_name) { 'new_name' }
-
-      its(:executable_name) { should eq 'new_name' }
+  context 'with :test and a block setting :executable_name = :executable' do
+    When(:task) do
+      PaperHouse::ExecutableTask.new(:test) do |task|
+        task.executable_name = :executable
+      end
     end
-
-    context 'with #executable_name = :new_name' do
-      let(:executable_name) { :new_name }
-
-      its(:executable_name) { should eq :new_name }
-    end
+    Then { task.executable_name == 'executable' }
   end
 end

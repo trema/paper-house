@@ -12,9 +12,11 @@ module PaperHouse
   class BuildTask < Rake::TaskLib
     # Helper class for defining CLEAN and CLOBBER.
     class CleanTask
-      def initialize(targets, file_list)
+      # Add +targets+ to +target_type+ (+:CLEAN+ or +:CLOBBER+).
+      # @example CleanTask.new %w(file1 file2), :CLEAN
+      def initialize(targets, target_type)
         @targets = targets
-        @file_list = Object.const_get(file_list.to_s.upcase)
+        @file_list = Object.const_get(target_type)
         define_task
       end
 
@@ -50,6 +52,7 @@ module PaperHouse
       ENV['CC'] || @cc || 'gcc'
     end
 
+    # @private
     def initialize(name, &block)
       @name = name.to_s
       block.call self if block
@@ -109,8 +112,8 @@ module PaperHouse
     end
 
     def define_clean_tasks
-      CleanTask.new objects, :clean
-      CleanTask.new clobber_targets, :clobber
+      CleanTask.new objects, :CLEAN
+      CleanTask.new clobber_targets, :CLOBBER
     end
 
     def clobber_targets

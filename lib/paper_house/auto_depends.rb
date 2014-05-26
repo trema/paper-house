@@ -1,17 +1,14 @@
-# -*- coding: utf-8 -*-
-#
 # encoding: utf-8
 
 require 'paper_house/build_failed'
-require 'paper_house/safe_popen'
+require 'popen4'
 
 module PaperHouse
-  #
   # Automatically detects compilation dependencies.
-  #
   class AutoDepends
     attr_reader :data
 
+    # @private
     def initialize(c_file, o_file, cc, cc_options)
       @cc = cc
       @command = "#{@cc} -H #{cc_options} -c #{c_file} -o #{o_file}"
@@ -19,9 +16,7 @@ module PaperHouse
       @out = STDERR
     end
 
-    #
     # Runs dependency detection.
-    #
     def run
       @out.puts @command
       exit_status = popen_command
@@ -31,7 +26,7 @@ module PaperHouse
     private
 
     def popen_command
-      SafePopen.popen(@command) do |stdout, stderr, stdin, |
+      POpen4.popen4(@command) do |_stdout, stderr, stdin, |
         stdin.close
         parse_cc_h_stderr stderr
       end

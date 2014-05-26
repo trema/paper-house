@@ -13,6 +13,17 @@ module PaperHouse
     # Library version string.
     attr_accessor :version
 
+    # Defines a rake task called +name+ that builds a shared library.
+    # Note that version number must be set as the +version+ argument
+    # or in the +block+ to build the library.
+    #
+    # @yield [task]
+    # @example
+    #   PaperHouse::SharedLibraryTask.new :libhello do |task|
+    #     task.version = '0.1.0'
+    #     task.sources = 'hello.c'
+    #     task.library_dependencies = 'm'
+    #   end
     def initialize(name, version = nil, &block)
       @version = version
       super name, &block

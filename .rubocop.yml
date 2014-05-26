@@ -1,8 +1,8 @@
 AllCops:
-  Includes:
-    - Gemfile
-    - Guardfile
-    - Rakefile
-    - examples
-    - pio.gemspec
+  Include:
+    - ./Gemfile
+    - ./Guardfile
+    - ./Rakefile
+    - ./examples
+    - ./paper_house.gemspec
     - tasks/*.rake

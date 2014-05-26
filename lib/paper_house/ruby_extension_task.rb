@@ -4,13 +4,9 @@ require 'paper_house/library_task'
 require 'paper_house/linker_options'
 require 'paper_house/platform'
 
-#
 # Rake for C projects.
-#
 module PaperHouse
-  #
   # Compiles *.c files into a Ruby extension library.
-  #
   class RubyExtensionTask < LibraryTask
     include LinkerOptions
     include Platform
