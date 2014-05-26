@@ -80,7 +80,7 @@ describe PaperHouse::SharedLibraryTask, '.new' do
     Then { task.target_path == './libtest.so.0.1.0' }
   end
 
-  context "with :test and a block setting "\
+  context 'with :test and a block setting '\
   ":version = '0.1.0' and :library_name = 'libfoo'" do
     When(:task) do
       PaperHouse::SharedLibraryTask.new(:libtest) do |task|

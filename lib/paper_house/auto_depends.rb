@@ -26,7 +26,7 @@ module PaperHouse
     private
 
     def popen_command
-      POpen4.popen4(@command) do |stdout, stderr, stdin, |
+      POpen4.popen4(@command) do |_stdout, stderr, stdin, |
         stdin.close
         parse_cc_h_stderr stderr
       end

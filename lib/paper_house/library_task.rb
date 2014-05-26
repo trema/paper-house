@@ -10,9 +10,8 @@ module PaperHouse
     def self.find_by_name(name)
       ObjectSpace.each_object(self) do |each|
         obj_name = each.name
-        if Rake::Task.task_defined?(obj_name) && obj_name == name.to_s
-          return each
-        end
+        next if !Rake::Task.task_defined?(obj_name) || obj_name != name.to_s
+        return each
       end
       nil
     end

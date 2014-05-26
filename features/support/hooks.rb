@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-AfterConfiguration do |config|
+AfterConfiguration do |_config|
   FileUtils.rm_f Dir.glob('tmp/.*_id')
 end
 
