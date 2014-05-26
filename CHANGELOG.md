@@ -4,6 +4,7 @@
 
 ### Changes
 
+* Updated bundled gems.
 * Replaced method `LibraryTask.find_named` with `LibraryTask.find_by_name`.
 
 ### Misc
