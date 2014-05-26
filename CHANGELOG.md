@@ -2,6 +2,8 @@
 
 ## develop (unreleased)
 
+## 0.6.1 (5/26/2014)
+
 ### Changes
 
 * Updated bundled gems.
