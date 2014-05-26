@@ -31,5 +31,5 @@ Gem::Specification.new do |gem|
 
   gem.required_ruby_version = '>= 1.9.3'
   gem.add_dependency 'POpen4', '~> 0.1.4'
-  gem.add_dependency 'rake', '~> 10.2.1'
+  gem.add_dependency 'rake'
 end
