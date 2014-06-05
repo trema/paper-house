@@ -2,6 +2,12 @@
 
 ## develop (unreleased)
 
+### Changes
+
+* Updated bundled gems.
+* Modernize Gemfile and .gemspec.
+
+
 ## 0.6.1 (5/26/2014)
 
 ### Changes
