@@ -59,5 +59,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'reek', '~> 1.3.7'
   gem.add_development_dependency 'rspec', '~> 3.0.0'
   gem.add_development_dependency 'rspec-given', '~> 3.5.4'
-  gem.add_development_dependency 'rubocop', '~> 0.22.0'
+  gem.add_development_dependency 'rubocop', '~> 0.23.0'
 end
