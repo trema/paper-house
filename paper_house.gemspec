@@ -56,9 +56,8 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'cucumber', '~> 1.3.15'
   gem.add_development_dependency 'flay', '~> 2.5.0'
   gem.add_development_dependency 'flog', '~> 4.2.1'
-  gem.add_development_dependency 'fuubar', '~> 1.3.3'
   gem.add_development_dependency 'reek', '~> 1.3.7'
-  gem.add_development_dependency 'rspec', '~> 2.14.1'
+  gem.add_development_dependency 'rspec', '~> 3.0.0'
   gem.add_development_dependency 'rspec-given', '~> 3.5.4'
   gem.add_development_dependency 'rubocop', '~> 0.22.0'
 end
