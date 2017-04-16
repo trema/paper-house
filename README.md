@@ -3,6 +3,7 @@ Paper House
 [![Gem Version](http://img.shields.io/gem/v/paper_house.svg)][gem]
 [![Build Status](http://img.shields.io/travis/trema/paper-house/develop.svg)][travis]
 [![Code Climate](http://img.shields.io/codeclimate/github/trema/paper-house.svg)][codeclimate]
+[![Inline docs](http://inch-pages.github.io/github/trema/paper-house.svg)][inchpages]
 [![Coverage Status](http://img.shields.io/coveralls/trema/paper-house/develop.svg)][coveralls]
 [![Dependency Status](http://img.shields.io/gemnasium/trema/paper-house.svg)][gemnasium]
 [![Inline docs](http://inch-ci.org/github/trema/paper-house.svg)][inchpages]
@@ -10,6 +11,7 @@ Paper House
 [gem]: https://rubygems.org/gems/paper_house
 [travis]: http://travis-ci.org/trema/paper-house
 [codeclimate]: https://codeclimate.com/github/trema/paper-house
+[inchpages]: http://inch-pages.github.io/github/trema/paper-house
 [coveralls]: https://coveralls.io/r/trema/paper-house?branch=develop
 [gemnasium]: https://gemnasium.com/trema/paper-house
 [inchpages]: http://inch-ci.org/github/trema/paper-house
